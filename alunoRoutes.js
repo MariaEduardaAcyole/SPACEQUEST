@@ -15,7 +15,7 @@ router.get('/aluno', (req, res) => {
 
 
 /* ROTAS GERAIS*/
-router.get('/',function(req,res){
+router.get('/home-aluno',function(req,res){
     res.render('pages/aluno/home')
 });
 

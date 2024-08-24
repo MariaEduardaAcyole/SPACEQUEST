@@ -24,7 +24,19 @@ app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-app.get('/hello', (req, res) => {
-    return res.json('hello')
+// Rota principal
+app.get('/', (req, res) => {
+    res.send('Hello, World!'); // Ou renderize uma página HTML/EJS
 });
-const baseUrl = "https://spacequest-rosy.vercel.app";
+
+app.get('/test', (req, res) => {
+    res.send('Test route is working!');
+});
+
+
+app.use((req, res) => {
+    res.status(404).send('404: NOT_FOUND');
+});
+
+const baseUrl = "https://spacequest-delta.vercel.app/";
+
