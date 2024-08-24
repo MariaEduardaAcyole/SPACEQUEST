@@ -1,0 +1,201 @@
+html{
+  padding: 0%;
+  margin: 0%;
+}
+
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  
+  height: 100vh;
+  width: 100vw;
+  font-family: "Russo One", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0%;
+  overflow: hidden;
+}
+
+.corpo{
+height: 100%;
+width: 100%;
+position: fixed;
+
+padding: 0%;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-image: url("img/cenário3.jpg");
+  background-size: 100%;   
+}
+
+a,* {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 1%;
+}
+
+.header {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-cardapio {
+  height: 12vh;
+}
+
+.pista{
+  height: 100%;
+  width: 110%;
+  position: relative;
+  top: 5%;
+}
+
+
+.kart1{
+  height: 65vh;
+  width: 30vw;
+  display: flex;
+  position: absolute;
+  top: 20%;
+  left: 35%;
+}
+
+.kart2{
+  height: 45vh;
+  width: 20vw;
+  display: flex;
+  position: absolute;
+  top: 15%;
+  left: 25%;
+}
+
+.kart3{
+  height: 35vh;
+  width: 15vw;
+  display: flex;
+  position: absolute;
+  top: 15%;
+  right: 30%;
+}
+
+.col{
+  height: 80vh;
+  width: 6vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.404);
+  border-radius: 30px;
+
+
+}
+
+.competidor{
+  height: 10vh;
+  width: 5vw;
+  display: flex;
+  border-radius: 100%;
+  margin-top: 10%;
+}
+
+
+/* TELA PEQUENA */
+@media screen and (max-width: 416px) {
+  body {
+  
+    height: 100vh;
+    width: 100vw;
+    margin: 1em auto;
+    font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    background-repeat: no-repeat;background-image: url("img/cenário3 mobile.jpeg");
+    background-size: 100%;  }
+
+  
+  .pista{
+    height: 60vh;
+    width: 110vw;
+    display: flex;
+    position: relative;
+    top: 30%;
+  }
+  
+  
+  .kart1{
+    height: 30vh;
+    width: 60vw;
+    display: flex;
+    position: absolute;
+    top: 50%;
+  }
+  
+  .kart2{
+    height: 20vh;
+    width: 40vw;
+    display: flex;
+    position: absolute;
+    top: 45%;
+    left: 20%;
+  }
+  
+  .kart3{
+    height: 15vh;
+    width: 30vw;
+    display: flex;
+    position: absolute;
+    top: 43%;
+    right: 25%;
+  }
+  
+  .col{
+    height: 10vh;
+    width: 95vw;
+    justify-content: center;
+    flex-direction:row;
+    top: 20%;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.404);
+    border-radius: 30px;
+  }
+  
+  .competidor{
+    height: 7.5vh;
+    width: 15vw;
+    display: flex;
+    margin-left: 2%;
+  }
+}

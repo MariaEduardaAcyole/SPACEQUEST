@@ -1,0 +1,143 @@
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest{
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    }
+
+/* TELA GRANDE */
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+  overflow: hidden;
+}
+
+.header{
+  width: 95%;
+
+  display: flex;
+  justify-content: space-between;
+}
+.head {
+  height: 8%;
+  width: 90%;
+  border-radius: 4.86vh;
+  background: rgba(217, 217, 217, 0.20);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+a {
+    color: #ffffff;
+}
+
+
+
+.col-1{
+    width: 30%;
+    height: 85%;
+    border-radius: 30px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background: rgba(217, 217, 217, 0.20);
+}
+
+.col-2{
+    width: 98%;
+    height: 98%;
+    border-radius: 30px;
+    margin-top: 1%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: #005eff00;
+
+}
+
+.cor-materia{
+    width: 40%;
+    height: 40%;
+    display: flex;
+    border: 0.5vh solid rgb(255, 255, 255);
+    border-radius: 100%;   
+}
+
+.cadastros{
+    width: 60%;
+    height: 20%;
+    border-radius: 30px;
+    margin-top: 3%;
+    
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background: rgba(217, 217, 217, 0.493);
+}
+
+.button{
+    width: 55%;
+    height: 20%;
+    border-radius: 30px;
+    margin-top: 3%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: #ffffff;
+    background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+}
+/*TELA PEQUENA*/
+@media screen and (max-width: 415px) {
+    .col-1{
+        width:90%;
+        height: 85%;
+    display: flex;
+    }
+    .col-2{
+        display: flex;
+        justify-content: space-evenly;
+    }
+        
+.cor-materia{
+    width: 40%;
+    height: 20%;
+
+}
+
+.cadastros{
+    width: 80%;
+    height: 10%;
+    border-radius: 30px;
+    margin-top: 3%;
+
+}
+
+.button{
+    width: 55%;
+    height: 10%;
+    border-radius: 30px;
+   
+}}

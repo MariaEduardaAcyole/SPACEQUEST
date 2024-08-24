@@ -1,0 +1,131 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+i {
+    padding: 1%;
+}
+
+/* Menu Icon */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 600;
+    color: #ffffff;
+    /* Certifique-se de que o ícone seja visível */
+}
+
+/* Menu */
+.menu {
+    position: absolute;
+    top: 0;
+    right: -250px;
+    width: 25%;
+    background: #029eff;
+    transition: right 1s ease-in-out;
+    z-index: 100;
+    padding-top: 60px;
+    /* Adiciona espaço para o conteúdo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transition: background 1s, color 0.9s;
+}
+
+.menu {
+    margin: 20px 0;
+}
+
+.menu {
+
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Espaçamento entre ícone e texto */
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.menu :hover {
+    background-color: #ffffff11;
+    color: #000000;
+    /* Altere a cor do texto ao passar o mouse */
+}
+
+.menu.open {
+    width: 20%;
+    right: 0;
+    gap: 10;
+    position: fixed;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: normal;
+}
+
+.item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  
+}
+
+
+.itens.open{
+width: max-content;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-evenly;
+
+}
+
+.menu {
+    display: none;
+}
+
+@media screen and (max-width: 415px) /*PEQUENA*/{
+    .item {
+        display: flex;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: center;
+
+    }
+
+    .menu {
+        width: 100%;
+    }
+    .menu.open {
+        width: 50%;
+        right: 0;
+        height: 70%;
+        display: flex;
+        flex-direction: row;
+        align-items: normal;
+
+    }
+
+    .menu-icon {
+        top: 5%;
+    }
+}

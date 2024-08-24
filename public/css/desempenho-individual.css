@@ -1,0 +1,174 @@
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+
+/* TELAS PEQUENAS */
+
+@media screen and (max-width: 415px) {
+  body {
+    font-size: 90%;
+  }
+
+
+
+  .head {
+    width: 100%;
+    height: auto;
+  }
+
+  .corpo {
+    width: 100%;
+    height: auto;
+  }
+
+  .tras {
+    width: 100%;
+    height: auto;
+    padding: 1vh;
+  }
+
+  .materia {
+    padding: 1%;
+    width: 100%;
+    height: auto;
+  }
+
+  .usuario {
+    padding: 1%;
+    width: 80%;
+  }
+
+  img {
+    width: 50%;
+    height: 10%;
+  }
+
+  h1 {
+    font-size: 50%;
+
+  }
+  h2{
+    font-size: 100%;
+  }
+  a {
+    font-size: 1%;
+  }
+}
+
+
+/* TELA GRANDE */
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family:  "Russo One",sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+  overflow: hidden;
+}
+
+
+.head {
+  height: 8%;
+  width: 90%;
+  border-radius: 4.86vh;
+  background: rgba(217, 217, 217, 0.20);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.corpo {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  height: 75%;
+}
+
+.tras {
+  width: 90%;
+  height: 90%;
+  border-radius: 40px;
+  display: flex;
+  padding: 2vh;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+/*SCROLL*/
+.tras::-webkit-scrollbar {
+  background-color: #ffffff;
+  height: max-content;
+  border-radius: 30px;
+
+
+}
+
+.tras::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #042763;
+  border-radius: 30px;
+}
+
+.materia {
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.50);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  height: 17%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1%;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  width: 60%;
+}
+
+.pontos {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  height: 50%;
+  width: 13%;
+  border-radius: 30px;
+}
+
+h1 {
+  font-size: 2em;
+  padding: 5%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1em; /* Ajuste conforme necessário */
+}
+
+/* SCROLL */
+.div-semana::-webkit-scrollbar {
+  background-color: #ffffff;
+}
+
+.div-semana::-webkit-scrollbar-thumb {
+  width: 10%;
+  background-color: #042763;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+

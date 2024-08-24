@@ -1,0 +1,405 @@
+:root {
+    --fundo: #042661;
+    --caixas: rgba(255, 255, 255, 0.6);
+    --transparencia: rgba(217, 217, 217, 0.6);
+    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
+}
+
+input,
+button,
+a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+
+
+body {
+    /* font-family: "Russo One", serif; */
+    color: #ffffff;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-size: 2rem;
+    /* 32px */
+}
+
+p {
+    font-size: 1rem;
+    /* 16px */
+}
+
+/* TELAS GRANDES */
+@media screen and (min-width: 416px) {
+    body {
+        height: 100vh;
+        width: 100%;
+        margin: 1em auto;
+        display: flex;
+        overflow-y: hidden;
+        flex-direction: column;
+        align-items: center;
+        background: var(--gradiente-body);
+    }
+
+    a {
+        color: #ffffff;
+    }
+
+
+
+    .atras {
+        width: 95%;
+        height: 80%;
+        border-radius: 30px;
+        margin-top: 1%;
+        filter: var(--shadow-filter);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .col-1,
+    .col-2 {
+        border-radius: 30px;
+    }
+
+    .col-1 {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-left: 1%;
+    }
+
+    .col-2 {
+        display: flex;
+        justify-content: end;
+    }
+
+    .instruçoes,
+    .linha-1,
+    .anexado {
+        display: flex;
+    }
+
+    .instruçoes {
+        height: 50%;
+        flex-wrap: wrap;
+    }
+
+    .titulo,
+    .vencimento-atv,
+    .descrição {
+        width: 100%;
+    }
+
+    .titulo {
+        height: 10%;
+    }
+
+    .vencimento-atv {
+        height: 5%;
+    }
+
+    .descrição {
+        height: 20%;
+    }
+
+    .caixa-arquivos,
+    .anexado {
+        border-radius: 30px;
+        display: flex;
+        background-color: var(--caixas);
+    }
+
+
+    .caixa-arquivos {
+        width: 90%;
+        height: 40%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .linha-1 {
+        width: 100%;
+        height: 25%;
+        margin-top: 1%;
+        background-color: transparent;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .anexo,
+    .img-anexo,
+    .img-anexado {
+        display: flex;
+    }
+
+    .anexo {
+        width: 12%;
+        height: 100%;
+        border-radius: 100px;
+        background-color: #ffffff;
+        margin-left: 1%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-anexo {
+        width: 70%;
+        height: 70%;
+        border-radius: 5%;
+    }
+
+    .anexado {
+        width: 95%;
+        height: 20%;
+        margin-top: 3%;
+        border-radius: 30px;
+        background: var(--transparencia);
+        color: white;
+        border: solid 1px;
+    }
+
+    .img-anexado {
+        width: 7%;
+        height: 70%;
+        border-radius: 5%;
+        margin: 1.5%;
+    }
+
+    .col-2 {
+        width: 58%;
+        justify-content: right;
+        align-items: center;
+    }
+
+    .entregar-button {
+        width: 20%;
+        height: 10%;
+        border-radius: 30px;
+        justify-content: center;
+        align-items: center;
+        background: var(--gradiente-button);
+        margin-top: 25%;
+        color: white;
+        position: fixed;
+    }
+
+    .astrosentado {
+        width: 80%;
+        height: 73%;
+        display: flex;
+        position: static;
+    }
+
+    .caixa-entrega {
+        width: 70%;
+        height: 85%;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--caixas);
+    }
+
+
+}
+
+/* TELAS PEQUENAS */
+@media screen and (max-width: 415px) {
+    body {
+        width: 100%;
+        height: 100vh;
+        margin: 1em;
+
+        display: flex;
+        overflow: auto;
+        flex-direction: column;
+        background: var(--gradiente-body);
+    }
+
+    a {
+        color: #ffffff;
+    }
+
+    .header {
+        width: 95%;
+        height: 10vh;
+        border-radius: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-cardapio {
+        height: 2vh;
+        margin: 0;
+    }
+
+    .atras {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+    }
+
+    .col-1 {
+        width: 100%;
+        flex-direction: column;
+        margin-left: 1%;
+        display: flex;
+        justify-content: space-around;
+        text-transform: uppercase;
+    }
+
+    .col-2 {
+        margin-top: 2%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .instruçoes,
+    .linha-1,
+    .anexado {
+        display: flex;
+    }
+
+    .instruçoes {
+        height: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-bottom: 5%;
+    }
+
+    .titulo,
+    .vencimento-atv,
+    .descrição {
+        width: 100%;
+     margin-bottom: 4%;
+        padding: 3%;
+    }
+
+    .titulo {
+        height: 10%;
+    }
+
+    .vencimento-atv {
+        height: 7%;
+    }
+
+    .descrição {
+        height: 30%;
+
+    }
+
+    .caixa-arquivos,
+    .anexado {
+        border-radius: 30px;
+        display: flex;
+        background-color: var(--caixas);
+    }
+
+    .caixa-arquivos {
+        width: 90%;
+        height: 40%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .linha-1 {
+        width: 100%;
+        height: 25%;
+        margin-top: 1%;
+        background-color: transparent;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .anexo,
+    .img-anexo,
+    .img-anexado {
+        display: flex;
+    }
+
+    .anexo {
+        width: 12%;
+        height: 100%;
+        border-radius: 100px;
+        background-color: #ffffff;
+        margin-left: 1%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-anexo {
+        width: 70%;
+        height: 70%;
+        border-radius: 5%;
+    }
+
+    .anexado {
+        width: 95%;
+        height: 20%;
+        margin-top: 3%;
+        border-radius: 30px;
+        background: var(--transparencia);
+        color: white;
+        border: solid 1px;
+    }
+
+    .img-anexado {
+        width: 7%;
+        height: 70%;
+        border-radius: 5%;
+        margin: 1.5%;
+    }
+
+    .col-2 {
+        width: 100%;
+    }
+
+    .entregar-button {
+        width: 40%;
+        height: 5%;
+        border-radius: 30px;
+        justify-content: center;
+        align-items: center;
+        background: var(--gradiente-button);
+        margin-top: 43%;
+        color: white;
+        position: fixed;
+    }
+
+    .astrosentado {
+        width: 60%;
+        height: 73%;
+        margin-top: 6%;
+        display: flex;
+        position: static;
+    }
+
+    .caixa-entrega {
+        width: 90%;
+        height: 100%;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--caixas);
+
+    }
+}

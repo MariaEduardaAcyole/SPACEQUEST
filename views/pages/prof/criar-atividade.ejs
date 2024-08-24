@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- LINKS -->
+    <meta http-equiv="refresh" content="300000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADD ATIVIDADE</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/criar-atividade.css">
+</head>
+
+<body>
+    <img class="img-fundo" src="img/fundo.png">
+
+    <div class="header">
+            <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
+        
+
+        <div class="menu-cardapio">
+            <%- include('../../partials/menu-superior-prof') %>
+        </div>
+
+    </div>
+    <div class="col-1">
+
+        <div class="img-materia" href="./materia">
+                <h1 href="./materia">NOME MATERIA</h1>
+        </div>
+
+        <div class="col-2">
+
+            <div class="col-navegacao">
+                <div class="navegacao">
+                    <a href="./materia-mural-prof" class="paginas">
+                        <h2>mural</h2>
+                    </a>
+                    <a href="./materia-downloads-prof" class="paginas">
+                        <h2>downloads</h2>
+                    </a>
+                    <a href="./materia-atividades-prof" class="paginas">
+                        <h2>atividades</h2>
+                    </a>
+                    <a href="./criar-atividade" class="paginas">
+                        <h2>addAtividade</h2>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3">
+
+                <div class="titulo-postagem">
+                    <div class="linha"></div>
+                    <h2>addAtividade</h2>
+                </div>
+
+                <div class="col-4">
+
+                    <div class="col-1-atv">
+                        <input placeholder="Titulo" type="text" class="titulo-atv" id="titulo-atv">
+
+                        <input placeholder="Descrição" type="text" class="descriçao-atv" id="descriçao-atv">
+                       
+                        <div class="linha-1">
+                            <div class="anexo">
+                                <img class="img-anexo" src="img/anexo-icon.png">
+                            </div>
+                            <div class="anexo">
+                                <img class="img-anexo" src="img/planilhas-icon.png">
+                            </div>
+                            <div class="anexo">
+                                <img class="img-anexo" src="img/docs-icon.png">
+                            </div>
+                            <div class="anexo">
+                                <img class="img-anexo" src="img/slides-icon.png">
+                            </div>
+                            <div class="anexo">
+                                <img class="img-anexo" src="img/formularios-icon.png">
+                            </div>
+                        </div>
+                        <input placeholder="arquivo" type="text" class="arquivo-anexado">
+                    </div>
+
+                    <div class="col-2-atv">
+
+<input type="date" placeholder="Data Vencimento" class="data-vencimento" id="">
+<input type="text" placeholder="Pontos" class="pontos">
+
+<button value="POSTAR" class="postar">POSTAR</button>
+                    </div>
+
+
+            </div>
+
+        </div>
+</body>
+
+</html>

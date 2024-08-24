@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/d54a2bc613.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="stylesheet" href="css/menu-superior.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+    <div class="menu-icon">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="menu">
+        <div class="itens">      
+            <a href="./home-prof" class="item"> <i class="fas fa-home"></i> HOME</a>
+            <a href="./criar-atividade" class="item"><i class="fa-solid fa-book-open-reader"></i>ATIVIDADE</a>
+            <a href="./materias" class="item"> <i class="fa-solid fa-pen-to-square"></i>MATERIAS</a>
+            <a href="./desempenho-geral" class="item"><i class="fa-solid fa-ranking-star"></i> DESEMPENHO</a>
+
+            <a href="./perfil-prof" class="item"> <i class="fa-solid fa-user"></i> PERFIL</a>
+            <a href="./calendario" class="item"> <i class="fa-solid fa-calendar-days"></i> CALENDARIO</a>
+
+    
+        </div>
+    </div>
+    <script>
+    document.querySelector('.menu-icon').addEventListener('click', function() {
+        document.querySelector('.menu').classList.toggle('open');
+        document.querySelector('.itens').classList.toggle('open');
+
+    });
+    </script>
+</body>
+</html>

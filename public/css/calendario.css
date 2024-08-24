@@ -1,0 +1,172 @@
+input,
+button,
+a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*TELA GRANDE*/
+
+@media screen and (min-width: 417px) {
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .header {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 5%;
+        align-items: center;
+
+    }
+
+    .menu-cardapio {
+        width: 5%;
+        height: 80%
+    }
+
+    .atras {
+        width: 90%;
+        height: 70%;
+        border-radius: 30px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: space-around;
+        padding: 2%;
+
+    }
+
+    .col-1 {
+        width: 80%;
+        height: 75%;
+        border-radius: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .img-astro {
+        height: 50%;
+        object-fit: fill;
+        border-radius: 30px;
+        position: absolute;
+        z-index: 1000;
+
+
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        width: 50%;
+        height: 30%;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
+    }
+
+    button:hover {
+        background-color: red;
+        cursor: pointer;
+        font-family: "Russo One", sans-serif;
+        font-size: 105%;
+    }
+
+    .foto {
+        width: 100%;
+
+    }
+
+    a {
+        color: #ffffff;
+    }
+}
+
+/*TELA PEQUENA*/
+
+@media screen and (max-width: 416px) {
+    body {
+
+      height: 100vh;
+        font-family: "Russo One", sans-serif;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 1%;
+        background-repeat: no-repeat;
+        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+
+    }
+
+
+    .atras {
+        width: 90%;
+        height: 70%;
+        border-radius: 30px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        flex-wrap: wrap;
+        display: flex;
+        align-content: center;
+        justify-content: space-around;
+        padding: 2%;
+
+    }
+
+
+    .col-1 {
+        width: 100%;
+        height: 75%;
+        border-radius: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .img-astro {
+        height: 50%;
+        border-radius: 30px;
+        position: absolute;
+        z-index: 1000;
+
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        width: 70%;
+        height: 30%;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
+    }
+
+
+}
+
+a {
+    color: #ffffff;
+    z-index: 100;
+
+
+}

@@ -1,0 +1,203 @@
+:root {
+    --fundo: ;
+    --caixas: #ffffffa3;
+    --trasparencia: #D9D9D9a2;
+}
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    }
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: normal;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    display: flex;
+    /*BACKGROUND*/
+    height: 100vh;
+    width: 100vw;
+    margin: 1em auto;
+
+    font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    /*BACKGROUND*/
+    background-repeat: no-repeat;
+    background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+}
+
+a {
+    color: #ffffff;
+}
+
+.header {
+    width: 95%;
+    height: 10vh;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-cardapio {
+    height: 9vh;
+    margin: 0%;
+}
+.atras-1 {
+    width: 90%;
+    height: 85%;
+    border-radius: 30px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background: rgba(217, 217, 217, 0.20);
+}
+.linha-1 {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+}
+.linha-2 {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.img-turma {
+    width: 10%;
+    height: 70%;
+    display: flex;
+    border: 0.5vh solid rgb(255, 255, 255);
+    border-radius: 100%;
+    background-color: cadetblue;
+
+        display: flex;
+        border: 0.5vh solid rgb(255, 255, 255);
+        border-radius   : 100%; 
+} 
+
+.img-materia , .img-perfil{
+    width: 30%;
+    height: 40%;
+    display: flex;
+    border: 0.5vh solid rgb(255, 255, 255);
+    border-radius: 100%;
+    background-color: rgb(0, 247, 255);
+
+        width: 20%;
+        height: 50%;
+        display: flex;
+        border: 0.5vh solid rgb(255, 255, 255);
+        border-radius   : 100%;
+    }
+    
+
+.inputs {
+    width: 50%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px black;
+}
+input {
+    width: 80%;
+    height: 40%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.50);
+}
+.botao-cadastrar {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    color: #ffffff;
+    width: 20%;
+    height: 30%;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
+}
+.col-alunos {
+    width: 45%;
+    height: 100%;
+overflow-y: scroll;
+border-radius: 81px;
+background: rgba(255, 255, 255, 0.50);
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.col-materias {
+    width: 45%;
+    height: 100%;
+    overflow-y: scroll;
+    border-radius: 81px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+    background: rgba(255, 255, 255, 0.50);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.aluno1-lista , .materia1-lista{
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+}
+.col-alunos::-webkit-scrollbar {
+    background-color: #ffffff;
+}
+
+.col-alunos::-webkit-scrollbar-thumb {
+    max-width: 1%;
+    max-height: 1%;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #042763;
+}
+.col-materias::-webkit-scrollbar {
+    background-color: #ffffff;
+}
+
+.col-materias::-webkit-scrollbar-thumb {
+    max-width: 1%;
+    max-height: 1%;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #042763;
+}
+.mais-materias , .mais-alunos{
+    width: 100%;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
+}

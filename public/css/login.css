@@ -1,0 +1,219 @@
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    }
+
+@media screen and (min-width: 417px) {
+
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 1em auto;
+
+        font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        /*BACKGROUND*/
+        background-repeat: no-repeat;
+        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    }
+
+    .caixa {
+        width: 40%;
+        height: 70%;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        justify-content: space-around;
+
+
+        border-radius: 40px;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .img-perfil {
+        width: 8em;
+        height: 8em;
+        border-radius: 50%;
+        top: 5%;
+        position: absolute;
+        border: 1vh solid rgb(255, 255, 255);
+    }
+
+
+    .texto-login {
+        width: 100%;
+        margin-top: 19%;
+        height: 10%;
+        color: antiquewhite;
+        text-align: center;
+        font-family: "Russo One", sans-serif;
+
+
+    }
+
+    .inputs {
+        width: 100%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+
+        align-content: center;
+        align-items: center;
+        justify-content: space-around;
+
+    }
+
+    input {
+        box-shadow: 0 0 0 0;
+        border: 0 none;
+        outline: 0;
+        text-decoration: none;
+        width: 70%;
+        height: 20%;
+        font-family: "Russo One", sans-serif;
+        font-size: 90%;
+        font-weight: 400;
+        line-height: 0.9375rem;
+        /* 62.5% */
+        letter-spacing: 0.06rem;
+        padding: 1%;
+        border-radius: 10px;
+
+    }
+
+    .btnEntrar     {
+        width: 90%;
+        height: 30%;
+        color: #000000;
+        font-family: RussoOne;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Russo One", sans-serif;
+
+        border-radius: 30px;
+        background: linear-gradient(90deg, rgba(65, 188, 216, 0.80) 0%, rgba(13, 54, 107, 0.80) 93.96%);
+
+    }
+
+    a {
+        width: 30%;
+        height: 30%;
+    }
+}
+
+/* /tela pequena/ */
+@media screen and (max-width: 416px) {
+    body {
+
+        height: 100vh;
+        width: 100vw;
+        margin: 1em auto;
+        font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        /*BACKGROUND*/
+        background-repeat: no-repeat;
+        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    }
+
+    .caixa {
+        width: 80%;
+        height: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        justify-content: space-around;
+
+
+        border-radius: 40px;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .img-perfil {
+        width: 40%;
+        height: 20%;
+        border-radius: 100%;
+        top: 14%;
+        position: absolute;
+        border: 1vh solid rgb(255, 255, 255);
+    }
+
+
+    .texto-login {
+        width: 100%;
+        margin-top: 30%;
+        height: 10%;
+        color: antiquewhite;
+        text-align: center;
+        font-family: "Russo One", sans-serif;
+
+
+    }
+
+    .inputs {
+        width: 100%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+
+        align-content: center;
+        align-items: center;
+        justify-content: space-around;
+
+    }
+
+    input {
+        box-shadow: 0 0 0 0;
+        border: 0 none;
+        outline: 0;
+        text-decoration: none;
+        width: 70%;
+        height: 20%;
+        font-family: "Russo One", sans-serif;
+        font-size: 90%;
+        font-weight: 400;
+        line-height: 0.9375rem;
+        /* 62.5% */
+        letter-spacing: 0.06rem;
+        padding: 1%;
+        border-radius: 10px;
+    }
+
+    .btn {
+        width: 150%;
+        height: 300%;
+        color: #000000;
+        font-family: RussoOne;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Russo One", sans-serif;
+        position: relative;
+        bottom: 20px;
+        right: 15px;
+        border-radius: 30px;
+        background: linear-gradient(90deg, rgba(65, 188, 216, 0.80) 0%, rgba(13, 54, 107, 0.80) 93.96%);
+
+
+    }
+}

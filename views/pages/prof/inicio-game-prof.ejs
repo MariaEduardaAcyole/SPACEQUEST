@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="stylesheet" href="css/inicio-game-prof.css">
+    <meta http-equiv="refresh" content="120" />
+    <title>Inicio game prof</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+
+<body>
+    <img class="img-fundo" src="img/fundo.png">
+
+    <div class="header">
+
+        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
+
+        <div class="menu-cardapio"> 
+            <%- include('../../partials/menu-superior-prof') %>
+
+        </div>
+
+    </div>
+
+    
+    <div class="atras-1">
+        <div class="linha-1">
+            <div class="carrossel-container">
+                <button class="prev">➜</button>
+                <div class="carrossel">
+                    <div class="carrossel-caixa">
+                        <div class="carrossel-item game-1">1</div>
+                        <div class="carrossel-item game-2">2</div>
+                        <div class="carrossel-item game-3">3</div>
+                        <div class="carrossel-item game-4">4</div>
+                    </div>
+                </div>
+                <button class="next">➜</button>
+            </div>
+
+
+        </div>
+        <div class="linha-2">
+            <div class="col-1">
+                <div class="caixa-pergunta" id="caixa-pergunta-1">
+                    <input type="text" class="pergunta" placeholder="pergunta">
+
+                    <div class="caixa-alternativas">
+                        <input type="text" class="alternativa" placeholder="alternativaA">
+                        <input type="text" class="alternativa" placeholder="alternativaB">
+                        <input type="text" class="alternativa" placeholder="alternativaC">
+                        <input type="text" class="alternativa" placeholder="alternativaD">
+                    </div>
+                    <button class="mais-perguntas">Adicionar mais perguntas</button>
+                </div>
+                
+            </div>
+            <div class="col-2">
+                <div class="turma">
+
+                    <div class="caixa-turma">
+                        <img src="./img/perfil imagem.png" alt="perfil" class="img-turma    ">
+
+                        <select class="opçoes-turma"> TURMAS
+                            <option value="" disabled selected>Turma</option>
+
+                            <option>3DS</option>
+                            <option>3DS</option>
+                            <option>3DS</option>
+
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="iniciar-jogo">
+                    <img src="./img/astronauta-sentado.png" alt="astroquest" class="astroquest">
+                    <button class="botao-iniciar-jogo">INICIAR JOGO</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        const carrosselCaixa = document.querySelector('.carrossel-caixa');
+        const items = document.querySelectorAll('.carrossel-item');
+        const totalItems = items.length;
+        const visibleItems = 3;
+        let index = Math.floor(totalItems / 2);
+
+        function updateCarousel() {
+            items.forEach((item, i) => {
+                item.classList.remove('inactive', 'active');
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.add('inactive');
+                }
+            });
+        }
+
+        function moveToIndex(newIndex) {
+            const itemWidth = carrosselCaixa.clientWidth / visibleItems;
+            const offset = (newIndex - Math.floor(visibleItems / 2)) * itemWidth;
+            carrosselCaixa.style.transform = `translateX(-${offset}px)`;
+            index = newIndex;
+        }
+
+        prevButton.addEventListener('click', () => {
+            const newIndex = (index > 0) ? index - 1 : totalItems - 1;
+            moveToIndex(newIndex);
+            updateCarousel();
+        });
+
+        nextButton.addEventListener('click', () => {
+            const newIndex = (index < totalItems - 1) ? index + 1 : 0;
+            moveToIndex(newIndex);
+            updateCarousel();
+        });
+
+        updateCarousel();
+        moveToIndex(index);
+
+    </script>
+</body>
+
+</html>

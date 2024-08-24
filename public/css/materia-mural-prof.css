@@ -1,0 +1,331 @@
+:root {
+    --fundo: #042661;
+    --caixas: rgba(255, 255, 255, 0.6);
+    --transparencia: rgba(217, 217, 217, 0.6);
+    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
+}
+input,
+button,a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    }
+
+body {
+    font-family: "Russo One", sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-size: 2rem;
+    /* 32px */
+}
+
+p {
+    font-size: 1rem;
+    /* 16px */
+}
+
+/* TELAS GRANDES */
+@media screen and (min-width: 416px) {
+    body {
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    font-family: "Russo One", sans-serif;
+    display: flex;
+
+    /*BACKGROUND*/
+    height: 100vh;
+    width: 100%;
+    margin: 1em auto;
+  
+    font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  
+     overflow: hidden;  
+    /*BACKGROUND*/
+    background-repeat: no-repeat;
+    background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+}
+
+a {
+    color: #ffffff;
+}
+
+
+.col-1 {
+    width: 95%;
+    height: 84%;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    display: flex;
+}
+
+.img-download {
+    width: 98%;
+    height: 20%;
+    border-radius: 30px;
+    margin-top: 1%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-self: auto;
+    background: ("./img/história.jfif");
+    background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    flex-direction: row;
+    align-content: center;
+}
+
+.h1{
+    width: 30%;
+    height: 50%;
+    border-radius: 30px;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ff000000;
+}
+
+.col-2{
+    width: 95%;
+    height: 72%;
+ 
+    margin-top: 1%;
+    display: flex ;
+    flex-wrap: wrap;
+    background: #ffd90000;
+    flex-direction: column;
+}
+
+
+.col-3{
+    
+        width: 100%;
+        height: 79%;
+    flex-wrap: wrap;
+    display: flex ;
+    margin-top: 1%;
+}
+
+.col-navegacao {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    background: #ff000000;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.navegacao {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.5);
+    align-items: center;
+    flex-direction: column;
+    align-content: space-evenly;
+    justify-content: center;
+}
+
+.linha {
+    width: 7%;
+    height: 1%;
+  }
+
+.col-4{
+    width: 100%;
+height: 100%;
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(191, 190, 244, 0.342);
+    overflow-y: scroll;
+    border-radius: 30px;
+}
+
+.titulo-postagem{
+    width: 90%;
+    height: 15%;
+    border-radius: 30px;
+    display: flex ;
+    flex-wrap: wrap;
+    background: #00b7ff00;
+}
+
+.postagem{
+    width: 90%;
+    height: 25%;
+    border-radius: 35px;
+    margin-top: 1%;
+    display: flex ;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+
+}
+
+.img-perfil{
+    width: 6%;
+    height: 70%;
+    border-radius: 100%;
+    margin: 1%;
+}
+}
+
+@media screen and (max-width: 415px) /* TELAS PEQUENAS */
+{
+    body {
+        width:100%;
+        height: 100vh;
+     
+        margin: 0% !important;
+        
+        background: var(--gradiente-body);
+    }
+    a {
+        color: #ffffff;
+    }
+
+  
+    .col-1 {
+        width: 100%;
+        height: 84%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .img-download {
+        width: 100%;
+        height: 15%;
+        border-radius: 30px;
+        margin-top: 1%;
+        display: flex ;
+        justify-content: center;
+        align-items: center;
+        background: ("./img/história.jfif");
+        background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    }
+    .paginas{
+        font-size:13px;
+    }
+    .col-2 {
+        width: 98%;
+        height: 85%;
+        margin-top: 1%;
+        display: flex;
+        flex-wrap: wrap;
+        background: #ffd90000;
+    }
+    
+    
+    .col-3{
+        
+            width: 100%;
+            height: 79%;
+        flex-wrap: wrap;
+        display: flex ;
+        margin-top: 1%;
+    }
+    
+    .col-navegacao {
+        width: 100%;
+        margin-top: 3%;
+        height: 10%;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-evenly;
+        flex-direction: row;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.5);
+        align-items: center;
+    }
+    
+    .navegacao {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        text-size-adjust: auto;
+        font-size: 60%;
+        flex-direction: row;
+    }
+    
+    .linha {
+        width: 7%;
+        height: 1%;
+      }
+    
+      .col-4{
+        width: 100%;
+        height: 95%;
+    
+        display: flex ;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        background: rgba(191, 190, 244, 0.342);
+        overflow-y: scroll;
+        border-radius: 30px;
+    }
+    
+    .titulo-postagem{
+        width: 90%;
+        height: 15%;
+        border-radius: 30px;
+        display: flex ;
+        flex-wrap: wrap;
+        background: #00b7ff00;
+    }
+    
+    .postagem{
+        width: 90%;
+        height: 15%;
+        border-radius: 35px;
+        margin-top: 1%;
+        display: flex ;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: center;
+        font-size: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+    
+    }
+    
+    .img-perfil{
+        width: 6%;
+        height: 70%;
+        border-radius: 100%;
+        margin: 5%;
+        display: flex;
+        align-items: center;
+        align-content: center;
+    }
+}

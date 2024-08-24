@@ -1,0 +1,246 @@
+input,
+button,
+a {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+.titulo-spacequest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+@media (min-width: 416px)/* TELA GRANDE */ {
+    
+    :root {
+        --fundo: ;
+        --caixas: #ffffffa3;
+        --trasparencia: #D9D9D9a2;
+    }
+
+    body {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: normal;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+        color: #ffffff;
+        display: flex;
+
+        /*BACKGROUND*/
+       
+        margin: 1em auto;
+
+
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+
+        overflow: hidden;
+        /*BACKGROUND*/
+        background-repeat: no-repeat;
+        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    }
+
+    .img-fundo {
+        height: 125%;
+        width: 120%;
+        position: absolute;
+        top: 0%;
+        opacity: 50%;
+    }
+
+    a {
+        color: #ffffff;
+    }
+
+    .col-1 {
+        width: 95%;
+        height: 90%;
+        border-radius: 30px;
+        margin-top: 1%;
+
+        flex-wrap: wrap;
+
+        filter: drop-shadow(#96747400 1rem 1rem 15px);
+
+        background-color: rgba(217, 217, 217, 0);
+        
+
+        display: flex;
+    }
+
+    .atras-menu {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .hearder {
+        width: 100%;
+        height: 20%;
+        display: flex;
+        align-self: start;
+        flex-wrap: wrap;
+        background-color: rgba(21, 255, 0, 0);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .linha {
+        display: block;
+        height: 5px;
+        width: 90%;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .img-planetas {
+        width: 8%;
+        height: 550%;
+    }
+
+    .nave {
+        width: 3%;
+        height: 25%;
+
+    }
+
+
+    .corpo {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgba(255, 0, 0, 0);
+    }
+
+    .atras {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgba(0, 217, 255, 0);
+    }
+
+    .col-2 {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(132, 0, 255, 0);
+    }
+
+
+    .col-3 {
+        width: 100%;
+        height: 50%;
+        align-items: center;
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        background-color: rgba(4, 0, 255, 0);
+    }
+
+    .planetas-bimestrais {
+        width: 80%;
+        height: 10%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 1%;
+        background-color: #005eff00;
+
+    }
+
+    .noticias {
+        width: 40%;
+        height: 100%;
+        border-radius: 20px;
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .pendencias {
+        width: 40%;
+        height: 100%;
+        border-radius: 20px;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+
+    .minigame {
+        width: 90%;
+        height: 50%;
+        border-radius: 20px;
+        margin-top: 3.3%;
+        display: flex;
+   align-items: center;
+        flex-direction: column;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .kart {
+        width: 10%;
+        height: 25%;
+        position: absolute;
+        top: 72%;
+        left: 70%;
+    }
+
+    .div-semana {
+        overflow-y: scroll;
+        width: 20%;
+        height: 100%;
+        border-radius: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /*SCROLL*/
+    .div-semana::-webkit-scrollbar {
+        background-color: #ffffff;
+        height: max-content;
+
+
+    }
+
+    .div-semana::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #042763;
+    }
+
+    .semana {
+        width: 80%;
+        height: 30%;
+        margin-top: 2%;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        background: rgba(217, 217, 217, 0.20);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+  
+}
+
+@media screen and (max-width: 415px) /* TELAS PEQUENAS */{}
