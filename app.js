@@ -24,4 +24,4 @@ app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-const baseUrl = "";
+const baseUrl = "https://spacequest-rosy.vercel.app";
