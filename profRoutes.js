@@ -1,78 +1,71 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./db'); // Importa a conexão com o banco de dados
+const db = require('./db'); // Conexão com o banco de dados
 
-router.get('/materia-atividades-prof', (req, res) => {
-    const sql = 'SELECT * FROM Atividade';
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).send('Erro ao buscar atividades');
-        }
-       
-        res.render('pages/prof/materia-atividades-prof', { secoes: results });
-    });
+
+router.get('/addatividade', (req, res) => {
+    res.render('pages/prof/addatividade', { message: null });
+});
+
+router.get('/addmateria', (req, res) => {
+    res.render('pages/prof/addmateria', { message: null });
+});
+
+router.get('/addpessoas', (req, res) => {
+    res.render('pages/prof/addpessoas', { message: null });
+});
+
+router.get('/addturma', (req, res) => {
+    res.render('pages/prof/addturma', { message: null });
+});
+
+router.get('/calendario-prof', (req, res) => {
+    res.render('pages/prof/calendario-prof', { message: null });
+});
+
+router.get('/desempenho-classe-prof', (req, res) => {
+    res.render('pages/prof/desempenho-classe-prof', { message: null });
+});
+router.get('/desempenho-geral-prof', (req, res) => {
+    res.render('pages/prof/desempenho-geral-prof', { message: null });
+});
+
+router.get('/home-prof', (req, res) => {
+    res.render('pages/prof/home-prof', { message: null });
 });
 
 
-/* ROTAS GERAIS*/
-router.get('/home-prof', function (req, res) {
-    res.render('pages/prof/home-prof')
-})
+router.get('/inicio-game-prof', (req, res) => {
+    res.render('pages/prof/inicio-game-prof', { message: null });
+});
 
-router.get('/inicio-game-prof', function (req, res) {
-    res.render('pages/prof/inicio-game-prof')
-})
+router.get('/materia-atividades-prof', (req, res) => {
+    res.render('pages/prof/materia-atividades-prof', { message: null });
+});
 
+router.get('/materia-downloads-prof', (req, res) => {
+    res.render('pages/prof/materia-downloads-prof', { message: null });
+});
 
-router.get('/perfil-prof', function (req, res) {
-    res.render('pages/prof/perfil-prof')
-})
+router.get('/materia-mural-prof', (req, res) => {
+    res.render('pages/prof/materia-mural-prof', { message: null });
+});
 
-router.get('/addpessoas', function (req, res) {
-    res.render('pages/prof/addpessoas')
-})
-
-router.get('/novamateria', function (req, res) {
-    res.render('pages/prof/novamateria')
-})
-
-router.get('/novaturma', function (req, res) {
-    res.render('pages/prof/novaturma')
-})
-
-router.get('/criar-atividade', function (req, res) {
-    res.render('pages/prof/criar-atividade')
-})
-
-router.get('/desempenho-geral-prof', function (req, res) {
-    res.render('pages/prof/desempenho-geral-prof')
-})
-router.get('/desempenho-classe-prof', function (req, res) {
-    res.render('pages/prof/desempenho-classe-prof')
-})
-
-router.get('/materia-mural-prof', function (req, res) {
-    res.render('pages/prof/materia-mural-prof')
-})
-
-router.get('/materia-downloads-prof', function (req, res) {
-    res.render('pages/prof/materia-downloads-prof')
-})
-router.get('/materia-atividades-prof', function (req, res) {
-    res.render('pages/prof/materia-atividades-prof')
-})
-
-router.get('/quiz', function (req, res) {
-    res.render('pages/prof/quiz')
-})
-
-router.get('/minigame-kart', function (req, res) {
-    res.render('pages/prof/minigame-kart')
-})
-
-router.get('/calendario-prof', function (req, res) {
-    res.render('pages/prof/calendario-prof')
-})
+router.get('/minigame-kart-prof', (req, res) => {
+    res.render('pages/prof/minigame-kart-prof', { message: null });
+});
 
 
-module.exports = router;
+router.get('/perfil-prof', (req, res) => {
+    res.render('pages/prof/perfil-prof', { message: null });
+});
+router.get('/professores', (req, res) => {
+    res.render('pages/prof/professores', { message: null });
+});
+router.get('/quiz', (req, res) => {
+    res.render('pages/prof/quiz', { message: null });
+});
+
+
+
+module.exports = router; // Exporta o router para uso em outros arquivos

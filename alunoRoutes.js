@@ -2,24 +2,32 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db'); // Importa a conexão com o banco de dados
 
-// Rota para listar todos os professores
-router.get('/aluno', (req, res) => {
-    const sql = 'SELECT * FROM Atividade';
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).send('Erro ao buscar professores');
-        }
-        res.render('pages/aluno/bancoaluno', { atividade: results });
-    });
-});
+// // Rota para listar todos os professores
+// router.get('/aluno', (req, res) => {
+//     const sql = 'SELECT * FROM Atividade';
+//     db.query(sql, (err, results) => {
+//         if (err) {
+//             return res.status(500).send('Erro ao buscar professores');
+//         }
+//         res.render('pages/aluno/bancoaluno', { atividade: results });
+//     });
+// });
 
+// Rota para exibir as seções com títulos, conteúdos e outros dados
+router.get('/materia-atividades', (req, res) => {
+   const sql = 'SELECT * FROM Atividade';
+   db.query(sql, (err, results) => {
+       if (err) {
+           return res.status(500).send('Erro ao buscar as seções');
+       }
+       res.render('pages/aluno/materia-atividades', { atividades: results });
+   });
+});
 
 /* ROTAS GERAIS*/
 router.get('/home-aluno',function(req,res){
     res.render('pages/aluno/home')
 });
-
-
 
 router.get('/perfil', (req, res) => {
    res.render('pages/aluno/perfil')
