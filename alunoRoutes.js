@@ -24,6 +24,9 @@ router.get('/materia-atividades', (req, res) => {
    });
 });
 
+
+
+
 /* ROTAS GERAIS*/
 router.get('/home-aluno',function(req,res){
     res.render('pages/aluno/home')
@@ -67,6 +70,10 @@ router.get('/desempenho-geral',function(req,res){
 
 router.get('/calendario',function(req,res){
    res.render('pages/aluno/calendario')
+})
+
+router.get('/minigame-kart',function(req,res){
+   res.render('pages/prof/minigame-kart')
 })
 
 module.exports = router;

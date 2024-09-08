@@ -24,18 +24,28 @@
     </div>
 
     <div class="col-1">
-        <div class="col-2">
+      
         <h2>cadastro materias</h2>
+        <form action="/addmateria" method="POST">
+            <!-- Campo para escolher a cor da matéria -->
+            <input type="color" id="corMateria" name="corMateria" class="cor-materia" required><br><br>
+    
+            <!-- Campo para o nome da matéria -->
+            <label for="nomeMateria">Nome da Matéria:</label>
+            <input type="text" id="nomeMateria" name="nomeMateria" class="cadastros" size="40" required><br>
+    
+            <!-- Campo para selecionar o professor -->
+            <label for="idProfessor">Professor:</label>
+            <select id="idProfessor" name="idProfessor" class="cadastros" required>
+                <% professores.forEach(function(professor) { %>
+                    <option value="<%= professor.ID_Professor %>"><%= professor.Nome %></option>
+                <% }); %>
+            </select><br><br>
+    
+            <!-- Botão de cadastro -->
+            <button type="submit" class="button">CADASTRAR</button>
+         </form>
 
-        
-        <input type="color" class="cor-materia" src="./img/xadrez-tabuleiro.png" style="border-radius: 10%;">
-        <h2>NomeMateria</h2>
-        
-        <input type="text"size="40" class="cadastros"  placeholder="nome" >
-        <input type="text"size="40" class="cadastros"  placeholder="professor" >
-
-        <button class="button">CADASTRAR</button>
-       </div>
     </div>
     
 </body>

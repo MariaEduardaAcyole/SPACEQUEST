@@ -49,7 +49,7 @@ router.post('/addpessoas', (req, res) => {
                                 console.error('Erro ao registrar o aluno:', err);
                                 return res.status(500).send('Erro ao registrar o aluno');
                             }
-                            res.redirect('/login'); // Redirecionar para a página de login após o registro
+                            res.redirect('/addpessoas'); // Redirecionar para a página de login após o registro
                         });
                     } else if (Tipo_Usuario === 'Professor') {
                         const insertProfessorSql = `INSERT INTO Professor (ID_Professor, ID_Usuario) VALUES (?, ?)`;
@@ -58,7 +58,7 @@ router.post('/addpessoas', (req, res) => {
                                 console.error('Erro ao registrar o professor:', err);
                                 return res.status(500).send('Erro ao registrar o professor');
                             }
-                            res.redirect('/login'); // Redirecionar para a página de login após o registro
+                            res.redirect('/addpessoas'); // Redirecionar para a página de login após o registro
                         });
 
                     }

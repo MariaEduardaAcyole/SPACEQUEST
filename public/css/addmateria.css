@@ -20,13 +20,20 @@ body {
   width: 100vw;
   font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
   overflow: hidden;
 }
 
+form{
+    width: 90%;
+    height: 90%;
+    border-radius: 30px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+    background: rgba(217, 217, 217, 0.20);
+}
 .header{
   width: 95%;
 
@@ -61,20 +68,10 @@ a {
     background: rgba(217, 217, 217, 0.20);
 }
 
-.col-2{
-    width: 98%;
-    height: 98%;
-    border-radius: 30px;
-    margin-top: 1%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background-color: #005eff00;
-
-}
 
 .cor-materia{
+    margin-top: 3%;
+
     width: 40%;
     height: 40%;
     display: flex;
@@ -83,7 +80,7 @@ a {
 }
 
 .cadastros{
-    width: 60%;
+    width: 80%;
     height: 20%;
     border-radius: 30px;
     margin-top: 3%;

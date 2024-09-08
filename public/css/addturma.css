@@ -1,7 +1,11 @@
+/* Regras gerais */
 :root {
-    --fundo: ;
-    --caixas: #ffffffa3;
-    --trasparencia: #D9D9D9a2;
+    --fundo: #042661;
+    --caixas: rgba(255, 255, 255, 0.6);
+    --transparencia: rgba(217, 217, 217, 0.6);
+    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
 
 input,
@@ -13,139 +17,11 @@ a {
     text-decoration: none;
 }
 
-.titulo-spacequest {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    align-content: normal;
-    background-repeat: no-repeat;
-    height: 100%;
     width: 100%;
-    color: #ffffff;
-    font-family: "font-family: " Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    display: flex;
-    /*BACKGROUND*/
     height: 100vh;
-    width: 100vw;
-    margin: 1em auto;
-
-    font-family: "font-family: " Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    overflow-y: hidden;
-
-    /*BACKGROUND*/
-    background-repeat: no-repeat;
+    font-family: "Russo One", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", "Segoe UI", Arial, sans-serif;
     background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
-}
-
-a {
-    color: #ffffff;
-}
-
-.header {
-    width: 95%;
-    height: 10vh;
-    border-radius: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.menu-cardapio {
-    height: 9vh;
-    margin: 0%;
-}
-
-.atras-1 {
-    width: 90%;
-    height:85%;
-    border-radius: 30px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    display: flex;
-    background: rgba(217, 217, 217, 0.20);
-}
-
-.linha-1 {
-    width: 100%;
-    height: 30%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-
-}
-
-.col-1-cor {
-    width: 10%;
-    height: 70%;
-}
-
-.col-2-inputs {
-    width: 70%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.linha-2 {
-    width: 100%;
-    height: 69%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-
-}
-
-.cor-materia {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    border: 0.5vh solid rgb(255, 255, 255);
-    border-radius: 100%;
-}
-
-.img-materia,
-.img-perfil {
-    width: 30%;
-    height: 40%;
-    display: flex;
-    border: 0.5vh solid rgb(255, 255, 255);
-    border-radius: 100%;
-    background-color: rgb(0, 247, 255);
-
-    width: 20%;
-    height: 50%;
-    display: flex;
-    border: 0.5vh solid rgb(255, 255, 255);
-    border-radius: 100%;
-}
-
-
-.inputs {
-    width: 100%;
-    height: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border: 1px black;
 }
 
 input {
@@ -154,70 +30,156 @@ input {
     background: rgba(255, 255, 255, 0.50);
 }
 
+/* Títulos e mensagens */
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Layouts e containers */
+.titulo-spacequest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.atras-1 {
+    width: 90%;
+    height: 86%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+form {
+    width: 95%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs-cadastro {
+    width: 67%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+label {
+    padding: 1%;
+}
+
+#nomeTurma {
+    height: 5vh;
+}
+
+#addTurmaForm {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topo {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: #ffffff66;
+    border-radius: 30px;
+    justify-content: space-evenly;
+}
+
+.tabelas-aluno-materias {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.col-1-aluno,
+.caixa-tabela-materia {
+
+    width: 49%;
+    flex-wrap: wrap;
+}
+
+.inputs {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid black;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    padding: 1%;
+    height: 99%;
+    overflow-y: auto;
+    border-radius: 30px;
+
+}
+
+th,
+tr {
+    border-radius: 30px !important;
+
+}
+
+td {
+    padding: 0 20px;
+    border: 0.5px solid rgba(0, 0, 0, 0.178);
+    /* 0 para o topo e fundo, 20px para os lados esquerdo e direito */
+
+}
+
+thead {
+    height: 10%;
+    background-color: #021F59;
+}
+
+tbody {
+    border: 5px solid var(--transparencia);
+    border-radius: 30px;
+}
+
+tr:hover {
+    color: white;
+}
+
+/* Estilo para linhas selecionadas */
+.selected {
+    background-color: #3aff54;
+    color: #000;
+    /* Garantir que o texto seja visível em contraste com a cor de fundo */
+}
+
+/* Classes adicionais */
+.clickable {
+    cursor: pointer;
+}
+
+.cor-materia {
+    height: 80%;
+    width: 15%;
+}
+
 .botao-cadastrar {
     display: flex;
     align-items: center;
-    align-content: center;
-    justify-content: center;
-
     color: #ffffff;
-    width: 40%;
-    height: 30%;
-    border-radius: 20px;
-    background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
-}
-
-.col-alunos {
-    width: 45%;
-    height: 100%;
-    overflow-y: scroll;
-    border-radius: 10%;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.col-materias {
-    width: 45%;
-    height: 100%;
-    overflow-y: auto;
-    border-radius: 10%;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.aluno-lista,
-.materia-lista {
-    width: 100%;
-    height: 35s%;
-    display: flex;
-    justify-content: space-around;
-    justify-items: center;
-    align-items: center;
-}
-
-.col-alunos::-webkit-scrollbar {
-    background-color: #ffffff;
-}
-
-.col-alunos::-webkit-scrollbar-thumb {
-    max-width: 1%;
-    max-height: 1%;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #042763;
-}
-
-.col-materias::-webkit-scrollbar {
-    background-color: #ffffff;
-}
-
-.col-materias::-webkit-scrollbar-thumb {
-    max-width: 1%;
-    max-height: 1%;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #042763;
-}
-
-.mais-materias,
-.mais-alunos {
-    width: 100%;
+    padding: 1%;
     border-radius: 20px;
     background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
 }

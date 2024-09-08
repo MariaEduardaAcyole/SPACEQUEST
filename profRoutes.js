@@ -1,71 +1,65 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./db'); // Conexão com o banco de dados
+const db = require('./db'); 
+const { getAlunosEMaterias, addTurma } = require('./public/js/addTurma');
+const addMateria = require('./public/js/addMateria');
 
+// Função utilitária para lidar com erros
+function funcaoErroDb(err, res, errorMsg = 'Erro ao executar a consulta') {
+    console.error(errorMsg, err);
+    return res.status(500).send(errorMsg);
+}
 
-router.get('/addatividade', (req, res) => {
-    res.render('pages/prof/addatividade', { message: null });
-});
-
-router.get('/addmateria', (req, res) => {
-    res.render('pages/prof/addmateria', { message: null });
-});
-
+// Rota para exibir a página de cadastro de pessoas
 router.get('/addpessoas', (req, res) => {
-    res.render('pages/prof/addpessoas', { message: null });
+    const sql = 'SELECT * FROM Usuario';
+    db.query(sql, (err, results) => {
+        if (err) return funcaoErroDb(err, res, 'Erro ao buscar os usuários');
+        res.render('pages/prof/addpessoas', { usuarios: results });
+    });
 });
 
-router.get('/addturma', (req, res) => {
-    res.render('pages/prof/addturma', { message: null });
+// Rota GET para exibir a página de cadastro de turmas (usando lógica de addTurma.js)
+router.get('/addTurma', (req, res) => {
+    getAlunosEMaterias((err, data) => {
+        if (err) return funcaoErroDb(err, res, 'Erro ao buscar dados para a turma');
+
+        const { alunos, materias } = data;
+        res.render('pages/prof/addTurma', { alunos, materias });
+    });
 });
 
-router.get('/calendario-prof', (req, res) => {
-    res.render('pages/prof/calendario-prof', { message: null });
+// Rota POST para processar o cadastro de turmas (usando lógica de addTurma.js)
+router.post('/addTurma', (req, res) => {
+    addTurma(req, res);
 });
 
-router.get('/desempenho-classe-prof', (req, res) => {
-    res.render('pages/prof/desempenho-classe-prof', { message: null });
-});
-router.get('/desempenho-geral-prof', (req, res) => {
-    res.render('pages/prof/desempenho-geral-prof', { message: null });
-});
-
-router.get('/home-prof', (req, res) => {
-    res.render('pages/prof/home-prof', { message: null });
+// Rota para exibir a página de matérias (usando lógica de addMateria.js)
+router.get('/addmateria', (req, res) => {
+    addMateria((err, materias) => {
+        if (err) return funcaoErroDb(err, res, 'Erro ao buscar matérias');
+        res.render('pages/prof/addmateria', { materias });
+    });
 });
 
+// Função para renderizar páginas simples
+function renderSimplePage(page) {
+    return (req, res) => res.render(`pages/prof/${page}`, { message: null });
+}
 
-router.get('/inicio-game-prof', (req, res) => {
-    res.render('pages/prof/inicio-game-prof', { message: null });
-});
+// Rotas para páginas simples
+router.get('/calendario-prof', renderSimplePage('calendario-prof'));
+router.get('/addatividade', renderSimplePage('addatividade'));
+router.get('/desempenho-classe-prof', renderSimplePage('desempenho-classe-prof'));
+router.get('/desempenho-geral-prof', renderSimplePage('desempenho-geral-prof'));
+router.get('/home-prof', renderSimplePage('home-prof'));
+router.get('/inicio-game-prof', renderSimplePage('inicio-game-prof'));
+router.get('/materia-atividades-prof', renderSimplePage('materia-atividades-prof'));
+router.get('/materia-downloads-prof', renderSimplePage('materia-downloads-prof'));
+router.get('/materia-mural-prof', renderSimplePage('materia-mural-prof'));
+router.get('/minigame-kart-prof', renderSimplePage('minigame-kart-prof'));
+router.get('/perfil-prof', renderSimplePage('perfil-prof'));
+router.get('/professores', renderSimplePage('professores'));
+router.get('/quiz', renderSimplePage('quiz'));
 
-router.get('/materia-atividades-prof', (req, res) => {
-    res.render('pages/prof/materia-atividades-prof', { message: null });
-});
-
-router.get('/materia-downloads-prof', (req, res) => {
-    res.render('pages/prof/materia-downloads-prof', { message: null });
-});
-
-router.get('/materia-mural-prof', (req, res) => {
-    res.render('pages/prof/materia-mural-prof', { message: null });
-});
-
-router.get('/minigame-kart-prof', (req, res) => {
-    res.render('pages/prof/minigame-kart-prof', { message: null });
-});
-
-
-router.get('/perfil-prof', (req, res) => {
-    res.render('pages/prof/perfil-prof', { message: null });
-});
-router.get('/professores', (req, res) => {
-    res.render('pages/prof/professores', { message: null });
-});
-router.get('/quiz', (req, res) => {
-    res.render('pages/prof/quiz', { message: null });
-});
-
-
-
-module.exports = router; // Exporta o router para uso em outros arquivos
+module.exports = router; // Expor

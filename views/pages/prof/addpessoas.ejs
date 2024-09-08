@@ -14,111 +14,69 @@
     <img class="img-fundo" src="img/fundo.png">
 
     <div class="header">
-
-
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
+        <h3 class="titulo-spacequest">
+            <a href="./home-prof">SPACE<br>QUEST</a>
+        </h3>
 
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior-prof') %>
-
         </div>
-
     </div>
 
     <main class="caixa-atras-1">
         <section class="caixa-atras-2">
             <div class="linha-1">
                 <form action="/addpessoas" method="POST"
-                    style=" display: flex; justify-content: space-evenly; flex-wrap: wrap; height: 100%;">
-
-                    <input type="text" id="ID_Usuario" name="ID_Usuario" class="inputs-para-cadastros" placeholder="RM"
-                        required>
-
-                    <input type="password" id="senha" name="senha" class="inputs-para-cadastros" placeholder="Senha"
-                        required>
-
+                    style="display: flex; justify-content: space-evenly; flex-wrap: wrap; height: 100%;">
+                    <input type="text" id="ID_Usuario" name="ID_Usuario" class="inputs-para-cadastros" placeholder="RM" required>
+                    <input type="password" id="senha" name="senha" class="inputs-para-cadastros" placeholder="Senha" required>
                     <input type="text" class="inputs-para-cadastros" id="nome" name="nome" placeholder="Nome" required>
 
                     <select id="Tipo_Usuario" class="inputs-para-cadastros" name="Tipo_Usuario" required>
                         <option value="Aluno">Aluno</option>
                         <option value="Professor">Professor</option>
                     </select>
-            </div>
 
-            <div class="linha-2">
-                <button class="button-cadastrar" type="submit">
-                    <h1>Registrar</h1>
-                </button>
-
-            </div>
-            </form>
-
-            <% if (message) { %>
-                <p style="color: red;">
-                    <%= message %>
-                </p>
-            <% } %>
-
-                    <div class="linha-3">
-                        <table class="TABELA">
-      
-                            <thead class="cabeçalho-tabela">
-                                <tr>
-                                    <th id="rm">RM</th>
-                                    <th id="nome">Nome</th>
-                                    <th id="tipo">Tipo</th>
-                                    <th id="serie-curso">Série/Curso</th>
-                                </tr>
-                            </thead>
-                            <tbody class="dados">
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-
-
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-
-
-                                <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
-                                    <td>Data 4</td>
-                                </tr>
-                                <!-- Adicione mais linhas aqui conforme necessário -->
-                            </tbody>
-                        </table>
+                    <div class="linha-2">
+                        <button class="button-cadastrar" type="submit">
+                            <h1>Registrar</h1>
+                        </button>
                     </div>
+                </form>
+            </div>
+
+            <div class="linha-3">
+                <table class="TABELA">
+                    <thead class="cabeçalho-tabela">
+                        <tr>
+                            <th id="rm">RM</th>
+                            <th id="nome">Nome</th>
+                            <th id="tipo">Tipo</th>
+                            <th id="delete">X
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="dados">
+                        <% if (typeof usuarios !== 'undefined' && usuarios.length > 0) { %>
+                            <% usuarios.forEach(usuario => { %>
+                                <tr>
+                                    <td><%= usuario.ID_Usuario %></td>
+                                    <td><%= usuario.Nome %></td>
+                                    <td><%= usuario.Tipo_Usuario %></td>
+                                    <td>X</td>
+                                </tr>
+                     
+                            <% }); %>
+                        <% } else { %>
+
+                          
+                            <tr>
+                                <td colspan="4">Nenhum usuário encontrado</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 </body>
