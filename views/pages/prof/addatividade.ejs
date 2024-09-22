@@ -56,10 +56,12 @@
 
                 <div class="col-4">
 
+                <form action="/addAtividade" method="POST" enctype="multipart/form-data">
                     <div class="col-1-atv">
-                        <input placeholder="Titulo" type="text" class="titulo-atv" id="titulo-atv">
 
-                        <input placeholder="Descrição" type="text" class="descriçao-atv" id="descriçao-atv">
+                    <input placeholder="Titulo" type="text" id="titulo" name="titulo" required class="titulo-atv">
+
+                        <input placeholder="Descrição" id="descricao" name="descricao" type="text" class="descriçao-atv" required>
 
                         <div class="linha-1">
                             <div class="anexo">
@@ -78,21 +80,31 @@
                                 <img class="img-anexo" src="img/formularios-icon.png">
                             </div>
                         </div>
-                        <input placeholder="arquivo" type="text" class="arquivo-anexado">
-                    </div>
-
+                        <input type="file" class="arquivo-anexado" id="arquivo" name="arquivo"
+                            accept=".pdf, .docx, .pptx" required>
+</div>
                     <div class="col-2-atv">
 
-                        <input type="date" placeholder="Data Vencimento" class="data-vencimento" id="">
-                        <input type="text" placeholder="Pontos" class="pontos">
+                        <input type="date" placeholder="Data Vencimento" class="data-vencimento" id="data_vencimento"
+                            name="data_vencimento">
 
-                        <button value="POSTAR" class="postar">POSTAR</button>
+                        <input type="number" placeholder="Pontos" id="pontos" name="pontos" class="pontos" required>
+
+                        <button type="submit" value="POSTAR" class="postar">POSTAR</button>
                     </div>
 
+                </form>
 
                 </div>
 
             </div>
+
+        </div>
+    </div>
+    <!-- Mensagem de sucesso, se existir -->
+<!-- <% if (successMessage) { %>
+    <p style="color: green;"><%= successMessage %></p>
+<% } %> -->
 </body>
 
 </html>

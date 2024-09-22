@@ -7,16 +7,24 @@
     --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
 
-input,
-button,
+input {
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+button {
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
 a {
     box-shadow: none;
     border: none;
     outline: none;
     text-decoration: none;
 }
-
-
 
 body {
     /* font-family: "Russo One", serif; */
@@ -35,8 +43,9 @@ p {
     /* 16px */
 }
 
-/* TELAS GRANDES */
-@media screen and (min-width: 416px) {
+@media screen and (min-width: 416px)
+/*GRANDES*/
+    {
     body {
         height: 100vh;
         width: 100%;
@@ -52,8 +61,6 @@ p {
         color: #ffffff;
     }
 
-
-
     .atras {
         width: 95%;
         height: 80%;
@@ -64,13 +71,8 @@ p {
         justify-content: space-between;
     }
 
-    .col-1,
-    .col-2 {
-        border-radius: 30px;
-    }
-
     .col-1 {
-        width: 40%;
+        width: 50%;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -79,84 +81,49 @@ p {
     }
 
     .col-2 {
+        width: 50%;
         display: flex;
         justify-content: end;
     }
 
-    .instruçoes,
-    .linha-1,
+    .instrucoes {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: end;
+        flex-wrap: wrap;
+    }
+
+    .linha-1 {
+        display: flex;
+
+        width: 100%;
+        height: 25%;
+        margin-top: 1%;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .linha-2 {}
+
     .anexado {
         display: flex;
     }
 
-    .instruçoes {
-        height: 50%;
-        flex-wrap: wrap;
-    }
-
-    .titulo,
-    .vencimento-atv,
-    .descrição {
-        width: 100%;
-    }
-
     .titulo {
+        width: 100%;
         height: 10%;
     }
 
     .vencimento-atv {
-        height: 5%;
+        width: 100%;
+        height: 10%;
     }
 
     .descrição {
-        height: 20%;
-    }
-
-    .caixa-arquivos,
-    .anexado {
-        border-radius: 30px;
-        display: flex;
-        background-color: var(--caixas);
-    }
-
-
-    .caixa-arquivos {
-        width: 90%;
-        height: 40%;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .linha-1 {
         width: 100%;
-        height: 25%;
-        margin-top: 1%;
-        background-color: transparent;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .anexo,
-    .img-anexo,
-    .img-anexado {
-        display: flex;
-    }
-
-    .anexo {
-        width: 12%;
-        height: 100%;
-        border-radius: 100px;
-        background-color: #ffffff;
-        margin-left: 1%;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .img-anexo {
-        width: 70%;
-        height: 70%;
-        border-radius: 5%;
+        height: 20%;
     }
 
     .anexado {
@@ -169,6 +136,36 @@ p {
         border: solid 1px;
     }
 
+    .caixa-arquivos {
+        width: 100%;
+        height: 40%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 30px;
+        display: flex;
+        background-color: var(--caixas);
+    }
+
+
+
+    .anexo {
+        width: 12%;
+        height: 100%;
+        border-radius: 100px;
+        background-color: #ffffff;
+        margin-left: 1%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-anexo {
+        width: 70%;
+        height: 70%;
+        border-radius: 5%;
+    }
+
     .img-anexado {
         width: 7%;
         height: 70%;
@@ -177,9 +174,10 @@ p {
     }
 
     .col-2 {
-        width: 58%;
-        justify-content: right;
-        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        border-radius: 10%;
     }
 
     .entregar-button {
@@ -210,17 +208,15 @@ p {
         align-items: center;
         background: var(--caixas);
     }
-
-
 }
 
-/* TELAS PEQUENAS */
-@media screen and (max-width: 415px) {
+@media screen and (max-width: 415px)
+/*PQ*/
+    {
     body {
         width: 100%;
         height: 100vh;
         margin: 1em;
-
         display: flex;
         overflow: auto;
         flex-direction: column;
@@ -250,7 +246,6 @@ p {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-
     }
 
     .col-1 {
@@ -269,47 +264,41 @@ p {
         align-items: center;
     }
 
-    .instruçoes,
-    .linha-1,
+    .linha-1 {
+        display: flex;
+    }
+
     .anexado {
         display: flex;
     }
 
     .instruçoes {
+        width: 50%;
         height: 50%;
         display: flex;
         flex-wrap: wrap;
-        flex-direction: column;
         justify-content: space-around;
         margin-bottom: 5%;
-    }
-
-    .titulo,
-    .vencimento-atv,
-    .descrição {
-        width: 100%;
-     margin-bottom: 4%;
-        padding: 3%;
+        background-color: red;
     }
 
     .titulo {
+        width: 100%;
         height: 10%;
+        margin-bottom: 4%;
+        padding: 3%;
     }
 
     .vencimento-atv {
+        width: 100%;
         height: 7%;
+        margin-bottom: 4%;
+        padding: 3%;
     }
 
     .descrição {
+        width: 100%;
         height: 30%;
-
-    }
-
-    .caixa-arquivos,
-    .anexado {
-        border-radius: 30px;
-        display: flex;
-        background-color: var(--caixas);
     }
 
     .caixa-arquivos {
@@ -318,6 +307,19 @@ p {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        border-radius: 30px;
+        display: flex;
+        background-color: var(--caixas);
+    }
+
+    .anexado {
+        width: 95%;
+        height: 20%;
+        margin-top: 3%;
+        border-radius: 30px;
+        background: var(--transparencia);
+        color: white;
+        border: solid 1px;
     }
 
     .linha-1 {
@@ -327,12 +329,6 @@ p {
         background-color: transparent;
         align-items: center;
         justify-content: center;
-    }
-
-    .anexo,
-    .img-anexo,
-    .img-anexado {
-        display: flex;
     }
 
     .anexo {
@@ -348,17 +344,9 @@ p {
     .img-anexo {
         width: 70%;
         height: 70%;
+        display: flex;
+        align-items: center;
         border-radius: 5%;
-    }
-
-    .anexado {
-        width: 95%;
-        height: 20%;
-        margin-top: 3%;
-        border-radius: 30px;
-        background: var(--transparencia);
-        color: white;
-        border: solid 1px;
     }
 
     .img-anexado {
@@ -400,6 +388,5 @@ p {
         flex-direction: column;
         align-items: center;
         background: var(--caixas);
-
     }
 }

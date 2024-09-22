@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const db = require('./db'); // Conexão com o banco de dados
 
-
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 

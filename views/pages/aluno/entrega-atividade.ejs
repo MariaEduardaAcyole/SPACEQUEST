@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- LINKS -->
+    <meta http-equiv="refresh" content="30" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATIVIDADE</title>
+    <link rel="stylesheet" type="text/css" href="/css/atividade.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+
+<body>
+    <div class="header">
+
+        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
+
+        <div class="menu-cardapio"> 
+            <%- include('../../partials/menu-superior') %>
+        </div>
+
+    </div>
+
+    <div class="atras">
+        <div class="col-1">
+            <div class="instrucoes">
+                <h1 class="titulo">
+                    <%= atividade.Titulo %>
+                </h1>
+                <p class="vencimento-atv">
+                    <%= new Date(atividade.Data_Vencimento).toLocaleDateString() %>
+                </p>
+                <p class="descricao">
+                    <%= atividade.Descricao %>
+                </p>
+            </div>
+
+            <div class="caixa-arquivos">
+                <div class="linha-1">
+                    <div class="anexo">
+                        <img class="img-anexo" src="/img/anexo-icon.png" alt="Anexo">
+                    </div>
+                    <div class="anexo">
+                        <img class="img-anexo" src="/img/planilhas-icon.png" alt="Planilhas">
+                    </div>
+                    <div class="anexo">
+                        <img class="img-anexo" src="/img/docs-icon.png" alt="Documentos">
+                    </div>
+                    <div class="anexo">
+                        <img class="img-anexo" src="/img/slides-icon.png" alt="Slides">
+                    </div>
+                    <div class="anexo">
+                        <img class="img-anexo" src="/img/formularios-icon.png" alt="Formulários">
+                    </div>
+                </div>
+
+                <!-- Formulário para envio da entrega -->
+                <div class="linha-2">
+                    <form action="/entrega-atividade/<%= atividade.ID_Atividade %>" method="POST"
+                        enctype="multipart/form-data">
+
+                        <div class="anexado">
+                            <img class="img-anexado" src="/img/anexo-icon.png" alt="Upload">
+                            <input type="file" name="file" required>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="caixa-entrega">
+            <h3>ENTREGUE DIA: <%= new Date().toLocaleDateString() %>
+            </h3>
+            <img class="astrosentado" src="/img/astrosentado.png" alt="Astronauta Sentado">
+
+            <button type="submit" class="entregar-button">ENTREGAR</button>
+        </div>
+        </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

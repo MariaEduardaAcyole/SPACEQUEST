@@ -2,7 +2,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db'); 
 const { getAlunosEMaterias, addTurma } = require('./public/js/addTurma');
-const addMateria = require('./public/js/addMateria');
+const { upload, addAtividade } = require('./public/js/addAtividade'); // Ajuste o caminho correto
+const addMateriasRouter = require('./public/js/addMaterias'); // Certifique-se de importar o router de addMateria.js
+
+// Rota para exibir o formulário de criar atividade
+router.get('/addAtividade', (req, res) => {
+    res.render('pages/prof/addAtividade', { successMessage: null });
+});
+
+// Rota para processar a criação de atividade
+router.post('/addAtividade', upload.single('arquivo'), addAtividade);
 
 // Função utilitária para lidar com erros
 function funcaoErroDb(err, res, errorMsg = 'Erro ao executar a consulta') {
@@ -19,28 +28,22 @@ router.get('/addpessoas', (req, res) => {
     });
 });
 
-// Rota GET para exibir a página de cadastro de turmas (usando lógica de addTurma.js)
+// Rota GET para exibir a página de cadastro de turmas
 router.get('/addTurma', (req, res) => {
     getAlunosEMaterias((err, data) => {
         if (err) return funcaoErroDb(err, res, 'Erro ao buscar dados para a turma');
-
         const { alunos, materias } = data;
         res.render('pages/prof/addTurma', { alunos, materias });
     });
 });
 
-// Rota POST para processar o cadastro de turmas (usando lógica de addTurma.js)
+// Rota POST para processar o cadastro de turmas
 router.post('/addTurma', (req, res) => {
     addTurma(req, res);
 });
 
-// Rota para exibir a página de matérias (usando lógica de addMateria.js)
-router.get('/addmateria', (req, res) => {
-    addMateria((err, materias) => {
-        if (err) return funcaoErroDb(err, res, 'Erro ao buscar matérias');
-        res.render('pages/prof/addmateria', { materias });
-    });
-});
+// Rota GET para exibir a página de cadastro de matérias
+router.use('/addmateria', addMateriasRouter);
 
 // Função para renderizar páginas simples
 function renderSimplePage(page) {
@@ -62,4 +65,4 @@ router.get('/perfil-prof', renderSimplePage('perfil-prof'));
 router.get('/professores', renderSimplePage('professores'));
 router.get('/quiz', renderSimplePage('quiz'));
 
-module.exports = router; // Expor
+module.exports = router;

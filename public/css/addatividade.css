@@ -167,12 +167,12 @@ a {
         border-radius: 30px;
         display: flex;
         flex-wrap: wrap;
-        flex-direction: row;
         background-color: var(--trasparencia);
-        overflow-y: hidden;
 
     }
-
+form{
+    display: flex;
+}
     .col-1-atv {
         width: 59%;
         height: 100%;
@@ -180,7 +180,7 @@ a {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-evenly;
         padding: 1%;
     }
 
