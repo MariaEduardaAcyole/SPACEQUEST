@@ -16,14 +16,14 @@
 
         <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
 
-        <div class="menu-cardapio"> 
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior-prof') %>
 
         </div>
 
     </div>
 
-    
+
     <div class="atras-1">
         <div class="linha-1">
             <div class="carrossel-container">
@@ -41,20 +41,20 @@
 
 
         </div>
-        <div class="linha-2">
+        <form action="" class="linha-2">
             <div class="col-1">
-                <div class="caixa-pergunta" id="caixa-pergunta-1">
-                    <input type="text" class="pergunta" placeholder="pergunta">
+                    <div class="caixa-pergunta" id="caixa-pergunta-1">
+                        <input type="text" class="pergunta" placeholder="pergunta">
 
-                    <div class="caixa-alternativas">
-                        <input type="text" class="alternativa" placeholder="alternativaA">
-                        <input type="text" class="alternativa" placeholder="alternativaB">
-                        <input type="text" class="alternativa" placeholder="alternativaC">
-                        <input type="text" class="alternativa" placeholder="alternativaD">
+                        <div class="caixa-alternativas">
+                            <input type="text" class="alternativa" placeholder="alternativaA">
+                            <input type="text" class="alternativa" placeholder="alternativaB">
+                            <input type="text" class="alternativa" placeholder="alternativaC">
+                            <input type="text" class="alternativa" placeholder="alternativaD">
+                        </div>
+                        <button class="mais-perguntas">Adicionar mais perguntas</button>
                     </div>
-                    <button class="mais-perguntas">Adicionar mais perguntas</button>
-                </div>
-                
+
             </div>
             <div class="col-2">
                 <div class="turma">
@@ -78,10 +78,9 @@
                     <img src="./img/astronauta-sentado.png" alt="astroquest" class="astroquest">
                     <button class="botao-iniciar-jogo">INICIAR JOGO</button>
                 </div>
-
             </div>
-
-        </div>
+            
+    </form>
     </div>
 
     <script>

@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db'); // Importa a conexão com o banco de dados
 
-// Importa o controlador de entrega de atividades
-const entregaController = require('./public/js/entrega-atividade');
+
 
 // Rota para listar todas as atividades
 router.get('/materia-atividades', (req, res) => {
@@ -16,6 +15,8 @@ router.get('/materia-atividades', (req, res) => {
    });
 });
 
+// Importa o controlador de entrega de atividades
+const entregaController = require('./public/js/entrega-atividade');
 // Rota para submissão de entrega
 router.post('/entrega-atividade/:id', entregaController.upload.single('file'), entregaController.atvEntrega);
 

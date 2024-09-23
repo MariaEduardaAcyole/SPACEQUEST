@@ -44,12 +44,15 @@
                         </div>
                     </div>
 
-                    <a href="./inicio-game-prof" class="minigame">
-                        <div class="minigame">
-                            <h3 class="titulo-spacequest">SPACE<br>‎ ‎ QUEST</h3>
-                            <img class="kart" src="img/astrokart.png">
-                        </div>
+                    <a href="./minigame-kart" class="minigame">
+
+
+                        <h3 class="titulo-spacequest">SPACE<br>‎ ‎ QUEST</h3>
+
+                        <img class="kart" src="img/astrokart.png">
+
                     </a>
+
                 </div>
 
                 <div class="div-semana">
@@ -91,33 +94,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const openPopupBtns = document.querySelectorAll('.open-popup');
-    const closePopupBtns = document.querySelectorAll('.close-popup');
-    const popups = document.querySelectorAll('.popup');
+            const openPopupBtns = document.querySelectorAll('.open-popup');
+            const closePopupBtns = document.querySelectorAll('.close-popup');
+            const popups = document.querySelectorAll('.popup');
 
-    openPopupBtns.forEach((btn, index) => {
-        btn.addEventListener('click', (event) => {
-            event.stopPropagation();
-            popups[index].classList.remove('popup-hidden');
-        });
-    });
+            openPopupBtns.forEach((btn, index) => {
+                btn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    popups[index].classList.remove('popup-hidden');
+                });
+            });
 
-    closePopupBtns.forEach((btn, index) => {
-        btn.addEventListener('click', (event) => {
-            event.stopPropagation();
-            popups[index].classList.add('popup-hidden');
-        });
-    });
+            closePopupBtns.forEach((btn, index) => {
+                btn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    popups[index].classList.add('popup-hidden');
+                });
+            });
 
-    // Fechar o pop-up clicando fora dele
-    window.addEventListener('click', (event) => {
-        popups.forEach(popup => {
-            if (!popup.contains(event.target) && !popup.classList.contains('popup-hidden')) {
-                popup.classList.add('popup-hidden');
-            }
+            // Fechar o pop-up clicando fora dele
+            window.addEventListener('click', (event) => {
+                popups.forEach(popup => {
+                    if (!popup.contains(event.target) && !popup.classList.contains('popup-hidden')) {
+                        popup.classList.add('popup-hidden');
+                    }
+                });
+            });
         });
-    });
-});
 
     </script>
 </body>

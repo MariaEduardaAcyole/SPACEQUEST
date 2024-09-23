@@ -56,23 +56,23 @@
 
 
                 <div class="col-4">
-                    <% atividades.forEach(atividade => { %>
+
+                    <% atividades.forEach(atividade=> { %>
 
                         <div class="postagem">
-
                             <h3>
-                                <%= atividades.Titulo %>
-                                    <%= atividades.Descricao %>
+                                <a href="/entrega-atividade<%= atividade.id %>">
+                                    <%= atividade.Titulo %>
+                                        <%= atividade.ID_Atividade %>
+                                </a>
                             </h3>
                         </div>
                         <% }); %>
                 </div>
-                   
-
-                </div>
             </div>
-
         </div>
+
+    </div>
 
 
     </div>
