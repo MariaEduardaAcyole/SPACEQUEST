@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/materia-atividades-prof.css">
+    <link rel="stylesheet" type="text/css" href="/css/materia-atividades-prof.css">
 </head>
 
 <body>
     <img class="img-fundo" src="img/fundo.png">
 
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
+        <h3 class="titulo-spacequest"><a href="/home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
 
 
         <div class="menu-cardapio">
@@ -54,22 +54,19 @@
                     <h2>ATIVIDADE</h2>
                 </div>
 
-
                 <div class="col-4">
-
-                    <% atividades.forEach(atividade=> { %>
-
+                    <% atividades.forEach(atividade => { %>
                         <div class="postagem">
                             <h3>
-                                <a href="/entrega-atividade<%= atividade.id %>">
+                                <a href="/entrega-atividade/<%= atividade.ID_Atividade %>">
                                     <%= atividade.Titulo %>
-                                        <%= atividade.ID_Atividade %>
                                 </a>
                             </h3>
                         </div>
-                        <% }); %>
+                    <% }); %>
                 </div>
-            </div>
+                
+                
         </div>
 
     </div>

@@ -50,6 +50,23 @@ function renderSimplePage(page) {
     return (req, res) => res.render(`pages/prof/${page}`, { message: null });
 }
 
+// Rota para exibir atividades de uma matéria com base no ID da matéria
+router.get('/materia-atividades-prof/:materiaId', (req, res) => {
+    const materiaId = req.params.materiaId;  // Captura o ID da matéria da URL
+    console.log('Materia ID:', materiaId);
+
+    db.query('SELECT * FROM atividade WHERE ID_Materia = ?', [materiaId], (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar atividades:', err);
+            res.status(500).send('Erro ao buscar atividades.');
+        } else {
+            res.render('pages/prof/materia-atividades-prof', { atividades: results });
+        }
+    });
+});
+
+
+
 // Rotas para páginas simples
 router.get('/calendario-prof', renderSimplePage('calendario-prof'));
 router.get('/addatividade', renderSimplePage('addatividade'));
