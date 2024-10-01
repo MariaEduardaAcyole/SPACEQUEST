@@ -73,7 +73,9 @@ a,* {
   height: 100%;
   width: 110%;
   position: relative;
-  top: 5%;
+  padding: 0%;
+  margin-left: 0%;
+  padding: 0%;
 }
 
 

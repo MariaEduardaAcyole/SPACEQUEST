@@ -43,6 +43,11 @@ router.get('/home-aluno', (req, res) => {
     res.render('pages/aluno/home');
 });
 
+router.get('/pendencias', (req, res) => {
+   res.render('pages/aluno/pendencias');
+});
+
+
 router.get('/perfil', (req, res) => {
    res.render('pages/aluno/perfil');
 });

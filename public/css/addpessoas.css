@@ -176,7 +176,6 @@ tr:hover {
 
 }
 
-
 .dados{
     overflow-y: scroll;
 }
@@ -214,7 +213,11 @@ tr:hover {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 415px)/*TELA PEQUENA*/ {
+    body{
+    overflow-x: hidden;
+    width: 100%;
+   }
     h1 {
         font-size: 1.2rem;
     }

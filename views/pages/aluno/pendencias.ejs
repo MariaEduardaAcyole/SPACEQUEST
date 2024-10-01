@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pendencias</title>
+</head>
+<body>
+    
+    <div class="col-4">
+
+        <% atividades.forEach(atividade=> { %>
+
+            <div class="postagem">
+
+                <h3>
+
+        <a href="/entrega-atividade<%= atividade.id %>">
+            <%= atividade.Titulo %>
+            <%= atividade.ID_Atividade %>
+
+        </a>
+
+                </h3>
+
+            </div>
+            <% }); %>
+
+    </div>
+
+</body>
+</html>

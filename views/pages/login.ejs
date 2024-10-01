@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta http-equiv="refresh" content="90" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-    <link rel="stylesheet" type="textcss" href="css/main.css">
-    <link rel="stylesheet" type="textcss" href=".css/login.css">
-
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
     </style>
-
-    <script>
-
-    </script>
 </head>
 
 <body>
 
     <div class="caixa">
-
-        <img class="img-perfil" src="./img/perfil imagem.png" alt="">
+        <img class="img-perfil" src="./img/perfil imagem.png" alt="Imagem de perfil">
 
         <h1 class="texto-login">Login</h1>
 
         <form class="inputs" action="/login" method="POST">
-            <input type="text" class="rm"  id="ID_Usuario" placeholder="RM" name="ID_Usuario" required>
+            <div class="espaço-entradas">
+                <label for="ID_Usuario">RM:</label>
+                <input type="text" class="rm" id="ID_Usuario" placeholder="Digite seu rm" name="ID_Usuario" required>
 
-            <input type="password" id="senha" name="senha" placeholder="Senha" class="senha" required />
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" class="senha" required />
+            </div>
 
             <button type="submit" class="btnEntrar">ENTRAR</button>
         </form>
-
-
     </div>
+
 </body>
-
-
-
-
 </html>

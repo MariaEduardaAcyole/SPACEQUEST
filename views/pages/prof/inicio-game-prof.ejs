@@ -41,46 +41,50 @@
 
 
         </div>
-        <form action="" class="linha-2">
+        <form action="/criar-minigame" method="POST" class="linha-2">
+
+            <label for="">Nome do minigame</label>
+            <input type="text" name="" id="" placeholder="nome do minigame" class="nome-minigame">
             <div class="col-1">
-                    <div class="caixa-pergunta" id="caixa-pergunta-1">
-                        <input type="text" class="pergunta" placeholder="pergunta">
-
-                        <div class="caixa-alternativas">
-                            <input type="text" class="alternativa" placeholder="alternativaA">
-                            <input type="text" class="alternativa" placeholder="alternativaB">
-                            <input type="text" class="alternativa" placeholder="alternativaC">
-                            <input type="text" class="alternativa" placeholder="alternativaD">
-                        </div>
-                        <button class="mais-perguntas">Adicionar mais perguntas</button>
+                <div class="caixa-pergunta" id="caixa-pergunta-1">
+                    <input type="text" class="pergunta" name="perguntas[0][texto]" placeholder="Pergunta">
+        
+                    <div class="caixa-alternativas">
+                        <label>
+                            <input type="radio" name="perguntas[0][correta]" value="0">
+                            <input type="text" class="alternativa" name="perguntas[0][alternativas][0]" placeholder="Alternativa A">
+                        </label>
+                        <label>
+                            <input type="radio" name="perguntas[0][correta]" value="1">
+                            <input type="text" class="alternativa" name="perguntas[0][alternativas][1]" placeholder="Alternativa B">
+                        </label>
+                        <label>
+                            <input type="radio" name="perguntas[0][correta]" value="2">
+                            <input type="text" class="alternativa" name="perguntas[0][alternativas][2]" placeholder="Alternativa C">
+                        </label>
+                        <label>
+                            <input type="radio" name="perguntas[0][correta]" value="3">
+                            <input type="text" class="alternativa" name="perguntas[0][alternativas][3]" placeholder="Alternativa D">
+                        </label>
                     </div>
-
+                </div>
+        
+                <button class="mais-perguntas">Adicionar mais perguntas</button>
             </div>
+        
             <div class="col-2">
                 <div class="turma">
-
-                    <div class="caixa-turma">
-                        <img src="./img/perfil imagem.png" alt="perfil" class="img-turma    ">
-
-                        <select class="opçoes-turma"> TURMAS
-                            <option value="" disabled selected>Turma</option>
-
-                            <option>3DS</option>
-                            <option>3DS</option>
-                            <option>3DS</option>
-
-
-                        </select>
-                    </div>
+                    <select class="opcoes-turma" name="turma"> 
+                        <option value="" disabled selected>Selecione uma turma</option>
+                        <option value="3DS">3DS</option>
+                        <!-- Outras turmas -->
+                    </select>
                 </div>
-
-                <div class="iniciar-jogo">
-                    <img src="./img/astronauta-sentado.png" alt="astroquest" class="astroquest">
-                    <button class="botao-iniciar-jogo">INICIAR JOGO</button>
-                </div>
+        
+                <button type="submit" class="botao-iniciar-jogo">INICIAR JOGO</button>
             </div>
-            
-    </form>
+        </form>
+        
     </div>
 
     <script>
