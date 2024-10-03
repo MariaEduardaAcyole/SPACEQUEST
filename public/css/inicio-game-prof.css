@@ -1,15 +1,37 @@
-@media screen and (min-width: 417px) {
+:root {
+    --fundo: #042661;
+    --caixas: rgba(255, 255, 255, 0.6);
+    --transparencia: rgba(217, 217, 217, 0.6);
+    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
+}
+
+@media screen and (min-width: 417px)
+/*GRANDE*/
+
+{
+
+.texto-Nomedominigame{
+    width: 100%;
+}
+.nome-minigame{
+width: 45%;
+margin-right: 2%;
+border-radius: 10px;
+}
 
     body {
         height: 100vh;
         width: 100vw;
+        overflow-y: auto !important;
         color: #000000;
-        font-family: "font-family: " Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-        overflow: hidden;
+        font-family: "Russo One", sans-serif , "lin Gothic Medium", Arial, sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
         background-repeat: no-repeat;
+        overflow-y: auto;
         background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     }
 
@@ -38,11 +60,10 @@
 
     .atras-1 {
         width: 97%;
-        height: 87%;
+        height: 85%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
     }
 
     .linha-1 {
@@ -52,7 +73,6 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        overflow: hidden;
     }
 
     /*INICIO CARROSSEL*/
@@ -151,521 +171,189 @@
 
     /*FIM CARROSSEL*/
 
-
     .linha-2 {
-        width: 100%;
-        height: 60%;
+        width: 98%;        
+    }
 
+    .linha-1-FORM {
+        height: 30%;
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-around;
+        align-items: center;
+flex-wrap: wrap;
+    }
+
+    /* Linha 2: Formulário */
+form.linha-2 {
+    width: 98%;
+}
+
+.linha-1-FORM {
+    height: 30%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.linha-2_FORM {
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--transparencia);
+
+}
+
+.pergunta-container {
+    margin-bottom: 20px;
+}
+
+.caixa-pergunta {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.label-pergunta {
+    color: white;
+    font-size: 1.2rem;
+    width: 50%;
+    margin-bottom: 5px;
+}
+
+.pergunta {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #41BDDA;
+    background-color: #ffffff;
+    font-size: 1rem;
+}
+
+.caixa-alternativas {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.alternativa {
+    display: flex;
+    align-items: center;
+    width: 48%;
+    gap: 10px;
+}
+
+.input-alternativa {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 2px solid #41BDDA;
+    background-color: #ffffff;
+    font-size: 1rem;
+}
+
+
+.caixa-dos-botoes{
+width: 100%;
+display: flex;
+margin-top: 20px;
+justify-content: space-evenly;
+
+}
+
+
+
+.mais-perguntas, .botao-iniciar-jogo {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mais-perguntas {
+    background-color: #41BDDA;
+    color: white;
+}
+
+.botao-iniciar-jogo {
+    background-color: #042661;
+    color: white;
+}
+
+.mais-perguntas:hover {
+    background-color: #319bc3;
+}
+
+.botao-iniciar-jogo:hover {
+    background-color: #031b40;
+}
+
+/* Select */
+.opcoes-turma {
+    width: 50%;
+    height: 50%;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #042661;
+    border: 2px solid #41BDDA;
+    color: white;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 10px);
+    background-position-y: center;
+}
+
+.opcoes-turma option {
+    background-color: #ffffff;
+    color: #042661;
+    padding: 5px;
+}
+
+.opcoes-turma:focus {
+    border-color: #042661;
+}
+}
+
+/* Media queries */
+@media screen and (max-width: 415px) {
+    body {
+        width: 100%;
+        color: #ffffff;
+    }
+
+    .linha-1 {
+        height: 20%;
+    }
+
+    .linha-1-FORM,
+    .caixa-alternativas,
+    .input-alternativa {
+        width: 100%;
+    }
+
+    .alternativa {
+        width: 40%;
+        height: 35%;
+    }
+}
+
+@media screen and (min-width: 417px) {
+    .linha-1 {
+        height: 40%;
     }
 
     .col-1 {
         width: 70%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-
-        overflow-y: auto;
         border-radius: 30px;
         background: rgba(217, 217, 217, 0.30);
-    }
-
-
-    .nome-minigame{
-        
-    }
-    .caixa-pergunta {
-        width: 90%;
-        height: 100%;
-        margin-top: 1%;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        justify-items: center;
-        flex-direction: column;
-
-    }
-
-    .col-1::-webkit-scrollbar {
-        background-color: #ffffff;
-        height: max-content;
-
-
-    }
-
-    .col-1::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-        background-color: #042763;
     }
 
     .pergunta {
-        top: 2%;
-        width: 95%;
-        height: 30%;
-        border-radius: 20px;
-    }
-
-    .caixa-alternativas {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 65%;
-    }
-
-    .alternativa {
-        border-radius: 20px;
-
-        width: 40%;
-        height: 35%;
-    }
-
-    .mais-perguntas {
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 8px;
-        background-color: #042661;
-        border: 2px solid #41BDDA;
-        color: white;
-    }
-
-
-
-    .col-2 {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        width: 20%;
-        height: 100%;
-        border-radius: 30px;
-    }
-
-    .astroquest {
-        width: 50%;
-        height: 70%;
-    }
-
-    .turma {
-        height: 45%;
-        width: 80%;
-        border-radius: 20px;
-        color: aliceblue;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .img-turma {
-        border: 2px solid rgb(255, 255, 255);
-        border-radius: 100%;
-        width: 20%;
-        height: 50%;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-    }
-
-    .iniciar-jogo {
-        width: 80%;
-        height: 50%;
-        display: flex;
-        flex-direction: column;
-        border-radius: 20px;
-        background: rgba(217, 217, 217, 0.30);
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    h1 {
-        height: 20%;
-        font-size: 95%;
-    }
-
-    .caixa-turma {
-        height: 60%;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .botao-iniciar-jogo {
-        color: #ffffff;
-        height: 7%;
-        border-radius: 30px;
-        background: linear-gradient(90deg, #41BCD8 0%, #0D366B 93.96%);
-        margin-top: 6%;
-        position: absolute;
-
-    }
-
-    .opçoes-turma {
-        width: 50%;
-        height: 50%;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 8px;
-        background-color: #042661;
-        border: 2px solid #41BDDA;
-        color: white;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        outline: none;
-        background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-        background-repeat: no-repeat;
-        background-position-x: calc(100% - 10px);
-        background-position-y: center;
-    }
-
-    .opçoes-turma option {
-        background-color: #ffffff;
-        color: #042661;
-        padding: 10px;
-    }
-
-    /* Custom styles for the select dropdown on focus */
-    .opçoes-turma:focus {
-        border-color: #042661;
-    }
-}
-
-@media screen and (max-width: 415px)/* PEQUENA */  {
-
-    body {
-        height: 100vh;
-        width: 100%;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-repeat: no-repeat;
-        overflow: auto;
-        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
-    }
-
-    input,
-    button,
-    a {
-        padding: 1%;
-        box-shadow: none;
-        border: none;
-        outline: none;
-        text-decoration: none;
-    }
-
-    .titulo-spacequest {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    nav {
-        height: 10%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .atras-1 {
-        width: 97%;
-        height: 95%;
-    
-    }
-
-    .linha-1 {
-        width: 100%;
-        height: 20%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /*INICIO CARROSSEL*/
-
-    .carrossel-container {
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-items: center;
-        justify-content: space-around;
-
-        width: 100%;
-        height: 100%;
-
-        position: relative;
-    }
-
-    .carrossel {
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-    }
-
-    .carrossel-caixa {
-        display: flex;
-        transition: transform 0.5s ease;
-        will-change: transform;
-        width: 100%;
-        height: 100%;
-    }
-
-    .carrossel-item {
-        flex: 0 0 33.33%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 15px;
-        height: 70%;
-        transition: transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
-    }
-
-    .carrossel-item.active {
-        margin-top: 1%;
-        opacity: 1;
-        height: 80%;
-    }
-
-    .carrossel-item.inactive {
-        opacity: 0.6;
-        transform: scale(0.8);
-    }
-
-    .prev,
-    .next {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-    }
-
-    .prev {
-        transform: rotateY(180deg);
-    }
-
-    .next {
-        transform: rotateY(0deg);
-
-    }
-
-    .game-1 {
-        background-image: url("img/cenário1.jpg");
-        border: 1vh solid #fff;
-    }
-
-    .game-2 {
-        background-image: url("img/cenário2.jpg");
-        border: 1vh solid #fff;
-    }
-
-    .game-3 {
-        background-image: url("img/cenário3.jpg");
-        border: 1vh solid #fff;
-    }
-
-    .game-4 {
-        background-image: url("img/cenário4.jpg");
-        border: 1vh solid #fff;
-    }
-
-    /*FIM CARROSSEL*/
-
-.header{
-    width: 90% !important;
-}
-    .linha-2 {
-        width: 100%;
-        height: 80%;
-        display: flex;
-flex-direction: column-reverse;
-justify-content: flex-end;
-        
-    }
-
-    .col-1 {
-        width: 100%;
         height: 40%;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-
-        overflow-y: auto;
-        border-radius: 30px;
-        background: rgba(217, 217, 217, 0.30);
     }
-
-    .caixa-pergunta {
-        width: 100%;
-        height: 100%;
-        margin-top: 1%;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        justify-items: center;
-        flex-direction: column;
-
-    }
-
-    .col-1::-webkit-scrollbar {
-        background-color: #ffffff;
-        height: max-content;
-
-
-    }
-
-    .col-1::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-        background-color: #042763;
-    }
-
-    .pergunta {
-        top: 2%;
-        width: 95%;
-        height: 30%;
-        border-radius: 20px;
-    }
-
-    .caixa-alternativas {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 65%;
-    }
-
-    .alternativa {
-        border-radius: 20px;
-
-        width: 40%;
-        height: 35%;
-    }
-
-    .mais-perguntas {
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 8px;
-        background-color: #042661;
-        border: 2px solid #41BDDA;
-        color: white;
-    }
-
-
-
-    .col-2 {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        width: 100%;
-        height: 50%;
-    align-items: center;
-        border-radius: 30px;
-    }
-
-    .astroquest {
-        width: 50%;
-        height: 100%;
-    }
-
-    .turma {
-        height: 25%;
-        width: 80%;
-        border-radius: 20px;
-        color: aliceblue;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .img-turma {
-        border: 2px solid rgb(255, 255, 255);
-        border-radius: 100%;
-        width: 20%;
-        height: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-    }
-
-    .iniciar-jogo {
-        width: 80%;
-        height: 50%;
-        display: flex;
-        flex-direction: column;
-        border-radius: 20px;
-        background: rgba(217, 217, 217, 0.30);
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    h1 {
-        height: 20%;
-        font-size: 95%;
-    }
-
-    .caixa-turma {
-        height: 60%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-    }
-
-    .botao-iniciar-jogo {
-        color: #ffffff;
-        height: 7%;
-        border-radius: 30px;
-        background: linear-gradient(90deg, #41BCD8 0%, #0D366B 93.96%);
-        margin-top: 20%;
-        position: absolute;
-
-    }
-
-    .opçoes-turma {
-        width: 50%;
-        height: 50%;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 8px;
-        background-color: #042661;
-        border: 2px solid #41BDDA;
-        color: white;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        outline: none;
-        background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-        background-repeat: no-repeat;
-        background-position-x: calc(100% - 10px);
-        background-position-y: center;
-    }
-
-    .opçoes-turma option {
-        background-color: #ffffff;
-        color: #042661;
-        padding: 10px;
-    }
-
-    /* Custom styles for the select dropdown on focus */
-    .opçoes-turma:focus {
-        border-color: #042661;
-    }
-
 }

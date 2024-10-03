@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Minigame</title>
+</head>
+<body>
+    <h1><%= titulo %></h1>
+    <h2>Turma: <%= turma %></h2>
+    <h3>Perguntas:</h3>
+    <ul>
+        <% perguntas.forEach(function(pergunta) { %>
+            <li>
+                <p><%= pergunta.texto %></p>
+                <ul>
+                    <% pergunta.alternativas.forEach(function(alternativa, index) { %>
+                        <li><%= alternativa %></li>
+                    <% }) %>
+                </ul>
+                <p>Correta: <%= pergunta.correta %></p>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

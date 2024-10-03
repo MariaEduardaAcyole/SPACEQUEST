@@ -1,9 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db'); 
+router.use(express.urlencoded({ extended: true }));
+
+
 const { getAlunosEMaterias, addTurma } = require('./public/js/addTurma');
-const { upload, addAtividade } = require('./public/js/addAtividade'); // Ajuste o caminho correto
-const addMateriasRouter = require('./public/js/addMaterias'); // Certifique-se de importar o router de addMateria.js
+const { upload, addAtividade } = require('./public/js/addAtividade'); 
+const addMateriasRouter = require('./public/js/addMaterias'); 
+
+
+// Importa a função de addMinigame.js
+const addMinigameRouter = require('./public/js/addMinigame');
+
+// Rota para exibir o formulário de criação de mini-game
+router.get('/inicio-game-prof', (req, res) => {
+    res.render('pages/prof/inicio-game-prof', { successMessage: null });
+});
+
+// Rota para processar a criação de mini-game, redirecionando para addMinigame.js
+router.post('/criar-minigame', addMinigameRouter);
+
+
+// Rota GET para exibir o formulário de criar mini-game
+
+router.get('/inicio-game-prof', (req, res) => {
+    res.render('pages/prof/inicio-game-prof', { successMessage: null });
+});
+
+// Rota POST para processar a criação de mini-game
+router.post('/criar-minigame', (req, res) => {
+    sqlInsertGame(req, res);
+});
+
+
+// Função utilitária para lidar com erros
+function funcaoErroDb(err, res, errorMsg = 'Erro ao executar a consulta') {
+    console.error(errorMsg, err);
+    return res.status(500).send(errorMsg);
+}
 
 // Rota para exibir o formulário de criar atividade
 router.get('/addAtividade', (req, res) => {
@@ -12,12 +46,6 @@ router.get('/addAtividade', (req, res) => {
 
 // Rota para processar a criação de atividade
 router.post('/addAtividade', upload.single('arquivo'), addAtividade);
-
-// Função utilitária para lidar com erros
-function funcaoErroDb(err, res, errorMsg = 'Erro ao executar a consulta') {
-    console.error(errorMsg, err);
-    return res.status(500).send(errorMsg);
-}
 
 // Rota para exibir a página de cadastro de pessoas
 router.get('/addpessoas', (req, res) => {
@@ -42,13 +70,9 @@ router.post('/addTurma', (req, res) => {
     addTurma(req, res);
 });
 
-// Rota GET para exibir a página de cadastro de matérias
-router.use('/addmateria', addMateriasRouter);
 
-// Função para renderizar páginas simples
-function renderSimplePage(page) {
-    return (req, res) => res.render(`pages/prof/${page}`, { message: null });
-}
+// Rota para exibir a página de cadastro de matérias
+router.use('/addmateria', addMateriasRouter);
 
 // Rota para exibir atividades de uma matéria com base no ID da matéria
 router.get('/materia-atividades-prof/:materiaId', (req, res) => {
@@ -65,7 +89,10 @@ router.get('/materia-atividades-prof/:materiaId', (req, res) => {
     });
 });
 
-
+// Rota para páginas simples
+function renderSimplePage(page) {
+    return (req, res) => res.render(`pages/prof/${page}`, { message: null });
+}
 
 // Rotas para páginas simples
 router.get('/calendario-prof', renderSimplePage('calendario-prof'));
@@ -74,7 +101,6 @@ router.get('/desempenho-classe-prof', renderSimplePage('desempenho-classe-prof')
 router.get('/desempenho-geral-prof', renderSimplePage('desempenho-geral-prof'));
 router.get('/home-prof', renderSimplePage('home-prof'));
 router.get('/inicio-game-prof', renderSimplePage('inicio-game-prof'));
-router.get('/materia-atividades-prof', renderSimplePage('materia-atividades-prof'));
 router.get('/materia-downloads-prof', renderSimplePage('materia-downloads-prof'));
 router.get('/materia-mural-prof', renderSimplePage('materia-mural-prof'));
 router.get('/minigame-kart-prof', renderSimplePage('minigame-kart-prof'));
@@ -82,4 +108,5 @@ router.get('/perfil-prof', renderSimplePage('perfil-prof'));
 router.get('/professores', renderSimplePage('professores'));
 router.get('/quiz', renderSimplePage('quiz'));
 
+// Exportando o roteador
 module.exports = router;

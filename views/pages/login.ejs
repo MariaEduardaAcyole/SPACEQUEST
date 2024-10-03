@@ -16,7 +16,7 @@
 
         <h1 class="texto-login">Login</h1>
 
-        <form class="inputs" action="/login" method="POST">
+        <form id="login-form" class="inputs" method="POST"> <!-- Método POST adicionado -->
             <div class="espaço-entradas">
                 <label for="ID_Usuario">RM:</label>
                 <input type="text" class="rm" id="ID_Usuario" placeholder="Digite seu rm" name="ID_Usuario" required>
@@ -26,8 +26,51 @@
             </div>
 
             <button type="submit" class="btnEntrar">ENTRAR</button>
+
+            <div id="error-message" style="color: red;"></div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const idUsuario = document.getElementById('ID_Usuario').value; // Corrigido
+            const senha = document.getElementById('senha').value;
+
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ID_Usuario: idUsuario, senha: senha }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Exibe os dados de sucesso
+
+                // Verifica o tipo de usuário e redireciona
+                if (data.tipoUsuario === 'Aluno') {
+                    window.location.href = '/home-aluno'; // Redireciona para a página do aluno
+                } else if (data.tipoUsuario === 'Professor') {
+                    window.location.href = '/home-prof'; // Redireciona para a página do professor
+                } else {
+                    console.error('Tipo de usuário desconhecido:', data.tipoUsuario);
+                    document.getElementById('error-message').innerText = 'Tipo de usuário desconhecido'; // Mensagem de erro
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error.message); // Exibe o erro no console
+                // Aqui você pode exibir a mensagem de erro na tela
+                document.getElementById('error-message').innerText = error.message; // Exibe a mensagem de erro na div correspondente
+            });
+        });
+    </script>
 
 </body>
 </html>
