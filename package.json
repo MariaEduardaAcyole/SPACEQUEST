@@ -1,11 +1,13 @@
 {
   "name": "SPACEQUEST",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000S\u0000P\u0000A\u0000C\u0000E\u0000-\u0000Q\u0000U\u0000E\u0000S\u0000T\u0000\r\u0000 \u0000",
+  "description": "description",
   "main": "app.js",
   "engines": {
     "node": "20.x"
   },
+
+  
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +15,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
