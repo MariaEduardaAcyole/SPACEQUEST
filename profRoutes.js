@@ -20,7 +20,6 @@ router.get('/inicio-game-prof', (req, res) => {
 // Rota para processar a criação de mini-game, redirecionando para addMinigame.js
 router.post('/criar-minigame', addMinigameRouter);
 
-
 // Rota GET para exibir o formulário de criar mini-game
 
 router.get('/inicio-game-prof', (req, res) => {

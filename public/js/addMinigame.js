@@ -2,16 +2,20 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db'); // Arquivo de conexão com o banco de dados
 
-// Rota para criar o mini-game e salvar no banco de dados
-router.post('/criar-minigame', (req, res) => {
-    console.log('Dados recebidos:', req.body);  // Isso vai mostrar o que foi enviado no corpo da requisição
+// Rota para criar o mini-game e salvar no banco de dad
 
+router.post('/criar-minigame', (req, res) => {
+    console.log('Dados recebidos:', req.body);
+
+    // Supondo que ID_Professor vem da sessão do usuário logado
+    const ID_Professor = req.session.ID_Professor; // Ou obtenha de onde for relevante
     const { Nome_Minigame, turma, perguntas } = req.body;
 
     // Verifique se todas as informações necessárias foram enviadas
     if (!Nome_Minigame || !turma || !Array.isArray(perguntas) || perguntas.length === 0) {
         return res.status(400).send('Erro: Todos os campos são obrigatórios e perguntas devem ser um array.');
     }
+
     // Insere o mini-game na tabela MiniGame
     const sqlInsertGame = `INSERT INTO MiniGame (Nome_Minigame, ID_Professor, Turma) VALUES (?, ?, ?)`;
     db.query(sqlInsertGame, [Nome_Minigame, ID_Professor, turma], (err, result) => {
@@ -53,8 +57,7 @@ router.post('/criar-minigame', (req, res) => {
 
         return res.send('Mini-game criado com sucesso!');
     });
-    console.log(req.body);
-
 });
+
 
 module.exports = router;
