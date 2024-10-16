@@ -13,16 +13,12 @@
     <img class="img-fundo" src="img/fundo.png">
 
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
+        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3></a>
 
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior-prof') %>
-
         </div>
-
     </div>
-
 
     <div class="atras-1">
         <div class="linha-1">
@@ -38,15 +34,13 @@
                 </div>
                 <button class="next">➜</button>
             </div>
-
-
         </div>
 
         <form action="/criar-minigame" method="POST" class="linha-2">
             <div class="linha-1-FORM">
-                <label for="" class="texto-Nomedominigame">Nome do minigame</label>
-                <input type="text" name="Nome_Minigame" id="" placeholder="nome do minigame" class="nome-minigame">
-                <select class="opcoes-turma" name="turma">
+                <label for="nome-minigame" class="texto-Nomedominigame">Nome do minigame</label>
+                <input type="text" name="Nome_Minigame" id="nome-minigame" placeholder="nome do minigame" class="nome-minigame">
+                <select class="opcoes-turma" name="turma" id="turma">
                     <option value="" disabled selected>Selecione uma turma</option>
                     <option value="3DS">3DS</option>
                     <!-- Outras turmas -->
@@ -65,44 +59,36 @@
                         <div class="caixa-alternativas">
                             <label class="alternativa">
                                 <input type="radio" name="perguntas[0][correta]" value="0">
-                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][0]"
-                                    placeholder="Alternativa A">
+                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][]" placeholder="Alternativa A">
                             </label>
                             <label class="alternativa">
                                 <input type="radio" name="perguntas[0][correta]" value="1">
-                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][1]"
-                                    placeholder="Alternativa B">
+                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][]" placeholder="Alternativa B">
                             </label>
                             <label class="alternativa">
                                 <input type="radio" name="perguntas[0][correta]" value="2">
-                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][2]"
-                                    placeholder="Alternativa C">
+                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][]" placeholder="Alternativa C">
                             </label>
                             <label class="alternativa">
                                 <input type="radio" name="perguntas[0][correta]" value="3">
-                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][3]"
-                                    placeholder="Alternativa D">
+                                <input type="text" class="input-alternativa" name="perguntas[0][alternativas][]" placeholder="Alternativa D">
                             </label>
                         </div>
-
-                        <br>
-
                     </div>
                 </div>
 
                 <div class="caixa-dos-botoes">
-                    <button type="button" id="adicionar-pergunta" class="mais-perguntas">Adicionar mais
-                        perguntas</button>
+                    <button type="button" id="adicionar-pergunta" class="mais-perguntas">Adicionar mais perguntas</button>
                     <button type="submit" class="botao-iniciar-jogo">INICIAR JOGO</button>
                 </div>
             </div>
         </form>
-
-    </div>
-    </div>
     </div>
 
     <script>
+
+        
+        // Seu código JavaScript permanece inalterado
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
         const carrosselCaixa = document.querySelector('.carrossel-caixa');
@@ -149,59 +135,124 @@
         let perguntaIndex = 1; // Inicializa com 1 porque a primeira pergunta já está criada
 
         adicionarPerguntaButton.addEventListener('click', () => {
-    const novaPergunta = `
-        <br>
-        <br>
-        <div class="caixa-pergunta" id="caixa-pergunta-${perguntaIndex}" style="flex-direction: row; justify-content:center; ">
+            const novaPergunta = `
+                <br>
+                <br>
+                <div class="caixa-pergunta" id="caixa-pergunta-${perguntaIndex}" style="flex-direction: row; justify-content:center;">
                     <hr style="height:2px ; background-color: black">
+                    <input type="text" class="pergunta" name="perguntas[${perguntaIndex}][texto]" placeholder="Pergunta" style="width: 98% !important">
+                    <button type="button" class="remover-pergunta" data-index="${perguntaIndex}"
+                        style="background-color: red; width: 3%; height: auto; border-radius:6px; color: white;">
+                        X
+                    </button>
+                </div>
+                <div class="caixa-alternativas">
+                    <label class="alternativa">
+                        <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="0">
+                        <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][0]" placeholder="Alternativa A">
+                    </label>
+                    <label class="alternativa">
+                        <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="1">
+                        <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][1]" placeholder="Alternativa B">
+                    </label>
+                    <label class="alternativa">
+                        <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="2">
+                        <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][2]" placeholder="Alternativa C">
+                    </label>
+                    <label class="alternativa">
+                        <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="3">
+                        <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][3]" placeholder="Alternativa D">
+                    </label>
+                    <br>
+                    <hr style="height:2px ; background-color: black">
+                </div>
+            `;
+            perguntasContainer.insertAdjacentHTML('beforeend', novaPergunta);
+            perguntaIndex++;
 
-            <input type="text" class="pergunta" name="perguntas[${perguntaIndex}][texto]" placeholder="Pergunta" style="width: 98% !important">
-            
-            <button type="button" class="remover-pergunta" data-index="${perguntaIndex}"
-                style="background-color: red; width: 3%; height: auto; border-radius:6px; color: white;">
-                X
-            </button>
-        </div>
-        <div class="caixa-alternativas">
-            <label class="alternativa">
-                <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="0">
-                <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][0]" placeholder="Alternativa A">
-            </label>
-            <label class="alternativa">
-                <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="1">
-                <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][1]" placeholder="Alternativa B">
-            </label>
-            <label class="alternativa">
-                <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="2">
-                <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][2]" placeholder="Alternativa C">
-            </label>
-            <label class="alternativa">
-                <input type="radio" name="perguntas[${perguntaIndex}][correta]" value="3">
-                <input type="text" class="input-alternativa" name="perguntas[${perguntaIndex}][alternativas][3]" placeholder="Alternativa D">
-            </label>
-          <br>
- 
-            <hr style="height:2px ; background-color: black">
-        </div>
-      `;
-    perguntasContainer.insertAdjacentHTML('beforeend', novaPergunta);
-    perguntaIndex++;
+            // Atualiza a lógica de remoção de pergunta para remover o bloco inteiro (pergunta + alternativas)
+            const removerPerguntaButtons = document.querySelectorAll('.remover-pergunta');
+            removerPerguntaButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const perguntaDiv = event.target.closest('.caixa-pergunta');
+                    if (perguntaDiv) {
+                        perguntaDiv.nextElementSibling.remove(); // Remove as alternativas associadas
+                        perguntaDiv.remove(); // Remove a pergunta do DOM
+                    }
+                });
+            });
+        });
 
-    // Atualiza a lógica de remoção de pergunta para remover o bloco inteiro (pergunta + alternativas)
-    const removerPerguntaButtons = document.querySelectorAll('.remover-pergunta');
-    removerPerguntaButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const perguntaDiv = event.target.closest('.caixa-pergunta');
-            if (perguntaDiv) {
-                perguntaDiv.nextElementSibling.remove(); // Remove as alternativas associadas
-                perguntaDiv.remove(); // Remove a pergunta do DOM
+        /// VALIDÇÃO DE ERROS -->
+        const form = document.querySelector('form');
+        const nomeMinigameInput = document.querySelector('input[name="Nome_Minigame"]');
+        const turmaSelect = document.querySelector('select[name="turma"]');
+        const perguntaContainer = document.getElementById('perguntas-container');
+
+        form.addEventListener('submit', function (event) {
+            let isValid = true; // Assumir que o formulário é válido
+
+            // Limpar mensagens de erro anteriores
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(error => error.remove());
+
+            // Validar Nome do Minigame
+            if (nomeMinigameInput.value.trim() === "") {
+                showError(nomeMinigameInput, "O nome do minigame é obrigatório.");
+                isValid = false;
+            }
+
+            // Validar Seleção de Turma
+            if (!turmaSelect.value) {
+                showError(turmaSelect, "Selecione uma turma.");
+                isValid = false;
+            }
+
+            // Validar Perguntas e Alternativas
+            const perguntas = perguntaContainer.querySelectorAll('.caixa-pergunta');
+            perguntas.forEach((pergunta, index) => {
+                const perguntaText = pergunta.querySelector('input[name^="perguntas"][name$="[texto]"]');
+                const alternativas = pergunta.parentNode.querySelectorAll('.caixa-alternativas input[type="text"]');
+                const correctAnswer = pergunta.parentNode.querySelector('.caixa-alternativas input[type="radio"]:checked');
+
+                // Verificar se o texto da pergunta foi preenchido
+                if (!perguntaText.value.trim()) {
+                    showError(perguntaText, `A Pergunta ${index + 1} é obrigatória.`);
+                    isValid = false;
+                }
+
+                // Verificar se todas as alternativas estão preenchidas
+                alternativas.forEach((alt, altIndex) => {
+                    if (!alt.value.trim()) {
+                        showError(alt, `Alternativa ${String.fromCharCode(65 + altIndex)} da Pergunta ${index + 1} é obrigatória.`);
+                        isValid = false;
+                    }
+                });
+
+                // Verificar se uma resposta correta foi marcada
+                if (!correctAnswer) {
+                    showError(pergunta.querySelector('.caixa-alternativas'), `Selecione a resposta correta para a Pergunta ${index + 1}.`);
+                    isValid = false;
+                }
+            });
+
+            // Impedir o envio do formulário se houver erros
+            if (!isValid) {
+                event.preventDefault();
             }
         });
-    });
-});
 
+        // Função para exibir mensagens de erro
+        function showError(element, message) {
+            const errorMessage = document.createElement('span');
+            errorMessage.classList.add('error-message');
+            errorMessage.style.color = 'red';
+            errorMessage.innerText = message;
+
+            // Coloca a mensagem de erro diretamente após o elemento
+            element.insertAdjacentElement('afterend', errorMessage);
+        }
     </script>
-<script src="/js/addMinigame.js"></script>
 </body>
 
 </html>

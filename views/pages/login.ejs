@@ -70,6 +70,14 @@
                 document.getElementById('error-message').innerText = error.message; // Exibe a mensagem de erro na div correspondente
             });
         });
+
+        fetch('/login', {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}` // Enviando o token no cabeçalho
+    }
+});
+
     </script>
 
 </body>
