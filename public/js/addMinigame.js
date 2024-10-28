@@ -1,5 +1,5 @@
 // services/minigameService.js
-const db = require('../../db'); // Conexão com o MySQL
+const db = require('../../supabaseClient'); // Conexão com o MySQL
 
 const criarMinigame = (nome, idProfessor, turma) => {
     return new Promise((resolve, reject) => {

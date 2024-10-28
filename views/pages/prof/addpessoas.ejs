@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="30">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Pessoas</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -25,9 +24,12 @@
 
     <main class="caixa-atras-1">
         <section class="caixa-atras-2">
+            <% if (typeof message !== 'undefined') { %>
+                <p style="color: red;"><%= message %></p>
+            <% } %>
+
             <div class="linha-1">
-                <form action="/addpessoas" method="POST"
-                    style="display: flex; justify-content: space-evenly; flex-wrap: wrap; height: 100%;">
+                <form action="/addpessoas" method="POST" style="display: flex; justify-content: space-evenly; flex-wrap: wrap; height: 100%;">
                     <input type="text" id="ID_Usuario" name="ID_Usuario" class="inputs-para-cadastros" placeholder="RM" required>
                     <input type="password" id="senha" name="senha" class="inputs-para-cadastros" placeholder="Senha" required>
                     <input type="text" class="inputs-para-cadastros" id="nome" name="nome" placeholder="Nome" required>
@@ -39,7 +41,7 @@
 
                     <div class="linha-2">
                         <button class="button-cadastrar" type="submit">
-                            <h1>Registrar</h1>
+                            Registrar
                         </button>
                     </div>
                 </form>
@@ -49,27 +51,23 @@
                 <table class="TABELA">
                     <thead class="cabeçalho-tabela">
                         <tr>
-                            <th id="rm">RM</th>
-                            <th id="nome">Nome</th>
-                            <th id="tipo">Tipo</th>
-                            <th id="delete">X
-                            </th>
+                            <th>RM</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody class="dados">
-                        <% if (typeof usuarios !== 'undefined' && usuarios.length > 0) { %>
+                        <% if (usuarios && usuarios.length > 0) { %>
                             <% usuarios.forEach(usuario => { %>
-                                <tr>
-                                    <td><%= usuario.ID_Usuario %></td>
-                                    <td><%= usuario.Nome %></td>
-                                    <td><%= usuario.Tipo_Usuario %></td>
-                                    <td>X</td>
+                                <tr data-id="<%= usuario.id_usuario %>">
+                                    <td><%= usuario.id_usuario %></td>
+                                    <td><%= usuario.nome %></td>
+                                    <td><%= usuario.tipo_usuario %></td>
+                                    <td><a href="#" class="delete-link" onclick="deleteUser('<%= usuario.id_usuario %>')">X</a></td>
                                 </tr>
-                     
                             <% }); %>
                         <% } else { %>
-
-                          
                             <tr>
                                 <td colspan="4">Nenhum usuário encontrado</td>
                             </tr>
@@ -79,6 +77,31 @@
             </div>
         </section>
     </main>
+
+    <script>
+        async function deleteUser(id) {
+            const confirmation = confirm('Tem certeza que deseja excluir este usuário?');
+            if (!confirmation) return;
+
+            try {
+                const response = await fetch(`/delete/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    row.remove();
+                    alert('Usuário excluído com sucesso!');
+                } else {
+                    alert('Erro ao excluir usuário.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao excluir usuário.');
+            }
+        }
+    </script>
+    
 </body>
 
 </html>

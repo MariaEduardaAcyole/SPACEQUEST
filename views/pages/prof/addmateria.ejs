@@ -2,52 +2,48 @@
 <html lang="pt-br">
 
 <head>
-    <!-- LINKS -->
     <meta http-equiv="refresh" content="30" />
-    <title>ADD materia</title>
+    <title>Cadastro de Matéria</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/addmateria.css">
 </head>
 
 <body>
     <div class="header">
-
         <a class="titulo-spacequest" href="./home-prof">
-            <h3 >SPACE<br> ‎ ‎ QUEST</h3>
+            <h3>SPACE<br> ‎ ‎ QUEST</h3>
         </a>
-
-        <div class="menu-superior"> 
+        <div class="menu-superior">
             <%- include('../../partials/menu-superior-prof') %>
-
         </div>
-
     </div>
 
     <div class="col-1">
-      
-        <h2>cadastro materias</h2>
+        <h2>Cadastro de Matérias</h2>
         <form action="/addmateria" method="POST">
             <!-- Campo para escolher a cor da matéria -->
+            <label for="corMateria">Cor da Matéria:</label>
             <input type="color" id="corMateria" name="corMateria" class="cor-materia" required><br><br>
     
             <!-- Campo para o nome da matéria -->
             <label for="nomeMateria">Nome da Matéria:</label>
-            <input type="text" id="nomeMateria" name="nomeMateria" class="cadastros" size="40" required><br>
+            <input type="text" id="nomeMateria" name="nomeMateria" class="cadastros" size="40" required aria-required="true"><br>
     
             <!-- Campo para selecionar o professor -->
             <label for="idProfessor">Professor:</label>
             <select id="idProfessor" name="idProfessor" class="cadastros" required>
+                <option value="" disabled selected>Selecione um Professor</option>
                 <% professores.forEach(function(professor) { %>
-                    <option value="<%= professor.ID_Professor %>"><%= professor.Nome %></option>
+                    <option value="<%= professor.id_professor %>"><%= professor.nome %></option>
                 <% }); %>
-            </select><br><br>
+            </select>
+            
+            <br><br>
     
             <!-- Botão de cadastro -->
             <button type="submit" class="button">CADASTRAR</button>
-         </form>
-
+        </form>
     </div>
-    
 </body>
 
 </html>

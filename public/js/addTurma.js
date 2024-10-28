@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db'); // Ajuste o caminho conforme necessário
+const db = require('../../supabaseClient'); // Ajuste o caminho conforme necessário
 
 // Função para obter alunos e matérias
 const getAlunosEMaterias = (callback) => {

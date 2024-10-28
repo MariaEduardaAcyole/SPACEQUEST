@@ -35,15 +35,17 @@
         document.getElementById('login-form').addEventListener('submit', function (event) {
             event.preventDefault(); // Impede o envio padrão do formulário
 
-            const idUsuario = document.getElementById('ID_Usuario').value; // Corrigido
+            const idUsuario = document.getElementById('ID_Usuario').value; 
             const senha = document.getElementById('senha').value;
+
+            // Envia os dados do formulário como URL encoded
+            const formData = new URLSearchParams();
+            formData.append('ID_Usuario', idUsuario);
+            formData.append('senha', senha);
 
             fetch('http://localhost:3000/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ID_Usuario: idUsuario, senha: senha }),
+                body: formData,
             })
             .then(response => {
                 if (!response.ok) {
@@ -66,18 +68,9 @@
             })
             .catch(error => {
                 console.error('Erro:', error.message); // Exibe o erro no console
-                // Aqui você pode exibir a mensagem de erro na tela
-                document.getElementById('error-message').innerText = error.message; // Exibe a mensagem de erro na div correspondente
+                document.getElementById('error-message').innerText = error.message; // Exibe a mensagem de erro
             });
         });
-
-        fetch('/login', {
-    method: 'GET',
-    headers: {
-        'Authorization': `Bearer ${token}` // Enviando o token no cabeçalho
-    }
-});
-
     </script>
 
 </body>

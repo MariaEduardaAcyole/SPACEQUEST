@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const db = require('../../db'); // Conexão com o banco de dados
+const supabase = require('../../supabaseClient'); // Conexão com o Supabase
 
 // Configuração do armazenamento do arquivo enviado
 const storage = multer.diskStorage({
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Função para processar a criação de atividade
-const addAtividade = (req, res) => {
+const addAtividade = async (req, res) => {
     const { titulo, descricao, data_vencimento, pontos } = req.body;
     const arquivo = req.file ? req.file.filename : null;
 
@@ -27,32 +27,32 @@ const addAtividade = (req, res) => {
     }
 
     // Inserir a atividade na tabela Atividade
-    const sqlAtividade = `INSERT INTO Atividade (Titulo, Descricao, Data_Vencimento, Pontos)
-                          VALUES (?, ?, ?, ?)`;
+    const { data: atividadeData, error: atividadeError } = await supabase
+        .from('atividade')
+        .insert([{ titulo, descricao, data_vencimento, pontos }])
+        .select(); // Isso fará com que o Supabase retorne a linha inserida
 
-    db.query(sqlAtividade, [titulo, descricao, data_vencimento, pontos], (err, result) => {
-        if (err) {
-            console.error('Erro ao adicionar atividade:', err);
-            return res.status(500).send('Erro ao adicionar atividade.');
-        }
+    if (atividadeError) {
+        console.error('Erro ao adicionar atividade:', atividadeError.message || atividadeError);
+        return res.status(500).send('Erro ao adicionar atividade.');
+    }
 
-        const atividadeId = result.insertId; // ID da atividade recém-criada
+    console.log('Dados da atividade:', atividadeData); // Mova para cá
 
-        const sqlArquivo = `INSERT INTO Arquivo_Atividade (Nome_Arquivo, Caminho_Arquivo, Tipo_Arquivo, ID_Atividade)
-                    VALUES (?, ?, ?, ?)`;
+    const atividadeId = atividadeData[0].id; // Pegando o ID da atividade recém-criada
 
-        db.query(sqlArquivo, [req.file.originalname, arquivo, req.file.mimetype, atividadeId], (err, result) => {
-            if (err) {
-                console.error('Erro ao salvar o arquivo da atividade:', err);
-                return res.status(500).send('Erro ao salvar o arquivo da atividade.');
-            }
+    // Inserir o arquivo relacionado à atividade
+    const { error: arquivoError } = await supabase
+        .from('arquivo_atividade') // Verifique se o nome da tabela está correto
+        .insert([{ nome_arquivo: req.file.originalname, caminho_arquivo: arquivo, tipo_arquivo: req.file.mimetype, id_atividade: atividadeId }]);
 
-            // Redirecionar para a página com a mensagem de sucesso
-            res.render('pages/prof/addAtividade', { successMessage: 'Atividade criada com sucesso!' });
-        });
+    if (arquivoError) {
+        console.error('Erro ao salvar o arquivo da atividade:', arquivoError);
+        return res.status(500).send('Erro ao salvar o arquivo da atividade.');
+    }
 
-
-    });
+    // Redirecionar para a página com a mensagem de sucesso
+    res.render('pages/prof/addAtividade', { successMessage: 'Atividade criada com sucesso!' });
 };
 
 module.exports = {

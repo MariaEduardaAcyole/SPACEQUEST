@@ -1,43 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db'); // Conexão com o banco de dados
+const supabase = require('../../supabaseClient'); // Conexão com o Supabase
 
 // Função para recuperar a lista de professores
-const getProfessores = (callback) => {
-    const getProfessoresSql = 'SELECT ID_Professor, Nome FROM Professor';
-    db.query(getProfessoresSql, (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar professores:', err);
-            return callback(err, null);
-        }
-        callback(null, results);
-    });
+const getProfessores = async () => {
+    const { data, error } = await supabase
+        .from('professor')
+        .select('id_professor, nome');
+
+    if (error) {
+        console.error('Erro ao buscar professores:', error);
+        throw new Error('Erro ao buscar professores');
+    }
+
+    return data;
 };
 
 // Rota GET para exibir a página de cadastro de matérias
-router.get('/', (req, res) => {
-    getProfessores((err, professores) => {
-        if (err) return res.status(500).send('Erro ao buscar professores');
+router.get('/', async (req, res) => {
+    try {
+        const professores = await getProfessores();
         res.render('pages/prof/addmateria', { professores });
-    });
+    } catch (err) {
+        return res.status(500).send('Erro ao buscar professores');
+    }
 });
 
 // Rota POST para processar o cadastro de matérias
-router.post('/', (req, res) => {
-    const { nomeMateria, idProfessor, corMateria } = req.body;  // Capturando também a cor da matéria
+router.post('/', async (req, res) => {
+    const { nomeMateria, idProfessor, corMateria } = req.body; // Capturando também a cor da matéria
 
     if (!nomeMateria || !idProfessor || !corMateria) {
         return res.status(400).send('Todos os campos são obrigatórios.');
     }
 
-    const insertMateriaSql = 'INSERT INTO Materia (Nome_Materia, ID_Professor, Cor_Materia) VALUES (?, ?, ?)';
-    db.query(insertMateriaSql, [nomeMateria, idProfessor, corMateria], (err, result) => {
-        if (err) {
-            console.error('Erro ao cadastrar matéria:', err);
-            return res.status(500).send('Erro ao cadastrar matéria');
-        }
-        res.redirect('/addmateria'); // Redireciona para a página de cadastro de matérias
-    });
+    const { error } = await supabase
+        .from('materia')
+        .insert([{ nome_materia: nomeMateria, id_professor: idProfessor, cor_materia: corMateria }]);
+
+    if (error) {
+        console.error('Erro ao cadastrar matéria:', error);
+        return res.status(500).send('Erro ao cadastrar matéria');
+    }
+
+    // Redireciona para a página de cadastro de matérias com uma mensagem de sucesso
+    res.redirect('/addmateria'); // Você pode considerar adicionar um parâmetro de sucesso aqui
 });
 
 module.exports = router;

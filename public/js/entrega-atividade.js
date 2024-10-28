@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const db = require('../../db'); // Conexão com o banco de dados
+const db = require('../../supabaseClient'); // Conexão com o banco de dados
 
 // Configuração do armazenamento do arquivo enviado
 const storage = multer.diskStorage({

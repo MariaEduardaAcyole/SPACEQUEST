@@ -13,6 +13,21 @@ button,a {
     align-items: center;
     }
 
+    input[type="color"] {
+        -webkit-appearance: none; /* Remove o estilo padrão do navegador */
+        width: 40%; /* Ajuste o tamanho conforme necessário */
+        height: 70%; /* Ajuste o tamanho conforme necessário */
+        border: none; /* Remove a borda */
+        border-radius: 50%; /* Torna o input um círculo */
+        cursor: pointer; /* Muda o cursor para indicar que é clicável */
+        background-color: transparent; /* Remove a cor de fundo padrão */
+        outline: none; /* Remove o contorno */
+    }
+    
+    input[type="color"]::-webkit-color-swatch {
+        border-radius: 50%; /* Torna o swatch do seletor de cores um círculo */
+    }
+    
 /* TELA GRANDE */
 
 body {

@@ -2,7 +2,6 @@
 <html lang="pt-br">
 
 <head>
-    <!-- LINKS -->
     <meta http-equiv="refresh" content="30" />
     <title>HOME Prof</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -11,32 +10,29 @@
 
 <body>
 
-    <img class="img-fundo" src="img/fundo.png">
+    <img class="img-fundo" src="img/fundo.png" alt="Fundo da página">
     <div class="col-1">
         <div class="atras-menu">
             <%- include('../../partials/menu-lateral-prof') %>
         </div>
 
         <div class="corpo">
-
-            <div class="hearder">
-
+            <div class="header">
                 <div class="planetas-bimestrais">
-                    <img class="img-planetas" src="img/planeta 01Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 02Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 03Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 04Bimestre.png">
+                    <img class="img-planetas" src="img/planeta 01Bimestre.png" alt="Planeta 1">
+                    <img class="img-planetas" src="img/planeta 02Bimestre.png" alt="Planeta 2">
+                    <img class="img-planetas" src="img/planeta 03Bimestre.png" alt="Planeta 3">
+                    <img class="img-planetas" src="img/planeta 04Bimestre.png" alt="Planeta 4">
                 </div>
-
                 <div class="linha"></div>
-                <img class="nave" src="img/nave-espacial.png">
+                <img class="nave" src="img/nave-espacial.png" alt="Nave Espacial">
             </div>
 
             <div class="atras">
                 <div class="col-2">
                     <div class="col-3">
                         <div class="noticias">
-                            <h3>Noticías</h3>
+                            <h3>Notícias</h3>
                         </div>
                         <div class="pendencias">
                             <h3>Pendências</h3>
@@ -46,90 +42,27 @@
 
                     <a href="./minigame-kart" class="minigame">
                         <h3 class="titulo-spacequest">SPACE<br>‎ ‎ QUEST</h3>
-                        <img class="kart" src="img/astrokart.png">
+                        <img class="kart" src="img/astrokart.png" alt="Astro Kart">
                     </a>
 
                 </div>
 
                 <div class="div-semana">
-                    <button class="open-popup semana" onclick="openPopup()">
-                        <p>SEG</p>
-                    </button>
-             
-                
-                   
+                    <!-- Botões de dia da semana -->
+                    <button class="open-popup" data-day="Segunda">SEG</button>
+                    <button class="open-popup" data-day="Terça">TER</button>
+                    <button class="open-popup" data-day="Quarta">QUA</button>
+                    <button class="open-popup" data-day="Quinta">QUI</button>
+                    <button class="open-popup" data-day="Sexta">SEX</button>
+
+                    <!-- Popup -->
                     <div class="popup popup-hidden">
                         <div class="popup-content">
                             <span class="close-popup close-btn">&times;</span>
-                            <h2>SEGUNDA</h2>
-                            <ul>
-                                <li><a href="#">portuga</a></li>
-                                <li><a href="#">Opção 2</a></li>
-                                <li><a href="#">Opção 3</a></li>
-                                <li><a href="#">Opção 4</a></li>
-                            </ul>
+                            <h2 id="popup-title"></h2>
+                            <ul id="popup-list"></ul>
                         </div>
                     </div>
-
-
-                    <button class="open-popup semana" onclick="openPopup()">
-                        <p>SEG</p>
-                    </button>
-             
-                
-                   
-                    <div class="popup popup-hidden">
-                        <div class="popup-content">
-                            <span class="close-popup close-btn">&times;</span>
-                            <h2>SEGUNDA</h2>
-                            <ul>
-                                <li><a href="#">portuga</a></li>
-                                <li><a href="#">Opção 2</a></li>
-                                <li><a href="#">Opção 3</a></li>
-                                <li><a href="#">Opção 4</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <button class="open-popup semana" onclick="openPopup()">
-                        <p>SEG</p>
-                    </button>
-             
-                
-                   
-                    <div class="popup popup-hidden">
-                        <div class="popup-content">
-                            <span class="close-popup close-btn">&times;</span>
-                            <h2>SEGUNDA</h2>
-                            <ul>
-                                <li><a href="#">portuga</a></li>
-                                <li><a href="#">Opção 2</a></li>
-                                <li><a href="#">Opção 3</a></li>
-                                <li><a href="#">Opção 4</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <button class="open-popup semana" onclick="openPopup()">
-                        <p>SEG</p>
-                    </button>
-             
-                
-                   
-                    <div class="popup popup-hidden">
-                        <div class="popup-content">
-                            <span class="close-popup close-btn">&times;</span>
-                            <h2>SEGUNDA</h2>
-                            <ul>
-                                <li><a href="#">portuga</a></li>
-                                <li><a href="#">Opção 2</a></li>
-                                <li><a href="#">Opção 3</a></li>
-                                <li><a href="#">Opção 4</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                   </div>    
                 </div>
             </div>
         </div>
@@ -138,33 +71,39 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const openPopupBtns = document.querySelectorAll('.open-popup');
-            const closePopupBtns = document.querySelectorAll('.close-popup');
-            const popups = document.querySelectorAll('.popup');
+            const closePopupBtn = document.querySelector('.close-popup');
+            const popup = document.querySelector('.popup');
+            const popupTitle = document.getElementById('popup-title');
+            const popupList = document.getElementById('popup-list');
 
-            openPopupBtns.forEach((btn, index) => {
+            openPopupBtns.forEach(btn => {
                 btn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    popups[index].classList.remove('popup-hidden');
+                    const day = event.target.getAttribute('data-day');
+                    popupTitle.textContent = day;
+
+                    // Atualiza a lista de opções com base no dia
+                    popupList.innerHTML = `
+                        <li><a href="#">Portuga</a></li>
+                        <li><a href="#">Opção 2</a></li>
+                        <li><a href="#">Opção 3</a></li>
+                        <li><a href="#">Opção 4</a></li>
+                    `;
+                    
+                    popup.classList.remove('popup-hidden');
                 });
             });
 
-            closePopupBtns.forEach((btn, index) => {
-                btn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    popups[index].classList.add('popup-hidden');
-                });
+            closePopupBtn.addEventListener('click', () => {
+                popup.classList.add('popup-hidden');
             });
 
             // Fechar o pop-up clicando fora dele
             window.addEventListener('click', (event) => {
-                popups.forEach(popup => {
-                    if (!popup.contains(event.target) && !popup.classList.contains('popup-hidden')) {
-                        popup.classList.add('popup-hidden');
-                    }
-                });
+                if (popup.contains(event.target) && !popup.classList.contains('popup-hidden')) {
+                    popup.classList.add('popup-hidden');
+                }
             });
         });
-
     </script>
 </body>
 

@@ -1,71 +1,92 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db'); // Conexão com o banco de dados
-const bcrypt = require('bcryptjs'); // Biblioteca para hash de senha
+const supabase = require('../../supabaseClient'); // Conexão com Supabase
+const bcrypt = require('bcryptjs');
 
+// Função auxiliar para lidar com erros
+const handleError = (error, res, message) => {
+    console.error(message, error);
+    return res.status(500).send(message);
+};
 
 // Rota para processar o registro
-router.post('/addpessoas', (req, res) => {
-    console.log(req.body); // Log dos dados recebidos para depuração
+router.post('/addpessoas', async (req, res) => {
+    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;
 
-    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;  // Capturar todos os dados do formulário
-
-    // Verificar se os dados obrigatórios estão presentes
     if (!ID_Usuario || !senha || !nome || !Tipo_Usuario) {
-        console.error('Campos obrigatórios ausentes:', { ID_Usuario, senha, nome, Tipo_Usuario });
         return res.status(400).send('Todos os campos são necessários.');
     }
 
-    // Verifica se o ID_Usuario já existe no banco de dados
-    const checkUserSql = `SELECT * FROM Usuario WHERE ID_Usuario = ?`;
-    db.query(checkUserSql, [ID_Usuario], (err, results) => {
-        if (err) {
-            return res.status(500).send('Erro ao verificar o usuário');
-        }
+    // Verifica se o ID_Usuario já existe
+    const { data: existingUser, error: userError } = await supabase
+        .from('usuario')
+        .select('*')
+        .eq('id_usuario', ID_Usuario);
 
-        if (results.length > 0) {
-            res.render('pages/prof/addpessoas', { message: 'Usuário já existe' });
-        } else {
-            // Criptografar a senha
-            bcrypt.hash(senha, 10, (err, hash) => {
-                if (err) {
-                    console.error('Erro ao criptografar a senha:', err); // Adicionar log de erro
-                    return res.status(500).send('Erro ao criptografar a senha');
-                }
+    if (userError) return handleError(userError, res, 'Erro ao verificar usuário.');
 
-                // Inserir o novo usuário no banco de dados com os campos adicionais
-                const insertUserSql = `INSERT INTO Usuario (ID_Usuario, Senha,Nome, Tipo_Usuario) VALUES (?, ?, ?, ?)`;
-                db.query(insertUserSql, [ID_Usuario, hash, nome, Tipo_Usuario], (err, result) => {
-                    if (err) {
-                        console.error('Erro ao registrar o usuário:', err); // Adicionar log de erro
-                        return res.status(500).send('Erro ao registrar o usuário');
-                    }
+    if (existingUser && existingUser.length > 0) {
+        return res.render('pages/prof/addpessoas', { usuarios: existingUser, message: 'Usuário já existe' });
+    }
 
-                    // Inserir na tabela Aluno ou Professor dependendo do tipo de usuário
-                    if (Tipo_Usuario === 'Aluno') {
-                        const insertAlunoSql = `INSERT INTO Aluno (ID_Aluno, ID_Usuario) VALUES (?, ?)`;
-                        db.query(insertAlunoSql, [ID_Usuario, ID_Usuario], (err, result) => {
-                            if (err) {
-                                console.error('Erro ao registrar o aluno:', err);
-                                return res.status(500).send('Erro ao registrar o aluno');
-                            }
-                            res.redirect('/addpessoas'); // Redirecionar para a página de login após o registro
-                        });
-                    } else if (Tipo_Usuario === 'Professor') {
-                        const insertProfessorSql = `INSERT INTO Professor (ID_Professor, ID_Usuario) VALUES (?, ?)`;
-                        db.query(insertProfessorSql, [ID_Usuario, ID_Usuario], (err, result) => {
-                            if (err) {
-                                console.error('Erro ao registrar o professor:', err);
-                                return res.status(500).send('Erro ao registrar o professor');
-                            }
-                            res.redirect('/addpessoas'); // Redirecionar para a página de login após o registro
-                        });
+    // Criptografar a senha
+    const hashedSenha = await bcrypt.hash(senha, 10);
 
-                    }
-                });
-            });
-        }
-    });
+    // Inserir o novo usuário
+    const { error: insertError } = await supabase
+        .from('usuario')
+        .insert([{ id_usuario: ID_Usuario, senha: hashedSenha, nome, tipo_usuario: Tipo_Usuario }]);
+
+    if (insertError) return handleError(insertError, res, 'Erro ao registrar o usuário');
+
+    // Inserir na tabela Aluno ou Professor conforme o tipo
+    const userRoleTable = Tipo_Usuario === 'Aluno' ? 'Aluno' : 'Professor';
+    const { error: insertRoleError } = await supabase
+        .from(userRoleTable)
+        .insert([{ id_usuario: ID_Usuario }]);
+
+    if (insertRoleError) return handleError(insertRoleError, res, `Erro ao registrar como ${Tipo_Usuario}`);
+
+    res.redirect('/addpessoas');
+});
+
+// Rota para exibir usuários
+router.get('/addpessoas', async (req, res) => {
+    const { data: usuarios, error } = await supabase
+        .from('usuario')
+        .select('*');
+
+    if (error) return handleError(error, res, 'Erro ao buscar usuários');
+
+    res.render('pages/prof/addpessoas', { usuarios: usuarios || [] });
+});
+
+// Rota para excluir usuário
+router.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    // Excluir o usuário de Aluno ou Professor
+    const { error: deleteRoleError } = await supabase
+        .from('Aluno')
+        .delete()
+        .eq('id_usuario', id);
+
+    if (deleteRoleError) {
+        await supabase
+            .from('Professor')
+            .delete()
+            .eq('id_usuario', id);
+    }
+
+    // Excluir o usuário da tabela 'usuario'
+    const { error: deleteUserError } = await supabase
+        .from('usuario')
+        .delete()
+        .eq('id_usuario', id);
+
+    if (deleteUserError) return handleError(deleteUserError, res, 'Erro ao excluir usuário.');
+
+    res.status(200).send('Usuário excluído com sucesso!');
 });
 
 module.exports = router;

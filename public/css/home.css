@@ -41,7 +41,7 @@ a {
         align-items: center;
         overflow: auto;
         background-repeat: no-repeat;
-        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+        background:#042661 ;
     }
 
     .img-fundo {

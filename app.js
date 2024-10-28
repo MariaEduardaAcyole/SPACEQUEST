@@ -1,137 +1,102 @@
+require('dotenv').config(); // Carregar variáveis de ambiente
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('./db'); // Conexão com o banco de dados
-
 const session = require('express-session');
+const supabase = require('./supabaseClient'); // Conexão com o banco de dados Supabase
+const { verificarToken } = require('./middlewares'); // Corrija o caminho se necessário
 
 // Configuração da sessão
 app.use(session({
-    secret: 'segredo', // Substitua por um segredo seguro
+    secret: process.env.SESSION_SECRET || 'segredo',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false , maxAge: 3600000 } // Certifique-se de que 'secure' está configurado corretamente (false para desenvolvimento local)
+    cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 3600000 }
 }));
-
-
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(bodyParser.json()); // Adiciona o suporte a JSON, caso necessário
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-const { verificarToken } = require('./middlewares'); // Importa o middleware
-// ...
-
-
+// Middleware para log de sessão
 app.use((req, res, next) => {
     console.log('Sessão atual:', req.session);
     next();
 });
 
-
-app.use((req, res, next) => {
-    console.log('Sessão atual (profRoutes):', req.session);
-    next();
-});
+// Rota de teste para conexão com o Supabase
+async function testSupabase() {
+    const { data, error } = await supabase.from('professor').select('*');
+    if (error) {
+        console.error('Erro ao buscar dados do Supabase:', error);
+    } else {
+        console.log('Dados do Supabase:', data);
+    }
+}
+testSupabase();
 
 // Importar rotas
-const profRoutes = require('./profRoutes'); // Importa as rotas do professor
-const alunoRoutes = require('./alunoRoutes'); // Importa as rotas do aluno
-const cadastroUsuarios = require('./public/js/cadastro-usuarios'); // Importa as rotas de cadastro de usuários
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const profRoutes = require('./profRoutes');
+const alunoRoutes = require('./alunoRoutes');
+const cadastroUsuarios = require('./public/js/cadastro-usuarios');
 
 app.use(profRoutes);
 app.use(alunoRoutes);
 app.use(cadastroUsuarios);
 
-
-// Rota para exibir a tela de criação de mini-game
+// Rota de login
 app.get('/login', (req, res) => {
-    res.render('pages/login'); // Renderiza a página que você já criou
+    res.render('pages/login'); // Renderize uma página de login
 });
 
-app.post('/login', (req, res) => {
-    const { ID_Usuario, senha } = req.body; // Captura 'ID_Usuario' e 'senha' do formulário
+app.post('/login', async (req, res) => {
+    const { ID_Usuario, senha } = req.body;
 
-    console.log('Dados do formulário:', req.body); // Log dos dados recebidos
+    try {
+        const { data, error } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('id_usuario', ID_Usuario)
+            .single();
 
-    // Consulta SQL para verificar o usuário
-    const sql = `SELECT * FROM Usuario WHERE ID_Usuario = ?`; // Consulta com 'ID_Usuario'
-    db.query(sql, [ID_Usuario], (err, results) => {
-        if (err) {
-            console.error('Erro ao verificar o usuário:', err);
-            return res.status(500).json({ message: 'Erro ao verificar o usuário' }); // Retorno em JSON
-        }
-
-        if (results.length > 0) {
-            const user = results[0];
-
-            bcrypt.compare(senha, user.Senha, (err, isMatch) => {
-                if (err) {
-                    console.error('Erro na verificação de senha:', err);
-                    return res.status(500).json({ message: 'Erro na verificação de senha' });
-                }
-            
-                if (isMatch) {
-                    console.log('Senha correta. Tipo de usuário:', user.Tipo_Usuario);
-            
-                    // Verifica o tipo de usuário (Professor ou Aluno)
-                    if (user.Tipo_Usuario === 'Professor') {
-                        req.session.ID_Professor = user.ID_Usuario;  // Armazena o ID do professor
-                        console.log('ID_Professor salvo na sessão:', req.session.ID_Professor); 
-                    }
-            
-                    const token = jwt.sign({ ID_Usuario: user.ID_Usuario, Tipo_Usuario: user.Tipo_Usuario }, 'seu_segredo', { expiresIn: '1h' });
-            
-                    req.session.save((err) => {
-                        if (err) {
-                            console.error('Erro ao salvar a sessão:', err);
-                            return res.status(500).json({ message: 'Erro ao salvar a sessão' });
-                        }
-            
-                        return res.json({ message: 'Login bem-sucedido', token, tipoUsuario: user.Tipo_Usuario });
-                    });
-                } else {
-                    return res.status(401).json({ message: 'Senha incorreta' });
-                }
-            });
-            
-                   } else {
+        if (error || !data) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
         }
-    });
-});
-// Rota para exibir a página de aluno
 
+        const user = data;
+        const isMatch = await bcrypt.compare(senha, user.senha);
+        if (isMatch) {
+            req.session.token = jwt.sign({ id_usuario: user.id_usuario, tipo_usuario: user.tipo_usuario }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            req.session.id_professor = user.id_usuario; // Se for professor
+            return res.json({ message: 'Login bem-sucedido', tipoUsuario: user.tipo_usuario });
+        } else {
+            return res.status(401).json({ message: 'Senha incorreta' });
+        }
+    } catch (err) {
+        console.error('Erro ao verificar o usuário:', err);
+        return res.status(500).json({ message: 'Erro ao verificar o usuário' });
+    }
+
+});
+
+// Rotas de home para aluno e professor
 app.get('/home-aluno', verificarToken, (req, res) => {
-    if (req.user.Tipo_Usuario !== 'Aluno') {
+    if (req.user.tipo_usuario !== 'Aluno') {
         return res.status(403).send('Acesso negado.');
     }
-    res.render('home-aluno');
+    res.render('pages/aluno/home'); // Corrigido: removido o '/' antes do nome da view
 });
 
-// Rota para exibir a página de professor e garantir que ID_Professor está na sessão
 app.get('/home-prof', verificarToken, (req, res) => {
-    if (req.user.Tipo_Usuario !== 'Professor') {
+    if (req.user.tipo_usuario !== 'Professor') {
         return res.status(403).send('Acesso negado.');
     }
-
-    // Garante que o ID_Professor está na sessão
-    if (!req.session.ID_Professor) {
-        return res.redirect('/login');
-
-        // req.session.ID_Professor = req.user.ID_Usuario;  // Caso não esteja na sessão, coloca o ID do usuário logado
-    }
-    res.render('home-prof');
+    res.render('pages/prof/home-prof'); // Corrigido: removido o '/' antes do nome da view
 });
-
-
 
 // Iniciar o servidor
 app.listen(3000, () => {
