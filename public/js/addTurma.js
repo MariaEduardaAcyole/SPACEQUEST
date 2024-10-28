@@ -1,84 +1,100 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../../supabaseClient'); // Ajuste o caminho conforme necessário
+const supabase = require('../../supabaseClient');
 
 // Função para obter alunos e matérias
-const getAlunosEMaterias = (callback) => {
-    const getAlunosSql = 'SELECT Aluno.ID_Aluno, Usuario.Nome FROM Aluno JOIN Usuario ON Aluno.ID_Usuario = Usuario.ID_Usuario';
-    const getMateriasSql = 'SELECT ID_Materia, Nome_Materia FROM Materia';
+const getAlunosEMaterias = async () => {
+    const { data: alunos, error: alunosError } = await supabase
+        .from('aluno')
+        .select('id_aluno, usuario(nome)');
 
-    db.query(getAlunosSql, (err, alunos) => {
-        if (err) {
-            console.error('Erro ao buscar alunos:', err);
-            return callback(err);
-        }
+    if (alunosError) throw alunosError;
 
-        db.query(getMateriasSql, (err, materias) => {
-            if (err) {
-                console.error('Erro ao buscar matérias:', err);
-                return callback(err);
-            }
+    const { data: materias, error: materiasError } = await supabase
+        .from('materia')
+        .select('id_materia, nome_materia');
 
-            // Retorna os alunos e matérias através do callback
-            callback(null, { alunos, materias });
-        });
-    });
+    if (materiasError) throw materiasError;
+
+    return {
+        alunos,
+        materias
+    };
 };
 
-// Função POST para inserir turma no banco de dados
-const addTurma = (req, res) => {
-    const { nomeTurma, idAlunosSelecionados, idMateriasSelecionadas } = req.body;
+// Função para adicionar uma nova turma
+async function addTurma(req, res) {
+    const nomeTurma = req.body.nome_turma;
+    const materiasSelecionadas = req.body.materias ? req.body.materias.split(',') : [];
+    const alunosSelecionados = req.body.alunos ? req.body.alunos.split(',') : [];
 
-    // Verificar se os campos obrigatórios estão presentes
-    if (!nomeTurma || !idAlunosSelecionados || !idMateriasSelecionadas) {
-        return res.status(400).send('Todos os campos são obrigatórios.');
+    console.log('Tentando inserir a turma:', { nome_turma: nomeTurma });
+
+    if (!nomeTurma) {
+        return res.status(400).send('Nome da turma é obrigatório.');
     }
 
-    // Converter os IDs de alunos e matérias em arrays
-    const alunosArray = idAlunosSelecionados.split(',');
-    const materiasArray = idMateriasSelecionadas.split(',');
+    try {
+        // 1. Inserir a turma com os nomes em minúsculo
+        const { data: turma, error: turmaError, status, statusText } = await supabase
+            .from('turma')
+            .insert([{ nome_turma: nomeTurma }])
+            .select()
+            .single();
 
-    // Inserir a nova turma no banco de dados
-    const insertTurmaSql = 'INSERT INTO Turma (Nome_Turma) VALUES (?)';
-    db.query(insertTurmaSql, [nomeTurma], (err, result) => {
-        if (err) {
-            console.error('Erro ao cadastrar turma:', err);
-            return res.status(500).send('Erro ao cadastrar turma');
+        if (turmaError) {
+            console.error('Erro ao inserir turma:', turmaError, 'Status:', status, 'StatusText:', statusText);
+            return res.status(500).send(`Erro ao cadastrar turma: ${turmaError.message || 'Erro desconhecido'}`);
         }
 
-        const turmaId = result.insertId;
+        if (!turma || !turma.id_turma) {
+            console.error('Erro: resposta da inserção de turma é null ou não contém id_turma.');
+            return res.status(500).send('Erro ao cadastrar turma: resposta inválida');
+        }
 
-        // Adicionar alunos à turma
-        alunosArray.forEach(idAluno => {
-            const insertAlunoTurmaSql = 'INSERT INTO Aluno_Turma (ID_Aluno, ID_Turma) VALUES (?, ?)';
-            db.query(insertAlunoTurmaSql, [idAluno, turmaId], (err) => {
-                if (err) {
-                    console.error('Erro ao adicionar aluno à turma:', err);
+        const turmaId = turma.id_turma;
+        console.log('Turma cadastrada com ID:', turmaId);
+
+        // 2. Associar as matérias à turma
+        if (materiasSelecionadas.length > 0) {
+            const turmaMateriaPromises = materiasSelecionadas.map((materiaId) => {
+                return supabase
+                    .from('turma_materia')
+                    .insert([{ id_turma: turmaId, id_materia: materiaId }]);
+            });
+            const turmaMateriaResults = await Promise.all(turmaMateriaPromises);
+
+            turmaMateriaResults.forEach((result, index) => {
+                if (result.error) {
+                    console.error(`Erro ao inserir id_materia ${materiasSelecionadas[index]} para a turma ${turmaId}:`, result.error);
+                    throw result.error;
                 }
             });
-        });
+        }
 
-        // Adicionar matérias à turma
-        materiasArray.forEach(idMateria => {
-            const insertTurmaMateriaSql = 'INSERT INTO Turma_Materia (ID_Turma, ID_Materia) VALUES (?, ?)';
-            db.query(insertTurmaMateriaSql, [turmaId, idMateria], (err) => {
-                if (err) {
-                    console.error('Erro ao adicionar matéria à turma:', err);
+        // 3. Associar os alunos à turma
+        if (alunosSelecionados.length > 0) {
+            const alunoTurmaPromises = alunosSelecionados.map((alunoId) => {
+                return supabase
+                    .from('aluno_turma')
+                    .insert([{ id_turma: turmaId, id_aluno: alunoId }]);
+            });
+            const alunoTurmaResults = await Promise.all(alunoTurmaPromises);
+
+            alunoTurmaResults.forEach((result, index) => {
+                if (result.error) {
+                    console.error(`Erro ao inserir id_aluno ${alunosSelecionados[index]} para a turma ${turmaId}:`, result.error);
+                    throw result.error;
                 }
             });
-        });
+        }
+        req.session.successMessage = 'Turma cadastrada com sucesso!';
+        return res.redirect('/addTurma');
+    } catch (err) {
+        console.error('Erro inesperado ao cadastrar turma:', err);
+        return res.status(500).send('Erro inesperado ao cadastrar turma');
+    }
+}
 
-        // Renderizar a página novamente com a mensagem de sucesso
-        getAlunosEMaterias((err, data) => {
-            if (err) {
-                console.error('Erro ao buscar dados para a turma:', err);
-                return res.status(500).send('Erro ao buscar dados para a turma');
-            }
-            const { alunos, materias } = data;
-            res.render('pages/prof/addTurma', { alunos, materias, successMessage: 'Turma cadastrada com sucesso!' });
-        });
-    });
+module.exports = {
+    addTurma,
+    getAlunosEMaterias
 };
-
-module.exports = { getAlunosEMaterias, addTurma };
-

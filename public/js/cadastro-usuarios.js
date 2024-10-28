@@ -11,8 +11,10 @@ const handleError = (error, res, message) => {
 
 // Rota para processar o registro
 router.post('/addpessoas', async (req, res) => {
-    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;
+    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body; // Corrigido para usar os nomes corretos
+    console.log('Dados recebidos:', req.body);
 
+    // Verifica se todos os campos necessários foram preenchidos
     if (!ID_Usuario || !senha || !nome || !Tipo_Usuario) {
         return res.status(400).send('Todos os campos são necessários.');
     }
@@ -21,7 +23,7 @@ router.post('/addpessoas', async (req, res) => {
     const { data: existingUser, error: userError } = await supabase
         .from('usuario')
         .select('*')
-        .eq('id_usuario', ID_Usuario);
+        .eq('id_usuario', ID_Usuario); // Aqui deve ser 'id_usuario'
 
     if (userError) return handleError(userError, res, 'Erro ao verificar usuário.');
 
@@ -35,7 +37,7 @@ router.post('/addpessoas', async (req, res) => {
     // Inserir o novo usuário
     const { error: insertError } = await supabase
         .from('usuario')
-        .insert([{ id_usuario: ID_Usuario, senha: hashedSenha, nome, tipo_usuario: Tipo_Usuario }]);
+        .insert([{ id_usuario: ID_Usuario, senha: hashedSenha, nome, tipo_usuario: Tipo_Usuario }]); // Aqui deve ser 'tipo_usuario'
 
     if (insertError) return handleError(insertError, res, 'Erro ao registrar o usuário');
 
@@ -49,6 +51,7 @@ router.post('/addpessoas', async (req, res) => {
 
     res.redirect('/addpessoas');
 });
+
 
 // Rota para exibir usuários
 router.get('/addpessoas', async (req, res) => {
@@ -67,13 +70,13 @@ router.delete('/delete/:id', async (req, res) => {
 
     // Excluir o usuário de Aluno ou Professor
     const { error: deleteRoleError } = await supabase
-        .from('Aluno')
+        .from('aluno')
         .delete()
         .eq('id_usuario', id);
 
     if (deleteRoleError) {
         await supabase
-            .from('Professor')
+            .from('professor')
             .delete()
             .eq('id_usuario', id);
     }

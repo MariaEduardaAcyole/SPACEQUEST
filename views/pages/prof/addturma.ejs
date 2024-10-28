@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +10,7 @@
 
 <body>
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</a></h3>
+        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> QUEST</a></h3>
 
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior-prof') %>
@@ -19,115 +18,90 @@
     </div>
 
     <div class="atras-1">
-        <!-- Exibir mensagem de sucesso, se houver -->
-        <% if (typeof successMessage !=='undefined' ) { %>
-            <div class="success-message">
-                    <script>
-                        alert('<%= successMessage %>');
-                    </script>               
+        <% if (typeof successMessage !== 'undefined') { %>
+            <script>
+                alert('<%= successMessage %>');
+            </script>
+        <% } %>
+
+        <form action="/addTurma" method="POST" id="addTurmaForm">
+            <div class="topo">
+                <label for="nomeTurma">Nome da Turma:</label>
+                <input type="text" name="nome_turma" id="nomeTurma" required />
+                <button type="submit" class="botao-cadastrar">Cadastrar Turma</button>
             </div>
-            <% } %>
 
-                <form action="/addTurma" method="POST" id="addTurmaForm">
-                    <br>
-                    <div class="topo">
-                        <div class="inputs-cadastro">
-                            <label for="nomeTurma">Nome da Turma:</label>
-                            <input type="text" id="nomeTurma" name="nomeTurma" required><br><br>
-                        </div>
+            <div class="tabelas-aluno-materias">
+                <!-- Alunos -->
+                <div class="col-1-aluno">
+                    <table class="alunosTable" id="alunosTable">
+                        <thead>
+                            <tr><th>Nome do Aluno</th></tr>
+                        </thead>
+                        <tbody>
+                            <% alunos.forEach(aluno => { %>
+                                <tr class="clickable" data-id="<%= aluno.id_aluno %>">
+                                    <td><%= aluno.usuario.nome %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
 
-                        <button type="submit" class="botao-cadastrar">Cadastrar Turma</button>
-                    </div>
+                <!-- Matérias -->
+                <div class="caixa-tabela-materia">
+                    <table class="materiasTable" id="materiasTable">
+                        <thead>
+                            <tr><th>Nome da Matéria</th></tr>
+                        </thead>
+                        <tbody>
+                            <% materias.forEach(materia => { %>
+                                <tr class="clickable" data-id="<%= materia.id_materia %>">
+                                    <td><%= materia.nome_materia %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="tabelas-aluno-materias">
-                        <div class="col-1-aluno">
-
-                                <!-- Tabela para seleção de alunos -->
-                                <table class="alunosTable" id="alunosTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Nome do Aluno</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody">
-                                        <% alunos.forEach(function(aluno) { %>
-                                            <tr class="clickable" data-id="<%= aluno.ID_Aluno %>">
-                                                <td>
-                                                    <%= aluno.Nome %>
-                                                </td>
-                                            </tr>
-                                            <% }); %>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        <!-- Tabela para seleção de matérias -->
-                        <div class="caixa-tabela-materia">
-
-                            <table class="materiasTable" id="materiasTable">
-                                <thead>
-                                    <tr>
-                                        <th>Nome da Matéria</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tbody">
-                                    <% materias.forEach(function(materia) { %>
-                                        <tr class="clickable" data-id="<%= materia.ID_Materia %>">
-                                            <td>
-                                                <%= materia.Nome_Materia %>
-                                            </td>
-                                        </tr>
-                                        <% }); %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Campos ocultos para enviar os IDs selecionados -->
-                    <input type="hidden" name="idAlunosSelecionados" id="idAlunosSelecionados">
-                    <input type="hidden" name="idMateriasSelecionadas" id="idMateriasSelecionadas">
-                </form>
+            <!-- Inputs ocultos para armazenar IDs dos alunos e matérias selecionados -->
+            <input type="hidden" name="alunos" id="idAlunosSelecionados">
+            <input type="hidden" name="materias" id="idMateriasSelecionadas">
+        </form>
     </div>
 
     <script>
-        // Função para alternar seleção de linhas na tabela
+        const selectedAlunos = [];
+        const selectedMaterias = [];
+
+        document.querySelectorAll('#alunosTable tr.clickable').forEach(row => {
+            row.addEventListener('click', event => {
+                toggleSelection(event, selectedAlunos, 'idAlunosSelecionados');
+            });
+        });
+
+        document.querySelectorAll('#materiasTable tr.clickable').forEach(row => {
+            row.addEventListener('click', event => {
+                toggleSelection(event, selectedMaterias, 'idMateriasSelecionadas');
+            });
+        });
+
         function toggleSelection(event, selectedIds, hiddenInputId) {
             const row = event.currentTarget;
             const id = row.getAttribute('data-id');
             const index = selectedIds.indexOf(id);
 
-            // Se já estiver selecionado, remover da seleção
             if (index > -1) {
                 selectedIds.splice(index, 1);
                 row.classList.remove('selected');
             } else {
-                // Adicionar à seleção
                 selectedIds.push(id);
                 row.classList.add('selected');
             }
 
-            // Atualizar o valor do campo oculto
             document.getElementById(hiddenInputId).value = selectedIds.join(',');
         }
-
-        // Inicializar as seleções
-        const selectedAlunos = [];
-        const selectedMaterias = [];
-
-        // Adicionar evento de clique para cada linha de aluno
-        document.querySelectorAll('#alunosTable tr.clickable').forEach(function (row) {
-            row.addEventListener('click', function (event) {
-                toggleSelection(event, selectedAlunos, 'idAlunosSelecionados');
-            });
-        });
-
-        // Adicionar evento de clique para cada linha de matéria
-        document.querySelectorAll('#materiasTable tr.clickable').forEach(function (row) {
-            row.addEventListener('click', function (event) {
-                toggleSelection(event, selectedMaterias, 'idMateriasSelecionadas');
-            });
-        });
     </script>
 </body>
-
 </html>

@@ -32,20 +32,17 @@
         <div class="caixa-container-materias">
 
               
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-
-                    <div class="caixa-materia" href="./materia">HITÓRIA</div>
-
-                    <div class="caixa-materia" href="./materia">HITÓRIA</div>
-
-                    <div class="caixa-materia" href="./materia">HITÓRIA</div>
-
-                    <div class="caixa-materia" href="./materia">HITÓRIA</div>
+                    <div class="caixa-materia" href="./materia">
+                        <% materias.forEach(materia => { %>
+                        <h2><%= materia.nome_materia %></h2>
+                        <ul>
+                            <% (atividadesPorMateria[materia.id_materia] || []).forEach(atividade => { %>
+                                <li><%= atividade.nome_atividade %> - <%= atividade.descricao %></li>
+                            <% }) %>
+                        </ul>
+                    <% }) %>
+                    </div>
+                   
 
          
             </div>
