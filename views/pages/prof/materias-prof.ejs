@@ -1,61 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta http-equiv="refresh" content="30" />
-    <title>MATERIAS</title>
-    <link rel="stylesheet" href="css/materias.css">
-    <link rel="stylesheet" type="text/css" href="main.css">
-
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Matérias</title>
+    <link rel="stylesheet" href="/css/materias.css">
 </head>
-
 <body>
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-prof.ejs">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
-        <div class="menu-cardapio"> 
+        <h3 class="titulo-spacequest"><a href="/home-prof">SPACE<br>QUEST</a></h3>
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
-
         </div>
-
     </div>
 
-    <div class="linha-2">
-        <div class="caixa-atras">
-            <div class="caixa-titulo-pagina">
-         Matérias
-            </div>
-
-
+    <div class="container">
+        <h2>Minhas Matérias</h2>
         <div class="caixa-container-materias">
-    
-            <% if (atividades.length > 0) { %>
-                <% atividades.forEach(atividade => { %>
-              
-                    <div class="caixa-materia" href="./materia">
-                        <h3><%= atividade.titulo %></h3>
-                        <p><%= atividade.descricao %></p>
-                        <p><strong>Data de Vencimento:</strong> <%= atividade.data_vencimento %></p>
-                        <p><strong>Pontos:</strong> <%= atividade.pontos %></p>
+            <% if (materias && materias.length > 0) { %>
+                <% materias.forEach(materia => { %>
+                    <!-- Card de cada matéria com link para a página de atividades dessa matéria -->
+                    <div class="caixa-materia">
+                        <h3><%= materia.nome_materia %></h3>
+                        <a href="/materia-atividades-prof/<%= materia.id_materia %>" class="btn-ver-atividades">Ver Atividades</a>
                     </div>
-
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-                    <div class="caixa-materia" href="./materia">HISTORIA</div>
-      
                 <% }); %>
             <% } else { %>
-                <p>Nenhuma atividade cadastrada para esta matéria.</p>
+                <p>Nenhuma matéria encontrada.</p>
             <% } %>
         </div>
     </div>
-
-         
-            </div>
-        </div>
-
-
 </body>
-
 </html>

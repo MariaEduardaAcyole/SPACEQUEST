@@ -10,46 +10,56 @@ const handleError = (error, res, message) => {
 };
 
 // Rota para processar o registro
+// Rota para processar o registro do usuário
 router.post('/addpessoas', async (req, res) => {
-    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body; // Corrigido para usar os nomes corretos
-    console.log('Dados recebidos:', req.body);
+    const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;
 
-    // Verifica se todos os campos necessários foram preenchidos
     if (!ID_Usuario || !senha || !nome || !Tipo_Usuario) {
         return res.status(400).send('Todos os campos são necessários.');
     }
 
-    // Verifica se o ID_Usuario já existe
-    const { data: existingUser, error: userError } = await supabase
-        .from('usuario')
-        .select('*')
-        .eq('id_usuario', ID_Usuario); // Aqui deve ser 'id_usuario'
+    try {
+        // Inserir o usuário na tabela usuario
+        const { data: novoUsuario, error: usuarioError } = await supabase
+            .from('usuario')
+            .insert([{ id_usuario: ID_Usuario, senha, nome, tipo_usuario: Tipo_Usuario }])
+            .select()
+            .single();
 
-    if (userError) return handleError(userError, res, 'Erro ao verificar usuário.');
+        if (usuarioError) {
+            console.error('Erro ao inserir usuário:', usuarioError);
+            return res.status(500).send('Erro ao cadastrar usuário');
+        }
 
-    if (existingUser && existingUser.length > 0) {
-        return res.render('pages/prof/addpessoas', { usuarios: existingUser, message: 'Usuário já existe' });
+        console.log('Usuário cadastrado:', novoUsuario);
+
+        // Inserir na tabela correspondente com base no tipo de usuário
+        if (Tipo_Usuario === 'Aluno') {
+            const { error: alunoError } = await supabase
+                .from('aluno')
+                .insert([{ id_usuario: novoUsuario.id_usuario, nome }]);
+
+            if (alunoError) {
+                console.error('Erro ao cadastrar aluno:', alunoError);
+                return res.status(500).send('Erro ao cadastrar aluno');
+            }
+
+        } else if (Tipo_Usuario === 'Professor') {
+            const { error: professorError } = await supabase
+                .from('professor')
+                .insert([{ id_usuario: novoUsuario.id_usuario, nome }]);
+
+            if (professorError) {
+                console.error('Erro ao cadastrar professor:', professorError);
+                return res.status(500).send('Erro ao cadastrar professor');
+            }
+        }
+
+        return res.redirect('/addpessoas');
+    } catch (err) {
+        console.error('Erro inesperado:', err);
+        return res.status(500).send('Erro ao cadastrar usuário');
     }
-
-    // Criptografar a senha
-    const hashedSenha = await bcrypt.hash(senha, 10);
-
-    // Inserir o novo usuário
-    const { error: insertError } = await supabase
-        .from('usuario')
-        .insert([{ id_usuario: ID_Usuario, senha: hashedSenha, nome, tipo_usuario: Tipo_Usuario }]); // Aqui deve ser 'tipo_usuario'
-
-    if (insertError) return handleError(insertError, res, 'Erro ao registrar o usuário');
-
-    // Inserir na tabela Aluno ou Professor conforme o tipo
-    const userRoleTable = Tipo_Usuario === 'Aluno' ? 'Aluno' : 'Professor';
-    const { error: insertRoleError } = await supabase
-        .from(userRoleTable)
-        .insert([{ id_usuario: ID_Usuario }]);
-
-    if (insertRoleError) return handleError(insertRoleError, res, `Erro ao registrar como ${Tipo_Usuario}`);
-
-    res.redirect('/addpessoas');
 });
 
 

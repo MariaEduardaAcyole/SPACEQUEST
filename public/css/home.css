@@ -20,6 +20,8 @@ a {
         --fundo: ;
         --caixas: #ffffffa3;
         --trasparencia: #D9D9D9a2;
+        --trasparencia2: #d9d9d946;
+
     }
 
     body {
@@ -256,43 +258,93 @@ a {
         font-family: Arial, sans-serif;
     }
         /* Popup */
-    .semana {
-        cursor: pointer;
-        padding: 20px;
-        background-color: #042763;
-        border: 1px solid #ccc;
-        display: inline-block;
-        transition: background-color 0.3s;
-    }
-    
-    .semana:hover {
-        background-color: #e0e0e0;
-    }
-    
-    .popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgb(0, 0, 0);
-        border: 1px solid #ccc;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-    }
-    
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-    }
-    
+/* Estilos para os botões */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.open-popup-btn {
+    padding: 10px 20px;
+    width: 100%;
+    height: 40%;
+    font-size: 16px;
+    cursor: pointer;
+    background-color:var(--trasparencia2);
+    color: white;
+    border: solid black 1px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease; /* Apenas a transição de sombra */
+}
+/* Efeito de duas sombras ao passar o mouse */
+.open-popup-btn:hover {
+    box-shadow: 
+        0px -4px 8px rgba(0, 0, 0, 0.2),   /* Sombra na parte superior */
+        0px 4px 12px rgba(0, 0, 0, 0.3);   /* Sombra ao redor */
+}
+
+
+/* Estilos para o popup */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--fundo);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Estilos para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #fffafa;
+    padding: 8px;
+}
+
+th {
+    background-color: #ffffff;
+    color:#000000;
+}
+
+
+/* Estilo para o botão de fechar */
+.close-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease; /* Apenas a sombra terá transição */
+}
+
+
+
+    /* Efeito de duas sombras no botão Fechar */
+.close-btn:hover {
+    box-shadow: 
+        0px -4px 8px rgba(0, 0, 0, 0.2),    /* Sombra na parte superior */
+        0px 4px 12px rgba(0, 0, 0, 0.3);    /* Sombra ao redor */
+}
     
 }
 

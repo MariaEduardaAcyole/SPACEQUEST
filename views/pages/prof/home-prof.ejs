@@ -46,64 +46,110 @@
                     </a>
 
                 </div>
+ <!-- Botões para cada dia da semana -->
+ <div class="button-container">
+    <button class="open-popup-btn" onclick="openPopup('segunda')">Segunda-feira</button>
+    <button class="open-popup-btn" onclick="openPopup('terca')">Terça-feira</button>
+    <button class="open-popup-btn" onclick="openPopup('quarta')">Quarta-feira</button>
+    <button class="open-popup-btn" onclick="openPopup('quinta')">Quinta-feira</button>
+    <button class="open-popup-btn" onclick="openPopup('sexta')">Sexta-feira</button>
+</div>
 
-                <div class="div-semana">
-                    <!-- Botões de dia da semana -->
-                    <button class="open-popup" data-day="Segunda">SEG</button>
-                    <button class="open-popup" data-day="Terça">TER</button>
-                    <button class="open-popup" data-day="Quarta">QUA</button>
-                    <button class="open-popup" data-day="Quinta">QUI</button>
-                    <button class="open-popup" data-day="Sexta">SEX</button>
-
-                    <!-- Popup -->
-                    <div class="popup popup-hidden">
-                        <div class="popup-content">
-                            <span class="close-popup close-btn">&times;</span>
-                            <h2 id="popup-title"></h2>
-                            <ul id="popup-list"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Estrutura do popup -->
+<div class="popup-overlay" id="popup">
+    <div class="popup-content">
+        <h3 id="popup-title">Horário das Aulas</h3>
+        <table>
+            <tr>
+                <th>Aula</th>
+                <th>Horário</th>
+            </tr>
+            <!-- Linhas da tabela serão atualizadas pelo JavaScript -->
+            <tbody id="popup-table-body">
+                <tr>
+                    <td colspan="2">Selecione um dia para ver o horário</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="close-btn" onclick="closePopup()">Fechar</button>
     </div>
+</div>
+
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const openPopupBtns = document.querySelectorAll('.open-popup');
-            const closePopupBtn = document.querySelector('.close-popup');
-            const popup = document.querySelector('.popup');
-            const popupTitle = document.getElementById('popup-title');
-            const popupList = document.getElementById('popup-list');
+     const schedule = {
+    segunda: [
+        { aula: "Matemática", horario: "08:00 - 09:00" },
+        { aula: "História", horario: "09:10 - 10:10" },
+        { aula: "Ciências", horario: "10:20 - 11:20" }
+    ],
+    terca: [
+        { aula: "Geografia", horario: "08:00 - 09:00" },
+        { aula: "Inglês", horario: "09:10 - 10:10" },
+        { aula: "Educação Física", horario: "10:20 - 11:20" }
+    ],
+    quarta: [
+        { aula: "Química", horario: "08:00 - 09:00" },
+        { aula: "Matemática", horario: "09:10 - 10:10" },
+        { aula: "Português", horario: "10:20 - 11:20" }
+    ],
+    quinta: [
+        { aula: "Biologia", horario: "08:00 - 09:00" },
+        { aula: "Física", horario: "09:10 - 10:10" },
+        { aula: "Artes", horario: "10:20 - 11:20" }
+    ],
+    sexta: [
+        { aula: "Sociologia", horario: "08:00 - 09:00" },
+        { aula: "História", horario: "09:10 - 10:10" },
+        { aula: "Geografia", horario: "10:20 - 11:20" }
+    ]
+};
 
-            openPopupBtns.forEach(btn => {
-                btn.addEventListener('click', (event) => {
-                    const day = event.target.getAttribute('data-day');
-                    popupTitle.textContent = day;
+function openPopup(day) {
+    const popup = document.getElementById("popup");
+    const title = document.getElementById("popup-title");
+    const tableBody = document.getElementById("popup-table-body");
 
-                    // Atualiza a lista de opções com base no dia
-                    popupList.innerHTML = `
-                        <li><a href="#">Portuga</a></li>
-                        <li><a href="#">Opção 2</a></li>
-                        <li><a href="#">Opção 3</a></li>
-                        <li><a href="#">Opção 4</a></li>
-                    `;
-                    
-                    popup.classList.remove('popup-hidden');
-                });
-            });
+    // Define o título do popup
+    title.innerText = `Horário de ${capitalize(day)}-feira`;
 
-            closePopupBtn.addEventListener('click', () => {
-                popup.classList.add('popup-hidden');
-            });
+    // Limpa o conteúdo anterior da tabela
+    tableBody.innerHTML = "";
 
-            // Fechar o pop-up clicando fora dele
-            window.addEventListener('click', (event) => {
-                if (popup.contains(event.target) && !popup.classList.contains('popup-hidden')) {
-                    popup.classList.add('popup-hidden');
-                }
-            });
-        });
+    // Adiciona as linhas da tabela com base no dia selecionado
+    schedule[day].forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${item.aula}</td><td>${item.horario}</td>`;
+        tableBody.appendChild(row);
+    });
+
+    // Exibe o popup
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+// Fecha o popup ao clicar fora do conteúdo principal
+document.getElementById("popup").addEventListener("click", function(event) {
+    const content = document.querySelector(".popup-content");
+    if (!content.contains(event.target)) {
+        closePopup();
+    }
+});
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+    
     </script>
 </body>
 
