@@ -3,8 +3,8 @@
 
 O SpaceQuest é uma idealização de sistema de aprendizagem para escola e professores particulares. Carrega valores de inovação e personalização da aprendizagem
 
-#### EMPRESA FUNDADORA: 
 # ANDROMEDA
+#### ceo: MARIA EDUARDA ACYOLE
 
 ## Funcionalidades
 
