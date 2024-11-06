@@ -171,3 +171,19 @@ const questions = [
     ]
   },
 ]
+
+document.getElementsByClassName("startButton").addEventListener("click", function () {
+  const button = this;
+  button.classList.add("animate");
+
+  // Remove a animação depois de um tempo para que possa ser clicada novamente
+  setTimeout(() => {
+    button.classList.remove("animate");
+    button.classList.add("animate-end");
+
+    // Remove também a classe de fim após um pequeno atraso
+    setTimeout(() => {
+      button.classList.remove("animate-end");
+    }, 300);
+  }, 300);
+});

@@ -8,9 +8,7 @@
 }
 
 @media screen and (min-width: 417px)
-/*GRANDE*/
-
-    {
+/*GRANDE*/{
 
     .texto-Nomedominigame {
         width: 100%;
@@ -247,6 +245,7 @@
 
     .caixa-alternativas {
         display: flex;
+
         flex-direction: row;
         gap: 10px;
         flex-wrap: wrap;
@@ -338,10 +337,343 @@
 }
 
 /* Media queries */
-@media screen and (max-width: 415px) {
+@media screen and (max-width: 415px) /*pequena*/{
+    
+    .texto-Nomedominigame {
+        width: 100%;
+    }
+
+    .nome-minigame {
+        width: 45%;
+        margin-right: 2%;
+        border-radius: 10px;
+    }
+
+    body {
+        height: 100vh;
+        overflow-y: auto !important;
+        color: #000000;
+        font-family: "Russo One", sans-serif, "lin Gothic Medium", Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-repeat: no-repeat;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+    }
+
+    input,
+    button,
+    a {
+        padding: 1%;
+        box-shadow: none;
+        border: none;
+        outline: none;
+        text-decoration: none;
+    }
+
+    .titulo-spacequest {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    nav {
+        height: 10%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .atras-1 {
+        width: 97%;
+        height: 85%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .linha-1 {
+        width: 100%;
+        height: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /*INICIO CARROSSEL*/
+
+    .carrossel-container {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+        justify-content: space-around;
+
+        width: 100%;
+        height: 100%;
+
+        position: relative;
+    }
+
+    .carrossel {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carrossel-caixa {
+        display: flex;
+        transition: transform 0.5s ease;
+        will-change: transform;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carrossel-item {
+        flex: 0 0 33.33%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        height: 70%;
+        transition: transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
+    }
+
+    .carrossel-item.game-1 {
+        background-image: url(../img/cenário1.jpg);
+    }
+
+    .carrossel-item.game-2 {
+        background-image: url(../img/cenário2.jpg);
+    }
+
+   
+    .carrossel-item.game-4 {
+        background-image: url(../img/cenário4.jpg);
+    }
+    .carrossel-item.game-3 {
+        background-image: url(../img/cenário1.jpg);
+    }
+
+
+    .carrossel-item.active {
+        margin-top: 1%;
+        opacity: 1;
+        height: 98%;
+    }
+
+    .carrossel-item.inactive {
+        opacity: 0.6;
+        transform: scale(0.8);
+    }
+
+    .prev,
+    .next {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+
+    .prev {
+        transform: rotateY(180deg);
+    }
+
+    .next {
+        transform: rotateY(0deg);
+
+    }
+
+    .game-1 {
+        background-image: url("img/cenário1.jpg");
+        border: 1vh solid #fff;
+    }
+
+    .game-2 {
+        background-image: url("img/cenário2.jpg");
+        border: 1vh solid #fff;
+    }
+
+    .game-3 {
+        background-image: url("img/cenário3.jpg");
+        border: 1vh solid #fff;
+    }
+
+    .game-4 {
+        background-image: url("img/cenário4.jpg");
+        border: 1vh solid #fff;
+    }
+
+    /*FIM CARROSSEL*/
+
+    .linha-2 {
+        width: 98%;
+    }
+
+    .linha-1-FORM {
+        width: 100%;
+        height: 30%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .texto-Nomedominigame{
+
+    }
+    /* Linha 2: Formulário */
+    form.linha-2 {
+        width: 98%;
+
+    }
+
+    .linha-1-FORM {
+        height: 30%;
+       
+    }
+
+    .linha-2_FORM {
+        border-radius: 10px;
+        width: 100%;
+height: 100%;
+    }
+
+    .pergunta-container {
+        margin-bottom: 20px;
+    }
+
+    .caixa-pergunta {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .label-pergunta {
+        color: white;
+        font-size: 1.2rem;
+        width: 50%;
+        margin-bottom: 5px;
+    }
+
+    .pergunta {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #41BDDA;
+        background-color: #ffffff;
+        font-size: 1rem;
+    }
+
+    .caixa-alternativas {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+        height: 40%;
+    }
+
+    .alternativa {
+        display: flex;
+        align-items: center;
+        width: 60%;
+        gap: 10px;
+    }
+
+    .input-alternativa {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 2px solid #41BDDA;
+        background-color: #ffffff;
+        font-size: 1rem;
+    }
+
+
+    .caixa-dos-botoes {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        justify-content: space-evenly;
+
+    }
+
+
+
+    .mais-perguntas,
+    .botao-iniciar-jogo {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .mais-perguntas {
+        background-color: #41BDDA;
+        color: white;
+        
+    }
+#adicionar-pergunta{
+    
+    height: 30%;
+}
+    .botao-iniciar-jogo {
+        background-color: #042661;
+        color: white;
+        height: 40%;
+    }
+
+    .mais-perguntas:hover {
+        background-color: #319bc3;
+    }
+
+    .botao-iniciar-jogo:hover {
+        background-color: #031b40;
+    }
+
+    /* Select */
+    .opcoes-turma {
+        width: 50%;
+        height: 50%;
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 8px;
+        background-color: #042661;
+        border: 2px solid #41BDDA;
+        color: white;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position-x: calc(100% - 10px);
+        background-position-y: center;
+    }
+
+    .opcoes-turma option {
+        background-color: #ffffff;
+        color: #042661;
+        padding: 5px;
+    }
+
+    .opcoes-turma:focus {
+        border-color: #042661;
+    }
     body {
         width: 100%;
-        color: #ffffff;
     }
 
     .linha-1 {
@@ -355,14 +687,11 @@
     }
 
     .alternativa {
-        width: 40%;
+        width: 100%;
         height: 35%;
     }
-}
-
-@media screen and (min-width: 417px) {
     .linha-1 {
-        height: 40%;
+        height: 30%;
     }
 
     .col-1 {
@@ -374,4 +703,9 @@
     .pergunta {
         height: 40%;
     }
+    #perguntas-container{
+    width: 100%;
+    height: 80%;
+    }
+
 }

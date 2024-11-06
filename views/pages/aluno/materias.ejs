@@ -6,50 +6,34 @@
     <title>MATERIAS</title>
     <link rel="stylesheet" href="css/materias.css">
     <link rel="stylesheet" type="text/css" href="main.css">
-
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 
 <body>
     <div class="header">
-
         <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
         <div class="menu-cardapio"> 
             <%- include('../../partials/menu-superior') %>
-
         </div>
-
     </div>
 
     <div class="linha-2">
         <div class="caixa-atras">
-            <div class="caixa-titulo-pagina">
-         Matérias
-            </div>
-
-
-        <div class="caixa-container-materias">
-
-              
-                    <div class="caixa-materia" href="./materia">
-                        <% materias.forEach(materia => { %>
-                        <h2><%= materia.nome_materia %></h2>
+            <div class="caixa-titulo-pagina">Matérias</div>
+            <div class="caixa-container-materias">
+                <div class="caixa-materia">
+                    <% materias.forEach(materia => { %>
+                        <h2><%= materia.materia_id.nome_materia %></h2>
                         <ul>
-                            <% (atividadesPorMateria[materia.id_materia] || []).forEach(atividade => { %>
+                            <% (atividadesPorMateria[materia.materia_id] || []).forEach(atividade => { %>
                                 <li><%= atividade.nome_atividade %> - <%= atividade.descricao %></li>
                             <% }) %>
                         </ul>
                     <% }) %>
-                    </div>
-                   
-
-         
+                </div>
             </div>
         </div>
-
     </div>
-
 </body>
 
 </html>

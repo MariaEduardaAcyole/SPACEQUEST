@@ -98,7 +98,7 @@ app.get('/home-aluno', verificarToken, (req, res) => {
     res.render('pages/aluno/home'); // Corrigido: removido o '/' antes do nome da view
 });
 
-app.get('/home-prof', verificarToken, (req, res) => {
+app.get('/home-prof', (req, res) => {
     if (req.user.tipo_usuario !== 'Professor') {
         return res.status(403).send('Acesso negado.');
     }

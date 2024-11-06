@@ -6,6 +6,29 @@ button,a {
     text-decoration: none;
 }
 
+
+/* Estilo inicial do botão */
+.start-quiz.button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Classe para a animação */
+.start-quiz.button.animate {
+  transform: scale(1.2); /* Aumenta o tamanho do botão */
+}
+
+/* Retorno ao estilo inicial após a animação */
+.start-quiz.button.animate-end {
+  transform: scale(1); /* Volta ao tamanho original */
+}
+
 .titulo-spacequest{
     display: flex;
     flex-direction: row;
@@ -67,8 +90,7 @@ height: 12vh;
 
 .container {
   background-color: #12121400;
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
 
   border-radius: 6px;
   padding: 16px;
@@ -174,15 +196,31 @@ height: 12vh;
     margin: 1em auto;
     font-family: "font-family: "Russo One", sans-seriflin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-    overflow: hidden;
+
+ overflow-x: hidden;
     background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     background-repeat: no-repeat;
   }
   
+  .questions-container{
+    display: grid;
+ 
+    grid-template-rows: 40% 60%;
+  }
+  
+  .controls-container{
+    grid-row: 1/2;  
+
+  }
+
+  .questions{
+    grid-row: 1/2;  
+  }
+
+  .answers-container{
+    grid-row: 2/3;
+  }
+
   a,* {
     color: #ffffff;
     text-decoration: none;
@@ -215,24 +253,23 @@ height: 12vh;
   
   .container {
     background-color: #12121400;
-    width: 90%;
+    width: 100%;
     max-width: 800px;
-  
+  display: grid;
     border-radius: 6px;
     padding: 16px;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
   
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
   }
   
   .questions-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+height: 90%;
+grid-row: 1/2;
     gap: 24px;
+
   }
   
   .question {
@@ -303,4 +340,8 @@ height: 12vh;
   .incorrect {
     background-color: #a10101;
   }
+}
+
+.rendom-toolbar-extension{
+  width: 100%;
 }

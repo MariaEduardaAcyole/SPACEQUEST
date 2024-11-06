@@ -20,6 +20,7 @@
 
     <div class="col-1">
         <h2>Cadastro de Matérias</h2>
+        
         <form action="/addmateria" method="POST">
             <!-- Campo para escolher a cor da matéria -->
             <label for="corMateria">Cor da Matéria:</label>
@@ -27,9 +28,7 @@
     
             <!-- Campo para o nome da matéria -->
             <label for="nomeMateria">Nome da Matéria:</label>
-            <input type="text" id="nomeMateria" name="nomeMateria" class="cadastros" size="40" required aria-required="true"><br>
-    
-            <!-- Campo para selecionar o professor -->
+            <input type="text" id="nomeMateria" name="nomeMateria" class="cadastros" size="40"><br>
             <label for="idProfessor">Professor:</label>
             <select id="idProfessor" name="idProfessor" class="cadastros" required>
                 <option value="" disabled selected>Selecione um Professor</option>

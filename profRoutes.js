@@ -6,6 +6,7 @@ const { verificarToken } = require('./middlewares');
 const { getAlunosEMaterias, addTurma } = require('./public/js/addTurma');
 const { upload, addAtividade } = require('./public/js/addAtividade');
 const addMateriasRouter = require('./public/js/addMaterias');
+router.use('/addmateria', addMateriasRouter);
 const session = require('express-session');
 
 router.use(express.urlencoded({ extended: true }));
@@ -18,15 +19,47 @@ const verificarProfessorLogado = (req, res, next) => {
     next();
 };
 
+router.use('/addmateria', addMateriasRouter);
+
+router.get('/addmateria', async (req, res) => {
+    try {
+        // Busca todos os professores para exibir no formulário
+        const { data: professores, error } = await supabase
+            .from('professor')
+            .select('*');
+
+        if (error) {
+            console.error('Erro ao buscar professores:', error);
+            return res.status(500).send('Erro ao buscar professores');
+        }
+
+        // Renderiza a página com a lista de professores
+        res.render('pages/prof/addmateria', { professores });
+    } catch (err) {
+        console.error('Erro ao buscar professores:', err);
+        res.status(500).send('Erro ao buscar professores');
+    }
+});
+
+module.exports = router;
+
+
+
 // Rota: Página inicial do professor
-// Rota: Página inicial do professor
-router.get('/home-prof', verificarProfessorLogado, (req, res) => {
+router.get('/home-prof', (req, res) => {
     res.render('pages/prof/home-prof');
 });
 
+router.get('/quiz', (req, res) => {
+    res.render('pages/prof/quiz');
+});
+
+router.get('/minigame-kart', (req, res) => {
+    res.render('pages/prof/minigame-kart');
+});
 
 // Rota: Exibir tela de criação de mini-game
-router.get('/inicio-game-prof', verificarProfessorLogado, (req, res) => {
+router.get('/inicio-game-prof', (req, res) => {
     res.render('pages/prof/inicio-game-prof');
 });
 
@@ -99,6 +132,8 @@ router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
 // Rota: Processar adição de turma
 router.post('/addTurma', addTurma);
 
+
+
 // Rota: Exibir tela de criar atividade
 router.get('/addAtividade', verificarProfessorLogado, (req, res) => {
     res.render('pages/prof/addAtividade', { successMessage: null });
@@ -118,27 +153,43 @@ router.get('/materia-downloads-prof', (req, res) => {
 });
 
 // Rota: Exibir matérias do professor
+// Rota: Exibir matérias do professor
 router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
-    const idProfessor = req.session.usuario.id_usuario; // Pegando o ID do professor logado
+    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
 
     try {
-        const { data: materias, error } = await supabase
-            .from('materia')
-            .select('*')
-            .eq('id_professor', idProfessor); // Certifique-se de usar a chave correta
+        const { data: professorData, error: professorError } = await supabase
+            .from('professor')
+            .select('id_professor')
+            .eq('id_usuario', idUsuario)
+            .single();
 
-        if (error) {
-            console.error('Erro ao buscar matérias do professor:', error);
-            return res.status(500).json({ error: 'Erro ao buscar matérias' }); // Retorne JSON em caso de erro
+        if (professorError || !professorData) {
+            console.error('Erro ao buscar ID do professor:', professorError);
+            return res.status(500).json({ error: 'Erro ao identificar o professor' });
         }
 
-        // Retorne um JSON se estiver usando uma API
-        res.json({ materias }); // Retorna as matérias em JSON
+        const idProfessor = professorData.id_professor;
+
+        const { data: materias, error: materiasError } = await supabase
+            .from('materia')
+            .select('*') // Inclua cor_materia
+            .eq('id_professor', idProfessor);
+
+        if (materiasError) {
+            console.error('Erro ao buscar matérias do professor:', materiasError);
+            return res.status(500).json({ error: 'Erro ao buscar matérias' });
+        }
+
+        res.render('pages/prof/materias-prof', { materias });
     } catch (err) {
         console.error('Erro ao buscar matérias:', err);
         res.status(500).json({ error: 'Erro ao buscar matérias' });
     }
 });
+
+
+
 
 // Rota para obter as atividades de uma matéria específica
 router.get('/materia-atividades-prof/:idMateria', verificarProfessorLogado, async (req, res) => {
@@ -179,7 +230,6 @@ router.get('/materia-atividades-prof/:idMateria', verificarProfessorLogado, asyn
     }
 });
 
-router.use('/addmateria', addMateriasRouter);
 
 router.post('/addpessoas', async (req, res) => {
     const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;
@@ -235,10 +285,10 @@ router.post('/addpessoas', async (req, res) => {
 
 
 router.get('/desempenho-geral-prof',  (req, res) => {
-    res.render('pages/prof/desempenho-classe-prof', { successMessage: null });
+    res.render('pages/prof/desempenho-geral-prof', { successMessage: null });
 });
 
 router.get('/desempenho-classe-prof',  (req, res) => {
-    res.render('pages/prof/desempenho-geral-prof', { successMessage: null });
+    res.render('pages/prof/desempenho-classe-prof', { successMessage: null });
 });
 module.exports = router;

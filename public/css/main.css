@@ -21,7 +21,8 @@
 
 body, html {
         font-family: "Russo One", sans-serif;
-        color: #ffffff;}
+        color: #ffffff;
+      }
  body {
         margin: 1em auto;
         display: flex;
@@ -86,7 +87,7 @@ h1 {
   /* 32px */
 }
 h3{
-  font-size: 1em;
+  font-size: 18px;
 }
 
 p {
