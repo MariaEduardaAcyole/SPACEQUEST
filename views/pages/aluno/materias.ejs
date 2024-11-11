@@ -23,9 +23,9 @@
             <div class="caixa-container-materias">
                 <div class="caixa-materia">
                     <% materias.forEach(materia => { %>
-                        <h2><%= materia.materia_id.nome_materia %></h2>
+                        <h2><%= materia.id_materia.nome_materia %></h2>
                         <ul>
-                            <% (atividadesPorMateria[materia.materia_id] || []).forEach(atividade => { %>
+                            <% (atividadesPorMateria[materia.id_materia] || []).forEach(atividade => { %>
                                 <li><%= atividade.nome_atividade %> - <%= atividade.descricao %></li>
                             <% }) %>
                         </ul>

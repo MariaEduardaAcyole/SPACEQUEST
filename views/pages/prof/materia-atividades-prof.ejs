@@ -1,47 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividades da Matéria</title>
-    <link rel="stylesheet" href="/css/materia-atividades-prof.css">
+    <meta http-equiv="refresh" content="30" />
+    <title>MATERIAS</title>
+    <link rel="stylesheet" href="css/materias.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
+
 <body>
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="/home-prof">SPACE<br>QUEST</a></h3>
-        <div class="menu-cardapio">
+        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
+        <div class="menu-cardapio"> 
             <%- include('../../partials/menu-superior-prof') %>
         </div>
     </div>
 
-    <div class="col-1">
-        <div class="img-materia">
-            <h1><%= nome_materia %></h1> <!-- Nome da matéria passado da rota -->
-        </div>
-
-        <div class="col-3">
-            <h2>Atividades</h2>
-            <div class="col-4">
-                <div class="container">
-                    <h2>Atividades da Matéria: <%= nome_materia %></h2>
-                    <div class="caixa-container-atividades">
-                        <% if (atividades && atividades.length > 0) { %>
-                            <% atividades.forEach(atividade => { %>
-                                <!-- Card de cada atividade -->
-                                <div class="caixa-atividade">
-                                    <h3><%= atividade.titulo %></h3> <!-- Supondo que a atividade tenha um campo 'titulo' -->
-                                    <p><%= atividade.descricao %></p> <!-- Descrição da atividade -->
-                                    <a href="./addAtividade/<%= atividade.id_atividade %>" class="btn-ver-atividade">Ver Detalhes</a>
-                                </div>
-                            <% }); %>
-                        <% } else { %>
-                            <p>Nenhuma atividade encontrada para esta matéria.</p>
-                        <% } %>
-                    </div>
+    <div class="linha-2">
+        <div class="caixa-atras">
+            <div class="caixa-titulo-pagina">Matérias</div>
+            <div class="caixa-container-materias">
+                <div class="caixa-materia">
+                        <h2><%= materia.materia_id.nome_materia %></h2>
+                        <ul>
+                            <% (atividadesPorMateria[materia.materia_id] || []).forEach(atividade => { %>
+                                <li><%= atividade.nome_atividade %> - <%= atividade.descricao %></li>
+                            <% }) %>
+                        </ul>
+                    <% }) %>
                 </div>
-                
             </div>
         </div>
     </div>
 </body>
+
 </html>

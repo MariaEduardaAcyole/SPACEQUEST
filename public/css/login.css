@@ -28,6 +28,14 @@ a {
         background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     }
 
+    .img-fundo {
+        height: 125%;
+        width: 120%;
+        position: absolute;
+        opacity: 30%;
+    }
+
+
     .caixa {
         width: 40%;
         height: auto;
@@ -42,18 +50,18 @@ a {
     }
 
     .img-perfil {
-        width: 8em;
-        height: 8em;
+        width: 15em;
+        height: 15em;
         border-radius: 50%;
         position: absolute;
-        top: 5%;
+        top: 2%;
         border: 1vh solid rgb(255, 255, 255);
     }
 
     .texto-login {
         width: 100%;
         margin-top: 19%;
-        color: antiquewhite;
+        color: rgb(255, 255, 255);
         text-align: center;
         font-family: "Russo One", sans-serif;
     }
@@ -85,7 +93,7 @@ a {
 
     input {
         width: 100%;
-        color: black;
+        color: rgb(255, 255, 255);
         height: 2.5rem;
         font-family: "Russo One", sans-serif;
         font-size: 0.9rem;
@@ -140,7 +148,7 @@ a {
 
     .caixa {
         width: 80%;
-        height: auto;
+        height: 42%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -152,17 +160,17 @@ a {
     }
 
     .img-perfil {
-        width: 40%;
-        height: 20%;
+        width: 48%;
+        height: 22%;
         border-radius: 50%;
         position: absolute;
-        top: 14%;
+        top: 15%;
         border: 1vh solid rgb(255, 255, 255);
     }
 
     .texto-login {
         width: 100%;
-        color: antiquewhite;
+        color: rgb(255, 255, 255);
         text-align: center;
         font-family: "Russo One", sans-serif;
     }
@@ -221,3 +229,4 @@ a {
         background: linear-gradient(90deg, rgba(65, 188, 216, 1) 0%, rgba(13, 54, 107, 1) 93.96%);
     }
 }
+

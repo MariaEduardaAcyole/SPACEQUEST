@@ -153,7 +153,6 @@ router.get('/materia-downloads-prof', (req, res) => {
 });
 
 // Rota: Exibir matérias do professor
-// Rota: Exibir matérias do professor
 router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
 

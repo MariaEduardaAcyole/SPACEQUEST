@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { supabase } = require('./supabaseClient'); // Conexão com o banco de dados PostgreSQL
+const supabase = require('./supabaseClient');
 const { verificarToken } = require('./middlewares'); // Verifique se este middleware está correto
+const session = require('express-session');
+
+
+router.use(express.urlencoded({ extended: true }));
 
 // Middleware para verificar se o usuário logado é um aluno
 const verificarAlunoLogado = (req, res, next) => {
@@ -16,16 +20,45 @@ router.get('/home-aluno', verificarAlunoLogado, (req, res) => {
 });
 
 // Rota para listar todas as atividades
-router.get('/materia-atividades', async (req, res) => {
-    const sql = 'SELECT * FROM Atividade';
+// Rota para listar todas as atividades de uma matéria específica
+router.get('/materia-atividades/:idMateria', async (req, res) => {
     try {
-        const results = await db.query(sql);
-        res.render('pages/aluno/materia-atividades', { atividades: results.rows });
-    } catch (err) {
-        console.error('Erro ao buscar as atividades:', err);
-        res.status(500).send('Erro ao buscar as atividades.');
+        const idAluno = req.session.usuario.id_usuario; // Pega o ID do aluno logado
+        const idMateria = req.params.idMateria; // Pega o ID da matéria da URL
+
+        const { data: atividades, error } = await supabase
+            .from('atividade')
+            .select('*')
+            .eq('id_materia', idMateria); // Adiciona o filtro para pegar atividades da matéria específica
+
+        if (error) {
+            console.error('Erro ao buscar as atividades:', error);
+            return res.status(500).send(`Erro ao buscar as atividades: ${error.message}`);
+        }
+
+        // Buscar a matéria específica para mostrar seu nome
+        const { data: materia, error: materiaError } = await supabase
+            .from('materia')
+            .select('*')
+            .eq('id_materia', idMateria)
+            .single(); // Pega uma única matéria
+
+        if (materiaError) {
+            console.error('Erro ao buscar matéria:', materiaError);
+            return res.status(500).send('Erro ao buscar matéria');
+        }
+
+        res.render('pages/aluno/materia-atividades', {
+            atividades, // Passa a lista de atividades para a view
+            nome_materia: materia.nome_materia // Passa o nome da matéria
+        });
+    } catch (error) {
+        console.error('Erro ao obter atividades:', error);
+        res.status(500).send('Erro ao obter atividades');
     }
 });
+
+
 
 const entregaController = require('./public/js/entrega-atividade');
 router.post('/entrega-atividade/:id', entregaController.upload.single('file'), entregaController.atvEntrega);
@@ -61,10 +94,9 @@ router.get('/perfil', verificarAlunoLogado, (req, res) => {
 
 // Rota para aluno ver suas matérias e atividades
 router.get('/materias', verificarAlunoLogado, async (req, res) => {
-    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
+    const idUsuario = req.session.usuario.id_usuario;
 
     try {
-        // 1. Recuperar o ID do aluno
         const { data: alunoData, error: alunoError } = await supabase
             .from('aluno')
             .select('id_aluno')
@@ -78,7 +110,6 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
 
         const idAluno = alunoData.id_aluno;
 
-        // 2. Recuperar a turma do aluno
         const { data: turmaData, error: turmaError } = await supabase
             .from('aluno_turma')
             .select('id_turma')
@@ -92,10 +123,9 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
 
         const idTurma = turmaData.id_turma;
 
-        // 3. Recuperar as matérias dessa turma
         const { data: materias, error: materiasError } = await supabase
-            .from('turma_materia') // Presumindo que você tenha essa tabela
-            .select('id_materia, materias(nome_materia)')
+            .from('turma_materia')
+            .select('id_materia, materia(nome_materia)')
             .eq('id_turma', idTurma);
 
         if (materiasError) {
@@ -103,15 +133,33 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
             return res.status(500).json({ error: 'Erro ao buscar matérias da turma' });
         }
 
-        // 4. Renderizar a página com as matérias
-        res.render('pages/aluno/materias', { materias });
+        // 3. Buscar as atividades associadas às matérias
+        const { data: atividades, error: atividadesError } = await supabase
+            .from('atividade')
+            .select('*')
+            .in('id_materia', materias.map(m => m.id_materia));
+
+        if (atividadesError) {
+            console.error('Erro ao buscar atividades:', atividadesError);
+            return res.status(500).json({ error: 'Erro ao buscar atividades' });
+        }
+
+        // 4. Estruturar as atividades por matéria
+        const atividadesPorMateria = atividades.reduce((acc, atividade) => {
+            const idMateria = atividade.id_materia;
+            if (!acc[idMateria]) acc[idMateria] = [];
+            acc[idMateria].push(atividade);
+            return acc;
+        }, {});
+
+        // 5. Renderizar a página com as matérias e atividades
+        res.render('pages/aluno/materias', { materias, atividadesPorMateria });
     } catch (err) {
         console.error('Erro ao buscar matérias:', err);
         res.status(500).json({ error: 'Erro ao buscar matérias' });
     }
 });
 
-   
 
 router.get('/materia-mural', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/materia-mural');
@@ -131,7 +179,6 @@ router.get('/desempenho-classe', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/desempenho-classe', { alunos });
 
 });
-
 
 router.get('/desempenho-geral', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/desempenho-geral');
