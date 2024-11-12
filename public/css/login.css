@@ -5,6 +5,7 @@ a {
     border: none;
     outline: none;
     text-decoration: none;
+
 }
 
 .titulo-spacequest {
@@ -93,7 +94,7 @@ a {
 
     input {
         width: 100%;
-        color: rgb(255, 255, 255);
+        color: #000000;
         height: 2.5rem;
         font-family: "Russo One", sans-serif;
         font-size: 0.9rem;

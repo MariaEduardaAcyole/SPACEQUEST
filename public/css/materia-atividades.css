@@ -1,195 +1,162 @@
 :root {
-    --fundo: #042661;
-    --caixas: rgba(255, 255, 255, 0.6);
-    --transparencia: rgba(217, 217, 217, 0.6);
-    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
-    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
-    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
-  }
-  
-  /* Global Styles */
-  body, input, button, a {
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    outline: none;
-    text-decoration: none;
-    color: #000000;
-  }
-  
+  --fundo: #042661;
+  --caixas: rgba(255, 255, 255, 0.8);
+  --transparencia: rgba(217, 217, 217, 0.6);
+  --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+  --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+  --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
+}
+
+/* Global Styles */
+body, input, button, a {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #000;
+}
+
+body {
+  font-family: 'Russo One', 'Gill Sans', 'Arial Narrow', Arial, sans-serif;
+  background: var(--gradiente-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #fff;
+}
+
+p {
+  font-size: 1rem;
+  color: #fff;
+}
+
+/* TELA GRANDE */
+@media screen and (min-width: 416px) {
   body {
-    font-family: "Russo One", "Gill Sans", "Gill Sans MT", "Arial Narrow", Arial, sans-serif;
-    background-repeat: no-repeat;
-    background: var(--gradiente-body);
-    overflow: hidden;
-  }
-  
-  /* Headings */
-  h1 {
-    font-size: 2rem;
-  }
-  
-  /* Paragraphs */
-  p {
-    font-size: 1rem;
-  }
-  
-  /* TELA GRANDE */
-  @media screen and (min-width: 416px) {
-    body {
-      display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      width: 100%;
-      margin: 1em auto;
-    }
-  
-    a {
+  }
+  a {
       color: #ffffff;
-    }
   }
-  
-  /* Common Class Styles */
-  .header,
-  .col-1,
-  .col-2,
-  .col-3,
-  .col-navegacao,
-  .navegacao,
-  .col-4,
-  .titulo-postagem,
-  .postagem,
-  .img-materia,
-  .h1,
-  .linha,
-  .img-perfil {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    border-radius: 30px;
-  }
-  
-  .header,
-  .col-1,
-  .col-2,
-  .col-3,
-  .col-navegacao,
-  .navegacao{
-    align-items: center;
-  }
-  .col-3{
-    align-content: flex-start;
-  }
-  .col-4 {
-justify-content: center ;
-align-content: flex-start;
-    
-  }
-  
-  .header {
-    width: 95%;
-    height: 10vh;
-    justify-content: space-between;
-  }
-  
-  .menu-cardapio {
-    height: 9vh;
-  }
-  
-  .col-1,
-  .col-2,
-  .col-3,
-  .col-4 {
-    width: 95%;
-    margin-top: 1%;
-  }
-  
-  .col-1 {
-    height: 20%;
-    flex-direction: column;
-  }
-  
-  .col-2 {
-    height: 72%;
-    background: #ffd90000;
-  }
-  
-  .col-3 {
-    height: 79%;
-  }
-  
-  .col-navegacao {
-    width: 100%;
-    height: 10%;
-    justify-content: space-around;
-  }
-  
-  .navegacao {
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5);
-    flex-direction: column;
-    align-content: space-evenly;
-  }
-  
-  .col-4 {
-    background: rgba(191, 190, 244, 0.342);
-    overflow-y: scroll;
-  }
-  
-  .titulo-postagem {
-    width: 90%;
-    height: 15%;
-    background: #00b7ff00;
-  }
-  
-  .postagem {
-    width: 90%;
-    height: 25%;
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    align-items: center;
-    margin-top: 3%;
-    padding: 1%;
-    background-color: transparent;
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-  
-  .link-atividade{
-display: flex;
-flex-direction: row;
-  }
-  .img-materia {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
-    justify-content: center;
-  }
-  
-  .h1 {
-    width: 30%;
-    height: 50%;
-    flex-direction: column;
-    background-color: transparent;
-  }
-  
-  .linha {
-    width: 7%;
-    height: 1%;
-  }
-  
-  .img-perfil {
-    width: 6%;
-    height: 70%;
-    border-radius: 50%;
-    margin: 1%;
-  }
-  
-  @media screen and (max-width: 415px)/* TELA PEQUENA */ {
-    body {
+}
+
+/* Common Class Styles */
+.header, .col-1, .col-2, .col-3, .col-navegacao, .navegacao, .col-4, .titulo-postagem, .postagem, .img-materia, .h1, .linha, .img-perfil {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  box-shadow: var(--shadow-filter);
+}
+
+.header {
+  width: 100%;
+  height: 10vh;
+  justify-content: space-between;
+  padding: 10px;
+  background: var(--caixas);
+}
+
+.menu-cardapio {
+  height: 9vh;
+}
+
+.col-1, .col-2, .col-3, .col-4 {
+  width: 95%;
+  margin-top: 1%;
+}
+
+.col-1 {
+  height: 20%;
+  flex-direction: column;
+}
+
+.col-2 {
+  height: 72%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.col-3 {
+  height: 79%;
+}
+
+.col-navegacao {
+  width: 100%;
+  height: 10%;
+  justify-content: space-around;
+}
+
+.navegacao {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  flex-direction: column;
+  align-content: space-evenly;
+}
+
+.col-4 {
+  background: rgba(191, 190, 244, 0.342);
+  overflow-y: auto;
+  color: #000;
+  padding: 20px;
+}
+
+.titulo-postagem {
+  width: 90%;
+  height: 15%;
+  background: #00b7ff;
+  padding: 15px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.postagem {
+  width: 90%;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  margin-top: 3%;
+  padding: 10px;
+  background-color: transparent;
+  flex-wrap: wrap;
+}
+
+.img-materia {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.h1 {
+  width: 30%;
+  height: 50%;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+.linha {
+  width: 7%;
+  height: 1%;
+}
+
+.img-perfil {
+  width: 6%;
+  height: 70%;
+  border-radius: 50%;
+  margin: 1%;
+}
+
+/* TELA PEQUENA */
+@media screen and (max-width: 415px) {
+  body {
       width: 100%;
       height: 100vh;
       display: flex;
@@ -197,19 +164,18 @@ flex-direction: row;
       justify-content: space-around;
       flex-direction: column;
       background: var(--gradiente-body);
-    }
-  
-    .col-4 {
+  }
+
+  .col-4 {
       height: 95%;
-    }
-  
-    .titulo-postagem {
+  }
+
+  .titulo-postagem {
       height: 10%;
-    }
-  
-    .postagem {
+  }
+
+  .postagem {
       height: 15%;
       font-size: 100%;
-    }
   }
-  
+}

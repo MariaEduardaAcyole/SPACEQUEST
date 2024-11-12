@@ -2,89 +2,64 @@
 <html lang="pt-br">
 
 <head>
-    <!-- LINKS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta http-equiv="refresh" content="30" />
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/materia-atividades.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/materia-atividades.css">
+    <title>Atividades da Matéria</title>
 </head>
 
 <body>
 
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
+        <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
-
         </div>
-
     </div>
 
-    </div>
     <div class="col-1">
-
         <div class="img-materia">
-            <h1 lass="h1" href="./materia">NOME MATERIA</h1>
+            <!-- Exibe o nome da matéria -->
+            <h1 class="h1">NOME DA MATÉRIA</h1>
         </div>
     </div>
 
     <div class="col-2">
-
         <div class="col-navegacao">
             <div class="navegacao">
-                <a href="./materia-mural" class="paginas">
-                    <h2>mural</h2>
-                </a>
+                <a href="/materia-mural/<%= idMateria %>" class="paginas"><h2>Mural</h2></a>
                 <div class="linha"></div>
-                <a href="./materia-downloads" class="paginas">
-                    <h2>downloads</h2>
-                </a>
+                <a href="/materia-downloads/<%= idMateria %>" class="paginas"><h2>Downloads</h2></a>
                 <div class="linha"></div>
-                <a href="./materia-atividades" class="paginas">
-                    <h2>atividades</h2>
-                </a>
+                <a href="/materia-atividades/<%= idMateria %>" class="paginas"><h2>Atividades</h2></a>
             </div>
         </div>
 
         <div class="col-3">
-
             <div class="titulo-postagem">
                 <div class="linha"></div>
-                <h2>ATIVIDADES</h2>
+                <h2>Atividades</h2>
             </div>
 
             <div class="col-4">
-
-                <% atividades.forEach(atividade=> { %>
-
-                    <div class="postagem">
-
-                        <h3>
-
-                <a href="/entrega-atividade<%= atividade.id %>">
-                    <%= atividade.Titulo %>
-                    <%= atividade.ID_Atividade %>
-
-                </a>
-
-                        </h3>
-
-                    </div>
-                    <% }); %>
-
+                <% if (atividades && atividades.length > 0) { %>
+                    <% atividades.forEach(atividade => { %>
+                        <div class="postagem">
+                            <h3>
+                                <a href="/entrega-atividade/<%= atividade.id_atividade %>">
+                                    <%= atividade.titulo %>
+                                </a>
+                            </h3>
+                            <p><%= atividade.descricao %></p>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>Não há atividades cadastradas para esta matéria.</p>
+                <% } %>
             </div>
-
-
         </div>
     </div>
 
-
-    </div>
-
-    </div>
 </body>
-
 </html>

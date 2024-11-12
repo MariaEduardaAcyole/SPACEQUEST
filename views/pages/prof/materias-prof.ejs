@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Matérias</title>
-    <link rel="stylesheet" href="/css/materias.css">
+    <link rel="stylesheet" href="/css/materia.css">
 </head>
 <body>
     <div class="header">
@@ -16,6 +16,8 @@
 
     <div class="container">
         <h2>Minhas Matérias</h2>
+        <br>
+        <br>
         <div class="caixa-container-materias">
             <% if (materias && materias.length > 0) { %>
                 <% materias.forEach(materia => { %>
@@ -29,8 +31,6 @@
                 <p>Nenhuma matéria encontrada.</p>
             <% } %>
         </div>
-        
-
     </div>
 </body>
 </html>

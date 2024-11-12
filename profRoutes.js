@@ -135,7 +135,7 @@ router.post('/addTurma', addTurma);
 
 
 // Rota: Exibir tela de criar atividade
-router.get('/addAtividade', verificarProfessorLogado, (req, res) => {
+router.get('/addAtividade/:id', verificarProfessorLogado, (req, res) => {
     res.render('pages/prof/addAtividade', { successMessage: null });
 });
 
@@ -143,13 +143,55 @@ router.get('/addAtividade', verificarProfessorLogado, (req, res) => {
 router.post('/addAtividade', upload.single('arquivo'), addAtividade);
 
 // Rota: Mural de uma matéria específica
-router.get('/materia-mural-prof', (req, res) => {
+router.get('/materia-mural-prof/:id', (req, res) => {
     res.render('pages/prof/materia-mural-prof', { successMessage: null });
 });
 
 // Rota: Downloads de uma matéria específica
-router.get('/materia-downloads-prof', (req, res) => {
+router.get('/materia-downloads-prof/:id', (req, res) => {
     res.render('pages/prof/materia-downloads-prof', { successMessage: null });
+});
+
+// Rota para obter as atividades de uma matéria específica
+router.get('/materia-atividades-prof/:id', verificarProfessorLogado, async (req, res) => {
+    try {
+        const idProfessor = req.session.usuario.id_usuario; // Pega o ID do professor logado
+        const idMateria = req.params.id; // Pega o ID da matéria da URL
+
+        // Buscar as atividades da matéria específica
+        const { data: atividades, error } = await supabase
+            .from('atividade') // Consulta à tabela de atividades
+            .select('*')
+            .eq('id_materia', idMateria); // Filtra pela ID da matéria
+
+        if (error) {
+            console.error('Erro ao buscar atividades:', error);
+            return res.status(500).send('Erro ao buscar atividades');
+        }
+
+        // Buscar a matéria específica para mostrar seu nome
+        const { data: materia, error: materiaError } = await supabase
+            .from('materia') // Consulta à tabela de matéria
+            .select('*')
+            .eq('id_materia', idMateria)
+            .single(); // Pega uma única matéria (por ID)
+
+        if (materiaError) {
+            console.error('Erro ao buscar matéria:', materiaError);
+            return res.status(500).send('Erro ao buscar matéria');
+        }
+
+        // Renderiza a página com as atividades, nome da matéria e idMateria
+        res.render('pages/prof/materia-atividades-prof', {
+            atividades, // Passa as atividades para a view
+            nome_materia: materia.nome_materia, // Passa o nome da matéria para a view
+            idMateria: idMateria // Passa a idMateria para o EJS
+        });
+        
+    } catch (error) {
+        console.error('Erro ao obter atividades:', error);
+        res.status(500).send('Erro ao obter atividades');
+    }
 });
 
 // Rota: Exibir matérias do professor
@@ -188,46 +230,6 @@ router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
 });
 
 
-
-
-// Rota para obter as atividades de uma matéria específica
-router.get('/materia-atividades-prof/:idMateria', verificarProfessorLogado, async (req, res) => {
-    try {
-        const idProfessor = req.session.usuario.id_usuario; // Pega o ID do professor logado
-        const idMateria = req.params.idMateria; // Pega o ID da matéria da URL
-
-        // Buscar as atividades da matéria específica
-        const { data: atividades, error } = await supabase
-            .from('atividade')
-            .select('*')
-            .eq('id_materia', idMateria); // Filtra as atividades pela id_materia
-
-        if (error) {
-            console.error('Erro ao buscar atividades:', error);
-            return res.status(500).send('Erro ao buscar atividades');
-        }
-
-        // Buscar a matéria específica para mostrar seu nome
-        const { data: materia, error: materiaError } = await supabase
-            .from('materia')
-            .select('*')
-            .eq('id_materia', idMateria)
-            .single(); // Pega uma única matéria
-
-        if (materiaError) {
-            console.error('Erro ao buscar matéria:', materiaError);
-            return res.status(500).send('Erro ao buscar matéria');
-        }
-
-        res.render('pages/prof/materia-atividades-prof', {
-            atividades, // Passa a lista de atividades para a view
-            nome_materia: materia.nome_materia // Passa o nome da matéria
-        });
-    } catch (error) {
-        console.error('Erro ao obter atividades:', error);
-        res.status(500).send('Erro ao obter atividades');
-    }
-});
 
 
 router.post('/addpessoas', async (req, res) => {
