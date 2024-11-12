@@ -10,18 +10,32 @@ button,a {
 /* TELA GRANDE */
 
 body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: normal;
+    background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
-    margin: 1em auto;
-    font-family: "Russo One",  sans-serif;
-    display: flex;
+    color: #ffffff;
+
+    /*BACKGROUND*/
     flex-direction: column;
+    align-content: center;
     align-items: center;
-    overflow: hidden;
-    background: linear-gradient(180deg, #042661 0%, #41bdda 100%);
+    overflow: auto;
+    background-repeat: no-repeat;
+    background:#042661 ;
 }
 
-
+.img-fundo {
+    height: 120%;
+    width: 120%;
+    position: absolute;
+    opacity: 20%;
+}
 
 a {
     text-decoration: none;
@@ -51,24 +65,26 @@ img {
     max-width: 100%;
 }
 
-.atras {
-    width: 99%;
+.tras {
+    width: 75%;
     height: 85%;
     border-radius: 30px;
     display: flex;
+    justify-content: right;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
+    align-items: end;
+    color: aquamarine;
 }
 
 .col-1 {
-    background: rgba(217, 217, 217, 0.2);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    background: rgba(255, 255, 255, 0.30);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     width: 30%;
     height: 95%;
     border-radius: 30px;
     box-sizing: border-box;
-    padding: 1%;
+    padding: 2%;
     flex-wrap: wrap;
 }
 
@@ -91,6 +107,7 @@ img {
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+    background-color: #04266100;
 }
 
 .linha1 {
@@ -121,15 +138,16 @@ flex-wrap: wrap;
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-right: 8%;
 }
 
 .img-perfil {
-    width: 14%;
-    height: 30%;
+    width: 16%;
+    height: 35%;
     border-radius: 50%;
     position: absolute;
     top: 5%;
-    left: 45%;
+    left: 43%;
     border: 1vh solid #fff;
 }
 
@@ -151,27 +169,25 @@ flex-wrap: wrap;
 }
 
 .caixa-materia {
-    background-color: cornflowerblue;
-    border-radius: 30px;
     width: 35%;
-    height: 90%;
+    height: 80%;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.30);
+    border-radius: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
 }
 
-.caixa-materia::-webkit-scrollbar {
-    background-color: #fff;
-    height: max-content;
-    border-radius: 20px;
+
+.pendencias-img {
+    width: 15%;
+    height: 30%;
+    position: absolute;
+    margin-top: 2%;
+    margin-left: 6%;
 }
 
-.caixa-materia::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #042763;
-    border-radius: 20px;
-}
 
 .materia {
     width: 100%;
@@ -182,19 +198,18 @@ flex-wrap: wrap;
     width: 100%;
     height: 50%;
     border-radius: 30px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 }
 
 .caixa-frequencia {
-    width: 100%;
+    width: 95%;
     height: 100%;
     text-align: center;
     align-content: center;
     border-radius: 30px;
-    background: rgba(217, 217, 217, 0.2);
+    background: rgba(255, 255, 255, 0.30);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -218,9 +233,18 @@ flex-wrap: wrap;
         height: 8vh;
     }
 
+    .img-perfil {
+        width: 40% !important;
+        height: auto !important;
+        left: 30%;
+        justify-content: flex-start;
+        border: 5px solid #fff;
+        top:7%;
+    }
+
     .atras {
         width: 90%;
-        padding: 2%;
+        height: 80%;
         flex-direction: column;
     }
 
@@ -230,6 +254,7 @@ flex-wrap: wrap;
     }
 
     .col-1{
+        padding: 5%;
         margin-top: 30%;
     }
     .linha1, .linha2 {
@@ -254,14 +279,7 @@ flex-wrap: wrap;
     .caixa-frequencia{
         height: 10vh !important;
     }
-    .img-perfil {
-        width: 40% !important;
-        height: auto !important;
-        left: 30%;
-        justify-content: flex-start;
-        border: 1vh solid #fff;
-        top:2%;
-    }
+
 
     .trocar-foto {
         width: 6%;
@@ -276,3 +294,4 @@ width: 40%;
     background: linear-gradient(90deg, #41BCD8 0%, #0D366B 93.96%);
   
 }
+

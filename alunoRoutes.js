@@ -98,8 +98,8 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
         }
 
         // Renderiza a página com as matérias do aluno e dados do aluno
-        res.render('pages/aluno/materias', { 
-            materias, 
+        res.render('pages/aluno/materias', {
+            materias,
             aluno: { id_aluno, nome, pontos } // Passa as informações do aluno
         });
     } catch (err) {
@@ -178,10 +178,10 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
         const idTurma = turmaData.id_turma;
 
         const { data: materias, error: materiasError } = await supabase
-        .from('turma_materia')
-        .select('id_materia, materia: nome_materia')
-        .eq('id_turma', idTurma);
-    
+            .from('turma_materia')
+            .select('id_materia, materia: nome_materia')
+            .eq('id_turma', idTurma);
+
 
         if (materiasError) {
             console.error('Erro ao buscar matérias da turma:', materiasError);
@@ -204,7 +204,7 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
             ...materia,
             atividades: atividades.filter(atividade => atividade.id_materia === materia.id_materia) || []
         }));
-        
+
 
         // Renderizar a página com as matérias e atividades
         res.render('pages/aluno/materias', { materias: materiasComAtividades });
@@ -223,14 +223,67 @@ router.get('/materia-downloads', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/materia-downloads');
 });
 
-router.get('/desempenho-individual', verificarAlunoLogado, (req, res) => {
-    res.render('pages/aluno/desempenho-individual');
+router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
+    try {
+        const idAluno = req.session.usuario.id_usuario; // Pega o ID do aluno logado
+        console.log('ID do aluno logado:', idAluno);  // Log do ID do aluno para debug
+
+
+        const { data: desempenhoAluno, error } = await supabase
+            .from('aluno_materia')
+            .select('id_materia, pontos, materia(nome_materia)') // Selecionando o nome da matéria com junção
+            .eq('id_aluno', idAluno);  // Filtra pelo ID do aluno
+
+        if (error) {
+            console.error('Erro ao buscar desempenho do aluno:', error);
+            return res.status(500).send('Erro ao buscar desempenho');
+        }
+
+        // Verifique se há dados
+        if (!desempenhoAluno || desempenhoAluno.length === 0) {
+            console.log('Nenhum desempenho encontrado para o aluno:', idAluno);
+            return res.status(404).send('Nenhum desempenho encontrado para este aluno.');
+        }
+
+        // Buscar o ranking de todos os alunos
+        const { data: rankingAlunos, error: rankingError } = await supabase
+            .from('aluno_materia') // Relacionamento de aluno com matéria
+            .select('id_aluno, pontos') // Seleciona os dados que você precisa (ajuste conforme necessário)
+            .order('pontos', { ascending: false }); // Ordena por pontos
+
+        if (rankingError) {
+            console.error('Erro ao buscar ranking de alunos:', rankingError);
+            return res.status(500).send('Erro ao buscar ranking');
+        }
+
+        // Buscar os nomes dos alunos e materias para exibir no ranking
+        const alunosInfo = await Promise.all(rankingAlunos.map(async aluno => {
+            const alunoData = await supabase
+                .from('aluno')
+                .select('nome')
+                .eq('id_aluno', aluno.id_aluno)
+                .single(); // Obtém o nome do aluno
+            return {
+                nome_aluno: alunoData.data.nome,
+                pontos: aluno.pontos
+            };
+        }));
+
+        // Renderiza a página passando o desempenho do aluno e o ranking
+        res.render('pages/aluno/desempenho-individual', {
+            desempenhoAluno: desempenhoAluno[0], // Passa o desempenho do aluno
+            rankingAlunos: alunosInfo  // Passa o ranking dos alunos com os nomes e pontos
+        });
+
+    } catch (error) {
+        console.error('Erro ao obter desempenho individual:', error);
+        res.status(500).send('Erro ao obter desempenho');
+    }
 });
 
-router.get('/desempenho-classe', verificarAlunoLogado, (req, res) => {
 
-    // Renderiza a página de ranking passando a lista de alunos
-    res.render('pages/aluno/desempenho-classe', { alunos });
+router.get('/desempenho-classe', verificarAlunoLogado, (req, res) => {
+    res.render('pages/aluno/desempenho-classe');
 
 });
 

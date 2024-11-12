@@ -4,26 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Desempenho Individual</title>
-
     <link rel="stylesheet" type="text/css" href="css/desempenho-individual.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-
 </head>
-<!-- arthur -->
 
 <body>
 
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
-        <div class="menu-cardapio"> 
+        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3></a>
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
-
         </div>
-
     </div>
 
     <div class="head">
@@ -40,84 +32,46 @@
         </a>
     </div>
 
-
     <div class="corpo">
         <div class="tras">
 
-
+            <!-- Exibe o desempenho individual -->
             <div class="materia">
                 <div class="usuario">
                     <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
+                    <h1>
+                        <%= desempenhoAluno.nome_materia %>
+                    </h1> <!-- Nome da matéria -->
                 </div>
                 <div class="pontos">
-                    <h1>50 </h1>
+                    <h1>
+                        <%= desempenhoAluno.pontos %>
+                    </h1> <!-- Pontos do aluno -->
                 </div>
             </div>
 
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
+            <!-- Exibe o ranking dos alunos -->
+            <% rankingAlunos.forEach((aluno)=> { %>
+                <div class="materia">
+                    <div class="usuario">
+                        <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
+                        <h1>
+                            <%= aluno.nome_aluno %> - <%= aluno.nome_materia %>
+                        </h1> <!-- Nome do aluno e da matéria -->
+                    </div>
+                    <div class="pontos">
+                        <h1>
+                            <%= aluno.pontos %>
+                        </h1> <!-- Pontos do aluno -->
+                    </div>
                 </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
+                <% }) %>
 
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Materia</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
 
 
         </div>
     </div>
+
 </body>
 
 </html>
