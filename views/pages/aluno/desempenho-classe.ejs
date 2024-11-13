@@ -13,12 +13,12 @@
 <!-- arthur -->
 
 <body>
-   
+
     <div class="header">
 
         <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
 
-        <div class="menu-cardapio"> 
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
 
         </div>
@@ -45,53 +45,24 @@
         <div class="pontuadores">
 
             <div class="pontuador1">
-                <div class="usuario">
-                    <img src="./img/perfil imagem.png" alt="imagem de perfil">
-                    <h1>Nome Usuario</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
+                <% ranking.forEach((aluno, index)=> { %>
 
-            <div class="pontuador2">
-                <div class="usuario">
-                    <img src="./img/perfil imagem.png" alt="imagem de perfil">
-                    <h1>Nome Usuario</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
+                    <div class="usuario">
+                        <h2>
+                            <%= index + 1 %>
+                        </h2>
+                        <h1>
+                            <%= aluno.nome %>
+                        </h1>
+                    </div>
+                    <div class="pontos">
+                        <h1>
+                            <%= aluno.pontos %>
+                        </h1>
+                    </div>
+                    <% }) %>
 
-            <div class="eu-pontuador">
-                <div class="usuario">
-                    <img src="./img/perfil imagem.png" alt="imagem de perfil">
-                    <h1>Nome Usuario</h1>
                 </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-            <div class="pontuador4">
-                <div class="usuario">
-                    <img src="./img/perfil imagem.png" alt="imagem de perfil">
-                    <h1>Nome Usuario</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-            <div class="pontuador5">
-                <div class="usuario">
-                    <img src="./img/perfil imagem.png" alt="imagem de perfil">
-                    <h1>Nome Usuario</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
 
         </div>
     </div>

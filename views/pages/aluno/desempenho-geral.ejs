@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -20,7 +18,7 @@
 
         <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
 
-        <div class="menu-cardapio"> 
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
 
         </div>
@@ -46,101 +44,30 @@
     <div class="corpo">
         <div class="tras">
 
+            <% ranking.forEach((aluno, index)=> { %>
 
             <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
+
+                    <div class="usuario">
+                        <h1>
+                            <%= index + 1 %>
+                        </h1>
+                        <h1>
+                            <%= aluno.nome %>
+                        </h1>
+                    </div>
+                    <div class="pontos">
+                        <h1>
+                            <%= aluno.pontos %>
+                        </h1>
+                    </div>
+
             </div>
 
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
-            <div class="classe">
-                <div class="usuario">
-                    <img class="img-classe" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>Nome Classe</h1>
-                </div>
-                <div class="pontos">
-                    <h1>50 </h1>
-                </div>
-            </div>
-
+            <% }) %>
 
         </div>
     </div>
 </body>
 
 </html>
-
