@@ -225,54 +225,67 @@ router.get('/materia-downloads', verificarAlunoLogado, (req, res) => {
 
 router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
     try {
-        const idAluno = req.session.usuario.id_usuario; // Pega o ID do aluno logado
-        console.log('ID do aluno logado:', idAluno);  // Log do ID do aluno para debug
+        // Obtém o id_usuario do usuário logado
+        const idUsuario = req.session.usuario.id_usuario;
 
+        // Busca o id_aluno correspondente ao id_usuario
+        const { data: alunoData, error: alunoError } = await supabase
+            .from('aluno')
+            .select('id_aluno')
+            .eq('id_usuario', idUsuario)
+            .single();
 
+        if (alunoError || !alunoData) {
+            console.error('Erro ao buscar ID do aluno:', alunoError);
+            return res.status(500).send('Erro ao identificar o aluno');
+        }
+
+        const idAluno = alunoData.id_aluno; // Obtém o id_aluno associado ao id_usuario
+
+        // Consulta o desempenho do aluno usando o id_aluno
         const { data: desempenhoAluno, error } = await supabase
             .from('aluno_materia')
-            .select('id_materia, pontos, materia(nome_materia)') // Selecionando o nome da matéria com junção
-            .eq('id_aluno', idAluno);  // Filtra pelo ID do aluno
+            .select('id_materia, pontos, materia(nome_materia)')
+            .eq('id_aluno', idAluno);
 
         if (error) {
             console.error('Erro ao buscar desempenho do aluno:', error);
             return res.status(500).send('Erro ao buscar desempenho');
         }
 
-        // Verifique se há dados
         if (!desempenhoAluno || desempenhoAluno.length === 0) {
             console.log('Nenhum desempenho encontrado para o aluno:', idAluno);
             return res.status(404).send('Nenhum desempenho encontrado para este aluno.');
         }
 
-        // Buscar o ranking de todos os alunos
+        // Consulta o ranking de todos os alunos com base nos pontos
         const { data: rankingAlunos, error: rankingError } = await supabase
-            .from('aluno_materia') // Relacionamento de aluno com matéria
-            .select('id_aluno, pontos') // Seleciona os dados que você precisa (ajuste conforme necessário)
-            .order('pontos', { ascending: false }); // Ordena por pontos
+            .from('aluno_materia')
+            .select('id_aluno, pontos')
+            .order('pontos', { ascending: false });
 
         if (rankingError) {
             console.error('Erro ao buscar ranking de alunos:', rankingError);
             return res.status(500).send('Erro ao buscar ranking');
         }
 
-        // Buscar os nomes dos alunos e materias para exibir no ranking
+        // Busca os nomes dos alunos no ranking
         const alunosInfo = await Promise.all(rankingAlunos.map(async aluno => {
             const alunoData = await supabase
                 .from('aluno')
                 .select('nome')
                 .eq('id_aluno', aluno.id_aluno)
-                .single(); // Obtém o nome do aluno
+                .single();
             return {
                 nome_aluno: alunoData.data.nome,
                 pontos: aluno.pontos
             };
         }));
 
-        // Renderiza a página passando o desempenho do aluno e o ranking
+        // Renderiza a página com o desempenho do aluno e o ranking dos alunos
         res.render('pages/aluno/desempenho-individual', {
-            desempenhoAluno: desempenhoAluno[0], // Passa o desempenho do aluno
-            rankingAlunos: alunosInfo  // Passa o ranking dos alunos com os nomes e pontos
+            desempenhoAluno: desempenhoAluno[0],
+            rankingAlunos: alunosInfo 
         });
 
     } catch (error) {
@@ -280,7 +293,6 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         res.status(500).send('Erro ao obter desempenho');
     }
 });
-
 
 router.get('/desempenho-classe', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/desempenho-classe');
