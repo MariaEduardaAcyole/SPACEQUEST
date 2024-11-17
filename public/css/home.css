@@ -37,33 +37,28 @@ a {
         width: 100%;
         color: #ffffff;
 
-        /*BACKGROUND*/
+        /BACKGROUND/
         flex-direction: column;
         align-content: center;
         align-items: center;
         overflow: auto;
         background-repeat: no-repeat;
-        background:#042661 ;
+        background: linear-gradient(180deg, #042661 0%, #020220 100%);
     }
 
-    .img-fundo {
-        height: 125%;
-        width: 120%;
-        position: absolute;
-        opacity: 20%;
-    }
+ 
 
     a {
         color: #ffffff;
     }
 
     .col-1 {
-        width: 95%;
-        height: 90%;
+        width: 85%;
+        height: 95%;
         border-radius: 30px;
         flex-wrap: wrap;
         filter: drop-shadow(#96747400 1rem 1rem 15px);
-        background-color: rgba(217, 217, 217, 0);
+        background-color: rgba(255, 0, 0, 0);
         display: flex;
     }
 
@@ -88,7 +83,7 @@ a {
 
     .linha {
 
-        height: 5px;
+        height: 3px;
         width: 74%;
         position: absolute;
         background-color: rgb(255, 255, 255);
@@ -96,8 +91,8 @@ a {
 
 
     .nave {
-        width: 6%;
-        height: 16%;
+        width: 5%;
+        height: 10%;
         margin-right: 40%;
         position: absolute;
     }
@@ -107,12 +102,12 @@ a {
         height: 100%;
         display: flex;
         flex-wrap: wrap;
-        background-color: rgba(255, 0, 0, 0);
+        background-color: rgba(0, 255, 21, 0);
     }
 
     .atras {
         width: 100%;
-        height: 90%;
+        height: 80%;
         display: flex;
         flex-wrap: wrap;
         background-color: rgba(0, 217, 255, 0);
@@ -227,14 +222,13 @@ a {
 
 
     .pendencias-img {
-        width: 15%;
+        width: 16%;
         height: 30%;
         position: absolute;
-        margin-top: 2%;
-        margin-left: 8%;
+        margin-left: 10%;
     }
 
-    
+
     .grafico{
         width: 80%;
         height: 75%;
@@ -256,18 +250,18 @@ a {
     }
 
     .kart {
-        width: 10%;
+        width: 12%;
         height: 25%;
         position: absolute;
-        top: 85%;
-        left: 65%;
+        top: 76%;
+        left: 63%;
     }
 
     .div-semana {
         overflow-y: scroll;
         width: 20%;
         height: 100%;
-        margin-top: -17%;
+        margin-top: -18%;
         display: flex;
         background-color:#00000000;
         flex-wrap: wrap;
@@ -423,7 +417,6 @@ th {
     
 }
 
-@media screen and (max-width: 415px) /* TELAS PEQUENAS */ {
+@media screen and (max-width: 415px) /* TELAS PEQUENAS */ {
 
 }
-

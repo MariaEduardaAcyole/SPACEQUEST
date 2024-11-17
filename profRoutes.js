@@ -1,5 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
+// Middleware para log de requisições
+router.use((req, res, next) => {
+    console.log(`Recebida requisição ${req.method} em ${req.url} com body:`, req.body);
+    next();
+});
+
 const supabase = require('./supabaseClient');
 const bcrypt = require('bcrypt');
 const { verificarToken } = require('./middlewares');
@@ -12,8 +19,11 @@ const session = require('express-session');
 router.use(express.urlencoded({ extended: true }));
 
 // Middleware para verificar se o usuário logado é um professor
+
 const verificarProfessorLogado = (req, res, next) => {
+    console.log("Sessão na verificação:", req.session);
     if (!req.session.usuario || req.session.usuario.tipo_usuario !== 'Professor') {
+        console.log("Usuário não autenticado como professor");
         return res.redirect('/login');
     }
     next();
@@ -50,64 +60,110 @@ router.get('/home-prof', (req, res) => {
     res.render('pages/prof/home-prof');
 });
 
-router.get('/quiz', (req, res) => {
-    res.render('pages/prof/quiz');
-});
+
 
 router.get('/minigame-kart', (req, res) => {
     res.render('pages/prof/minigame-kart');
 });
 
 // Rota: Exibir tela de criação de mini-game
-router.get('/inicio-game-prof', (req, res) => {
-    res.render('pages/prof/inicio-game-prof');
+// Rota: Exibir tela de criação de mini-game
+router.get('/inicio-game-prof', async (req, res) => {
+    try {
+        // Supondo que você tenha uma consulta para buscar as turmas no banco de dados
+        const { data: turma, error } = await supabase
+            .from('turma') // Tabela onde você está armazenando as turmas
+            .select('*');
+
+        if (error) {
+            console.error("Erro ao buscar as turmas:", error);
+            return res.status(500).send('Erro ao buscar as turmas');
+        }
+
+        // Renderiza a página com a variável turma
+        res.render('pages/prof/inicio-game-prof', { turma });
+    } catch (err) {
+        console.error("Erro na rota GET /inicio-game-prof:", err);
+        res.status(500).send('Erro ao carregar a página de criação de minigame');
+    }
 });
 
 // Rota: Processar criação de mini-game
 router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
-    const { Nome_Minigame, turma, perguntas } = req.body;
-    const ID_Professor = req.session.usuario.id_usuario;
+    const { nome_minigame, turma, perguntas } = req.body;
+    const id_professor = req.session.usuario.id_usuario;
 
-    if (!Nome_Minigame || !turma || !perguntas || perguntas.length === 0) {
+    if (!nome_minigame || !turma || !perguntas || perguntas.length === 0) {
         return res.status(400).send('Dados incompletos');
     }
 
     try {
+        // Inserir o mini-game no banco
         const { data: minigame, error: minigameError } = await supabase
-            .from('Minigame')
-            .insert([{ Nome_Minigame, ID_Professor, Turma: turma }])
+            .from('minigame')
+            .insert([{ nome_minigame, id_professor, turma, data_criacao: new Date() }])
+            .select('id_minigame')
             .single();
 
-        if (minigameError) throw minigameError;
-
-        const minigameId = minigame.id;
-
-        for (const pergunta of perguntas) {
-            const { data: perguntaData, error: perguntaError } = await supabase
-                .from('Pergunta')
-                .insert([{ ID_MiniGame: minigameId, Texto: pergunta.texto }])
-                .single();
-
-            if (perguntaError) throw perguntaError;
-
-            const perguntaId = perguntaData.id;
-            const alternativasInsert = pergunta.alternativas.map(async (alternativa, index) => {
-                const correta = pergunta.correta === String(index + 1);
-                const { error: alternativaError } = await supabase
-                    .from('Alternativa')
-                    .insert([{ ID_Pergunta: perguntaId, Texto: alternativa, Correta: correta }]);
-
-                if (alternativaError) throw alternativaError;
-            });
-            await Promise.all(alternativasInsert);
+        if (minigameError || !minigame) {
+            console.error('Erro ao inserir minigame:', minigameError);
+            throw new Error('Falha ao criar mini-game no banco');
         }
 
-        res.redirect('/inicio-game-prof');
+        console.log("Mini-game criado com ID:", minigame.id_minigame);
+
+        // Iterar sobre cada pergunta para inserir no banco
+        for (const pergunta of perguntas) {
+            const { texto, alternativas, correta } = pergunta;
+
+            // Inserir a pergunta vinculada ao minigame recém-criado
+            const { data: perguntaData, error: perguntaError } = await supabase
+                .from('pergunta')
+                .insert([{ id_minigame: minigame.id_minigame, texto }])
+                .select('id_pergunta') // Supondo que a coluna seja id_pergunta
+                .single();
+
+            if (perguntaError || !perguntaData) {
+                console.error('Erro ao inserir pergunta:', perguntaError);
+                throw new Error('Falha ao inserir pergunta');
+            }
+
+            const perguntaId = perguntaData.id_pergunta; // Atribui o ID da pergunta
+
+            // Mapear alternativas com o ID da pergunta
+            const alternativasInsert = alternativas.map((alternativa, index) => {
+                const corretaAlternativa = correta === String(index + 1); // Verifica se é a alternativa correta
+                return {
+                    id_pergunta: perguntaId,
+                    texto: alternativa,
+                    correta: corretaAlternativa,
+                    nome_materia: "Biologia", // Defina o nome da matéria conforme necessário
+                    pontos: corretaAlternativa ? 10 : 0 // Atribui pontos apenas para a resposta correta
+                };
+            });
+
+            // Inserir as alternativas no banco de dados
+            const { error: alternativaError } = await supabase
+                .from('alternativa')
+                .insert(alternativasInsert);
+
+            if (alternativaError) {
+                console.error('Erro ao inserir alternativas:', alternativaError);
+                throw new Error('Falha ao inserir alternativas');
+            }
+
+            console.log(`Alternativas criadas para a pergunta com ID: ${perguntaId}`);
+        }
+
+        console.log("Mini-game criado com sucesso e todas as perguntas e alternativas inseridas!");
+        res.status(200).send('Minigame criado com sucesso!');
+
     } catch (err) {
-        console.error('Erro ao criar minigame:', err);
+        console.error('Erro ao criar minigame:', err.message);
         res.status(500).send('Erro ao criar minigame');
     }
 });
+
 
 // Rota: Exibir tela de cadastro de turmas
 router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
@@ -131,8 +187,6 @@ router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
 
 // Rota: Processar adição de turma
 router.post('/addTurma', addTurma);
-
-
 
 // Rota: Exibir tela de criar atividade
 router.get('/addAtividade/:id', verificarProfessorLogado, (req, res) => {
@@ -187,7 +241,7 @@ router.get('/materia-atividades-prof/:id', verificarProfessorLogado, async (req,
             nome_materia: materia.nome_materia, // Passa o nome da matéria para a view
             idMateria: idMateria // Passa a idMateria para o EJS
         });
-        
+
     } catch (error) {
         console.error('Erro ao obter atividades:', error);
         res.status(500).send('Erro ao obter atividades');
@@ -228,9 +282,6 @@ router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar matérias' });
     }
 });
-
-
-
 
 router.post('/addpessoas', async (req, res) => {
     const { ID_Usuario, senha, nome, Tipo_Usuario } = req.body;
@@ -284,12 +335,11 @@ router.post('/addpessoas', async (req, res) => {
     }
 });
 
-
-router.get('/desempenho-geral-prof',  (req, res) => {
+router.get('/desempenho-geral-prof', (req, res) => {
     res.render('pages/prof/desempenho-geral-prof', { successMessage: null });
 });
 
-router.get('/desempenho-classe-prof',  (req, res) => {
+router.get('/desempenho-classe-prof', (req, res) => {
     res.render('pages/prof/desempenho-classe-prof', { successMessage: null });
 });
 module.exports = router;

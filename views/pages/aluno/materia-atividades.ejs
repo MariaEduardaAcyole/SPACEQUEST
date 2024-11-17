@@ -11,6 +11,8 @@
 
 <body>
 
+    
+
     <div class="header">
         <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
         <div class="menu-cardapio">
@@ -28,19 +30,12 @@
     <div class="col-2">
         <div class="col-navegacao">
             <div class="navegacao">
-                <a href="/materia-mural/<%= idMateria %>" class="paginas"><h2>Mural</h2></a>
-                <div class="linha"></div>
                 <a href="/materia-downloads/<%= idMateria %>" class="paginas"><h2>Downloads</h2></a>
                 <div class="linha"></div>
                 <a href="/materia-atividades/<%= idMateria %>" class="paginas"><h2>Atividades</h2></a>
             </div>
         </div>
 
-        <div class="col-3">
-            <div class="titulo-postagem">
-                <div class="linha"></div>
-                <h2>Atividades</h2>
-            </div>
 
             <div class="col-4">
                 <% if (atividades && atividades.length > 0) { %>
@@ -63,3 +58,4 @@
 
 </body>
 </html>
+

@@ -3,7 +3,6 @@
 
 <head>
     <link rel="stylesheet" href="css/inicio-game-prof.css">
-    <meta http-equiv="refresh" content="120" />
     <title>Criar game prof</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -39,12 +38,14 @@
         <form action="/criar-minigame" method="POST" class="linha-2">
             <div class="linha-1-FORM">
                 <label for="nome-minigame" class="texto-Nomedominigame">Nome do minigame</label>
-                <input type="text" name="Nome_Minigame" id="nome-minigame" placeholder="nome do minigame" class="nome-minigame">
-                <select class="opcoes-turma" name="turma" id="turma">
+                <input type="text" name="nome_minigame" id="nome-minigame" placeholder="nome do minigame" class="nome-minigame">
+                <select class="opcoes-turma" name="turma" id="turma" required>
                     <option value="" disabled selected>Selecione uma turma</option>
-                    <option value="3DS">3DS</option>
-                    <!-- Outras turmas -->
+                    <% turma.forEach(function(turma) { %>
+                        <option value="<%= turma.id_turma %>"><%= turma.nome_turma %></option>
+                    <% }); %>                    
                 </select>
+                
             </div>
 
             <div class="linha-2_FORM">

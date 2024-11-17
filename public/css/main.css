@@ -1,5 +1,3 @@
-
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
@@ -9,8 +7,7 @@
   --fundo: #042661;
   --caixas: rgba(255, 255, 255, 0.6);
   --transparencia: rgba(217, 217, 217, 0.6);
-  --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
-  --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+        background: linear-gradient(180deg, #042661 0%, #020220 100%);
   --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
 * {
@@ -37,11 +34,10 @@ body, html {
     color: rgb(255, 255, 255);
  }
 .img-fundo {
-  height: 125%;
-  width: 120%;
+  height: 150%;
+  width: 100%;
   position: absolute;
   top: 0%;
-  z-index: -100;
   opacity: 50%;
 }
 .header {
@@ -95,7 +91,7 @@ p {
   /* 16px */
 }
 
-/*---------------------------------------------*/
+/---------------------------------------------/
 a {
 	font-family: "Russo One", sans-serif !important;
 	line-height: 1.7;
@@ -120,7 +116,7 @@ a:hover {
   color: linear-gradient(left, #21d4fd, #b721ff);
 }
 
-/*---------------------------------------------*/
+/---------------------------------------------/
 h1,h2,h3,h4,h5,h6{
 	margin: 0px;
   color: rgb(255, 255, 255);
@@ -153,5 +149,3 @@ button:hover {
 iframe {
 	border: none !important;
 }
-
-

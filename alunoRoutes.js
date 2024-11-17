@@ -471,8 +471,47 @@ router.get('/minigame-kart', verificarAlunoLogado, (req, res) => {
     res.render('pages/prof/minigame-kart');
 });
 
-router.get('/quiz', verificarAlunoLogado, (req, res) => {
-    res.render('pages/prof/quiz');
+router.get('/quiz-perguntas/:id_minigame', async (req, res) => {
+    const { id_minigame } = req.params;
+
+    // Validar o ID do minigame
+    if (!id_minigame) {
+        console.error("ID do minigame não fornecido.");
+        return res.status(400).json({ error: 'ID do minigame é obrigatório.' });
+    }
+
+    console.log("ID recebido:", id_minigame);
+
+    try {
+        // Buscar perguntas relacionadas ao minigame
+        const { data: perguntas, error: perguntasError } = await supabase
+            .from('pergunta')
+            .select('id_pergunta, texto')
+            .eq('id_minigame', id_minigame);
+
+        console.log("Buscando perguntas para o minigame ID:", id_minigame);
+        console.log("Resultado da consulta:", perguntas);
+
+        // Tratar erros de consulta
+        if (perguntasError) {
+            console.error("Erro na consulta ao Supabase:", perguntasError);
+            return res.status(500).json({ error: 'Erro ao buscar perguntas do minigame.' });
+        }
+
+        // Caso nenhuma pergunta seja encontrada
+        if (!perguntas || perguntas.length === 0) {
+            console.warn("Nenhuma pergunta encontrada para o minigame ID:", id_minigame);
+            return res.status(404).json({ error: 'Nenhuma pergunta encontrada para este minigame.' });
+        }
+
+        // Retornar perguntas encontradas
+        res.status(200).json({ perguntas });
+    } catch (err) {
+        console.error("Erro inesperado:", err);
+        res.status(500).json({ error: 'Erro inesperado ao buscar perguntas.' });
+    }
 });
+
+
 
 module.exports = router;
