@@ -198,7 +198,7 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
 
         const { data: materias, error: materiasError } = await supabase
             .from('turma_materia')
-            .select('id_materia, materia: nome_materia')
+            .select('id_materia')
             .eq('id_turma', idTurma);
 
 
