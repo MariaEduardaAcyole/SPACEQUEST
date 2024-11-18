@@ -59,8 +59,20 @@
             </div>
 
             <div class="col-4">
-
-
+                <% if (minigames && minigames.length > 0) { %>
+                    <ul>
+                      <% minigames.forEach(minigame => { %>
+                        <li>
+                          <h2><%= minigame.titulo %></h2>
+                          <p><%= minigame.descricao %></p>
+                          <a href="/quiz/<%= minigame.id_minigame %>">Jogar</a>
+                        </li>
+                      <% }); %>
+                    </ul>
+                  <% }
+                  else { %>
+                    <p>Nenhum minigame encontrado para esta matéria.</p>
+                  <% } %>
             </div>
 
 
@@ -70,3 +82,4 @@
 </body>
 
 </html>
+

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <img class="img-fundo" src="img/fundo.png">
+    <!-- <img class="img-fundo" src="img/fundo.png"> -->
 
     <div class="header">
         <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3></a>
@@ -46,6 +46,12 @@
                     <% }); %>                    
                 </select>
                 
+                <select class="opcoes-materia" name="materia" id="materia" required>
+                    <option value="" disabled selected>Selecione uma materia</option>
+                    <% materia.forEach(function(materia) { %>
+                        <option value="<%= materia.id_materia %>"><%= materia.nome_materia %></option>
+                    <% }); %>                    
+                </select>
             </div>
 
             <div class="linha-2_FORM">

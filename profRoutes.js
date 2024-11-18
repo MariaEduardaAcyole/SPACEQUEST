@@ -75,13 +75,17 @@ router.get('/inicio-game-prof', async (req, res) => {
             .from('turma') // Tabela onde você está armazenando as turmas
             .select('*');
 
+            const { data: materia, errorMateria } = await supabase
+            .from('materia') // Tabela onde você está armazenando as turmas
+            .select('*');
+
         if (error) {
             console.error("Erro ao buscar as turmas:", error);
             return res.status(500).send('Erro ao buscar as turmas');
         }
 
         // Renderiza a página com a variável turma
-        res.render('pages/prof/inicio-game-prof', { turma });
+        res.render('pages/prof/inicio-game-prof', { turma, materia });
     } catch (err) {
         console.error("Erro na rota GET /inicio-game-prof:", err);
         res.status(500).send('Erro ao carregar a página de criação de minigame');
@@ -90,10 +94,10 @@ router.get('/inicio-game-prof', async (req, res) => {
 
 // Rota: Processar criação de mini-game
 router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
-    const { nome_minigame, turma, perguntas } = req.body;
+    const { nome_minigame, turma, materia, perguntas } = req.body;
     const id_professor = req.session.usuario.id_usuario;
 
-    if (!nome_minigame || !turma || !perguntas || perguntas.length === 0) {
+    if (!nome_minigame || !turma || !perguntas ||!materia || perguntas.length === 0) {
         return res.status(400).send('Dados incompletos');
     }
 
@@ -101,7 +105,7 @@ router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
         // Inserir o mini-game no banco
         const { data: minigame, error: minigameError } = await supabase
             .from('minigame')
-            .insert([{ nome_minigame, id_professor, turma, data_criacao: new Date() }])
+            .insert([{ nome_minigame, id_professor, turma, id_materia: materia, data_criacao: new Date() }])
             .select('id_minigame')
             .single();
 

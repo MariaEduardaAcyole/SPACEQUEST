@@ -12,7 +12,7 @@
 <body>
 
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3></a>
+        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</a></h3>
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
         </div>
@@ -36,38 +36,20 @@
         <div class="tras">
 
             <!-- Exibe o desempenho individual -->
-            <div class="materia">
-                <div class="usuario">
-                    <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                    <h1>
-                        <%= desempenhoAluno.nome_materia %>
-                    </h1> <!-- Nome da matéria -->
-                </div>
-                <div class="pontos">
-                    <h1>
-                        <%= desempenhoAluno.pontos %>
-                    </h1> <!-- Pontos do aluno -->
-                </div>
-            </div>
-
-            <!-- Exibe o ranking dos alunos -->
-            <% rankingAlunos.forEach((aluno)=> { %>
-                <div class="materia">
-                    <div class="usuario">
-                        <img class="img-materia" src="./img/xadrez-tabuleiro.png" alt="imagem de perfil">
-                        <h1>
-                            <%= aluno.nome_aluno %> - <%= aluno.nome_materia %>
-                        </h1> <!-- Nome do aluno e da matéria -->
+            <% if (desempenhoAluno.length > 0) { %>
+                <% desempenhoAluno.forEach((materia) => { %>
+                    <div class="materia">
+                        <div class="usuario">
+                            <h1><%= materia.nome_materia %></h1> <!-- Nome da matéria -->
+                        </div>
+                        <div class="pontos">
+                            <h1><%= materia.pontos %></h1> <!-- Pontos na matéria -->
+                        </div>
                     </div>
-                    <div class="pontos">
-                        <h1>
-                            <%= aluno.pontos %>
-                        </h1> <!-- Pontos do aluno -->
-                    </div>
-                </div>
                 <% }) %>
-
-
+            <% } else { %>
+                <p>Nenhum desempenho encontrado.</p>
+            <% } %>
 
         </div>
     </div>

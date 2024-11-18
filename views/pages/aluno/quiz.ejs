@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/quiz.css">
+  <title>Quiz</title>
+  <style>
+    /* Adicionando estilos para botões com cores de feedback */
+    .correct {
+      background-color: green;
+      color: white;
+    }
+    
+    .incorrect {
+      background-color: red;
+      color: white;
+    }
+    
+    .answer-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h3 class="titulo-spacequest"><a href="../home-aluno">SPACE<br> ‎ ‎ QUEST</a></h3>
+    <div class="menu-cardapio">
+      <%- include('../../partials/menu-superior') %>
+    </div>
+  </div>
+  <img class="astro" src="/img/astroquest.png" alt="img">
+
+  <div class="container">
+    <!-- Container de perguntas e alternativas -->
+    <div class="questions-container hide">
+      <div class="questions">
+        <span class="question">Pergunta aqui?</span> <!-- Aqui a pergunta será inserida dinamicamente -->
+      </div>
+      <div class="answers-container">
+        <button class="answer button">Resposta 1</button> <!-- Alternativas serão inseridas aqui dinamicamente -->
+        <button class="answer button">Resposta 2</button>
+        <button class="answer button">Resposta 3</button>
+        <button class="answer button">Resposta 4</button>
+      </div>
+    </div>
+
+    <!-- Controles do Quiz -->
+    <div class="controls-container">
+      <button class="start-quiz button">Começar Quiz!</button>
+      <button class="next-question button hide">Próxima pergunta</button>
+    </div>
+
+    <!-- Resultado Final -->
+    <div class="result-container hide">
+      <h2>Resultado Final</h2>
+      <p class="result-text"></p>
+      <button class="restart-quiz button hide">Reiniciar Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    // Variáveis
+    const quizData = <%- JSON.stringify(quiz) %>;  // Dados do quiz em formato JSON
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const startButton = document.querySelector('.start-quiz');
+      const nextButton = document.querySelector('.next-question');
+      const questionsContainer = document.querySelector('.questions-container');
+      const questionElement = document.querySelector('.question');
+      const answersElement = document.querySelector('.answers-container');
+      const resultContainer = document.querySelector('.result-container');
+      const resultText = document.querySelector('.result-text');
+      const restartButton = document.querySelector('.restart-quiz');
+      let currentQuestionIndex = 0;
+      let score = 0;
+
+      // Função para exibir a pergunta atual
+      function showQuestion() {
+        const currentQuestion = quizData[currentQuestionIndex];
+        
+        // Exibe a pergunta
+        questionElement.textContent = currentQuestion.texto;
+        answersElement.innerHTML = ''; // Limpa as alternativas
+
+        // Exibe as alternativas
+        currentQuestion.alternativas.forEach(alternativa => {
+          const answerButton = document.createElement('button');
+          answerButton.textContent = alternativa.texto;
+          answerButton.classList.add('answer', 'button');
+          
+          // Atribui a função para verificar se a resposta está correta
+          answerButton.onclick = () => checkAnswer(alternativa, answerButton);
+          answersElement.appendChild(answerButton);
+        });
+      }
+
+      // Função para verificar a resposta
+      function checkAnswer(selectedAlternative, answerButton) {
+        const currentQuestion = quizData[currentQuestionIndex];
+        const isCorrect = selectedAlternative.correta;
+
+        // Desabilita todos os botões de resposta após a escolha
+        const answerButtons = document.querySelectorAll('.answer');
+        answerButtons.forEach(button => button.disabled = true);
+
+        // Se a resposta estiver correta, alteramos a cor para verde, caso contrário, para vermelho
+        if (isCorrect) {
+          answerButton.classList.add('correct');
+          score++; // Aumenta a pontuação se a resposta estiver certa
+        } else {
+          answerButton.classList.add('incorrect');
+        }
+
+        // Exibe o botão para avançar para a próxima pergunta
+        nextButton.classList.remove('hide');
+      }
+
+      // Função para avançar para a próxima pergunta
+      function nextQuestion() {
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < quizData.length) {
+          showQuestion();
+          nextButton.classList.add('hide');
+        } else {
+          // Quando o quiz terminar, mostra o resultado
+          showResult();
+        }
+      }
+
+      // Função para exibir o resultado final
+      function showResult() {
+        // Oculta a parte do quiz
+        questionsContainer.classList.add('hide');
+        nextButton.classList.add('hide');
+
+        // Exibe o resultado
+        resultContainer.classList.remove('hide');
+        resultText.textContent = `Você acertou ${score} de ${quizData.length} perguntas.`;
+
+        // Exibe o botão de reiniciar
+        restartButton.classList.remove('hide');
+      }
+
+      // Função para reiniciar o quiz
+      function restartQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        resultContainer.classList.add('hide');
+        questionsContainer.classList.remove('hide');
+        startButton.classList.add('hide');
+        nextButton.classList.add('hide');
+        showQuestion();
+      }
+
+      // Função para iniciar o quiz
+      startButton.addEventListener('click', () => {
+        startButton.classList.add('hide');
+        questionsContainer.classList.remove('hide');
+        showQuestion();
+      });
+
+      // Função para avançar para a próxima pergunta
+      nextButton.addEventListener('click', nextQuestion);
+
+      // Função para reiniciar o quiz
+      restartButton.addEventListener('click', restartQuiz);
+    });
+  </script>
+</body>
+</html>

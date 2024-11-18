@@ -137,11 +137,11 @@ router.get('/entrega-atividade/:id', async (req, res) => {
     const sucesso = req.query.sucesso;
 
     try {
-        // Realiza a consulta no Supabase para buscar os dados da atividade
+        // READ - consulta no banco os dados
         const { data: atividade, error } = await supabase
-            .from('atividade') // Nome da tabela no Supabase
+            .from('atividade') 
             .select('*')
-            .eq('id_atividade', atividadeId) // Condição para buscar a atividade específica
+            .eq('id_atividade', atividadeId) 
             .single(); // Espera apenas um único resultado
 
         // Verifica se houve erro ou se a atividade não foi encontrada
@@ -149,7 +149,6 @@ router.get('/entrega-atividade/:id', async (req, res) => {
             return res.status(404).send('Atividade não encontrada.');
         }
 
-        // Renderiza o template passando a atividade e a mensagem de sucesso
         res.render('pages/aluno/entrega-atividade', { atividade, sucesso });
     } catch (err) {
         console.error('Erro ao buscar detalhes da atividade:', err);
@@ -233,8 +232,37 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
     }
 });
 
-router.get('/materia-mural', verificarAlunoLogado, (req, res) => {
-    res.render('pages/aluno/materia-mural');
+router.get('/materia-mural/:id', verificarAlunoLogado, async (req, res) => {
+    const { id } = req.params;
+
+    // Validar o ID da matéria
+    if (!id || isNaN(Number(id))) {
+        console.error("ID inválido fornecido:", id);
+        return res.status(400).send('ID da matéria inválido.');
+    }
+
+    try {
+        // Buscar os minigames associados à matéria no banco
+        const { data: minigames, error } = await supabase
+            .from('minigame')
+            .select('id_minigame, nome_minigame')
+            .eq('id_materia', id); // Filtrar pelo ID da matéria
+
+        if (error) {
+            console.error("Erro ao buscar minigames:", error);
+            return res.status(500).send('Erro ao buscar minigames.');
+        }
+
+        if (!minigames || minigames.length === 0) {
+            console.warn("Nenhum minigame encontrado para a matéria:", id);
+        }
+
+        // Renderizar a página passando os minigames
+        res.render('pages/aluno/materia-mural', { minigames });
+    } catch (err) {
+        console.error("Erro inesperado:", err);
+        res.status(500).send('Erro inesperado.');
+    }
 });
 
 router.get('/materia-downloads', verificarAlunoLogado, (req, res) => {
@@ -245,6 +273,7 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
     try {
         const idUsuario = req.session.usuario.id_usuario;
 
+        // Busca o ID do aluno com base no ID do usuário logado
         const { data: alunoData, error: alunoError } = await supabase
             .from('aluno')
             .select('id_aluno')
@@ -259,53 +288,48 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         const idAluno = alunoData.id_aluno;
         console.log(idAluno);
 
-        const { data: desempenhoAluno, error } = await supabase
+        // Busca as matérias e os pontos do aluno
+        const { data: desempenhoAluno, error: desempenhoError } = await supabase
             .from('aluno_materia')
             .select('id_materia, pontos')
-            .eq('id_aluno', idAluno);
+            .eq('id_aluno', idAluno)
+            .order('pontos', { ascending: false }); // Ordena por pontos de forma decrescente
 
-        if (error) {
-            console.error('Erro ao buscar desempenho do aluno:', error);
+        if (desempenhoError || !desempenhoAluno) {
+            console.error('Erro ao buscar desempenho do aluno:', desempenhoError);
             return res.status(500).send('Erro ao buscar desempenho');
         }
 
-        // Verifica se o desempenhoAluno contém dados antes de tentar usar forEach
-        if (!desempenhoAluno || desempenhoAluno.length === 0) {
-            console.log('Nenhum desempenho encontrado para o aluno:', idAluno);
+        // Verifica se o aluno tem matérias registradas
+        if (desempenhoAluno.length === 0) {
             return res.status(404).send('Nenhum desempenho encontrado para este aluno.');
         }
 
-        // Log para verificar cada campo individual do desempenhoAluno
-        desempenhoAluno.forEach(({ id_materia, pontos, nome_materia }) => {
-            console.log(id_materia, pontos, nome_materia);
-        });
-
-        const { data: rankingAlunos, error: rankingError } = await supabase
-            .from('aluno_materia')
-            .select('id_aluno, pontos')
-            .order('pontos', { ascending: false });
-
-        if (rankingError) {
-            console.error('Erro ao buscar ranking de alunos:', rankingError);
-            return res.status(500).send('Erro ao buscar ranking');
-        }
-
-        const alunosInfo = await Promise.all(rankingAlunos.map(async aluno => {
-            const alunoData = await supabase
-                .from('aluno')
+        // Faz a busca dos nomes das matérias
+        const materiasInfo = await Promise.all(desempenhoAluno.map(async ({ id_materia, pontos }) => {
+            const { data: materiaData, error: materiaError } = await supabase
+                .from('materia')
                 .select('nome')
-                .eq('id_aluno', aluno.id_aluno)
+                .eq('id_materia', id_materia)
                 .single();
+
+            if (materiaError || !materiaData) {
+                console.error('Erro ao buscar nome da matéria:', materiaError);
+                return null; // Caso não encontre a matéria
+            }
+
             return {
-                nome_aluno: alunoData.data.nome,
-                pontos: aluno.pontos
+                nome_materia: materiaData.nome,
+                pontos
             };
         }));
 
-        // Renderiza a página com o desempenho do aluno e o ranking dos alunos
+        // Filtra valores nulos (caso alguma matéria não tenha sido encontrada)
+        const materiasComPontos = materiasInfo.filter(materia => materia !== null);
+
+        // Renderiza a página com as matérias e desempenho
         res.render('pages/aluno/desempenho-individual', {
-            desempenhoAluno: desempenhoAluno[0],
-            rankingAlunos: alunosInfo
+            desempenhoAluno: materiasComPontos
         });
 
     } catch (error) {
@@ -313,6 +337,7 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         res.status(500).send('Erro ao obter desempenho');
     }
 });
+
 
 router.get('/desempenho-classe', verificarAlunoLogado, async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
@@ -346,43 +371,54 @@ router.get('/desempenho-classe', verificarAlunoLogado, async (req, res) => {
 
         const idTurma = turmaData.id_turma;
 
-        // 3. Buscar o desempenho de todos os alunos na turma
+        // 3. Buscar os IDs dos alunos da turma
+        const { data: turmaAlunos, error: turmaAlunosError } = await supabase
+            .from('aluno_turma')
+            .select('id_aluno')
+            .eq('id_turma', idTurma);
+
+        if (turmaAlunosError) {
+            console.error('Erro ao buscar alunos da turma:', turmaAlunosError);
+            return res.status(500).send('Erro ao identificar alunos da turma');
+        }
+
+        console.log("Alunos da turma:", turmaAlunos); // Verifique os alunos da turma
+
+        // 4. Buscar o desempenho de todos os alunos na turma
         const { data: desempenhoTurma, error: desempenhoError } = await supabase
             .from('aluno_materia')
             .select('id_aluno, pontos')
-            .in('id_aluno', 
-                (await supabase
-                    .from('aluno_turma')
-                    .select('id_aluno')
-                    .eq('id_turma', idTurma)
-                ).data.map(t => t.id_aluno) // Filtrar apenas os IDs dos alunos na turma
-            );
+            .in('id_aluno', turmaAlunos.map(t => t.id_aluno));
+
+        console.log("Desempenho da turma:", desempenhoTurma); // Verifique o desempenho
 
         if (desempenhoError) {
             console.error('Erro ao buscar desempenho da turma:', desempenhoError);
             return res.status(500).send('Erro ao buscar desempenho da turma');
         }
 
-        // 4. Somar os pontos de cada aluno para o ranking
+        // 5. Somar os pontos de cada aluno para o ranking
         const ranking = {};
         desempenhoTurma.forEach(({ id_aluno, pontos }) => {
             ranking[id_aluno] = (ranking[id_aluno] || 0) + pontos;
         });
 
-        // 5. Transformar ranking em array e ordenar por pontos (decrescente)
+        // 6. Transformar ranking em array e ordenar por pontos (decrescente)
         const rankingArray = Object.entries(ranking).map(([id_aluno, pontos]) => ({ id_aluno, pontos }));
         rankingArray.sort((a, b) => b.pontos - a.pontos);
 
-        // 6. Buscar nomes dos alunos para exibir no ranking
+        // 7. Buscar nomes dos alunos para exibir no ranking
         const alunosInfo = await Promise.all(rankingArray.map(async aluno => {
             const { data, error } = await supabase
                 .from('aluno')
                 .select('nome')
                 .eq('id_aluno', aluno.id_aluno)
                 .single();
-                
+
             return error ? null : { nome: data.nome, pontos: aluno.pontos };
         }));
+
+        console.log("Alunos Info:", alunosInfo); // Verifique os alunos
 
         // Filtra para remover alunos não encontrados (caso de erro em algum `select`)
         const rankingFinal = alunosInfo.filter(a => a !== null);
@@ -397,6 +433,7 @@ router.get('/desempenho-classe', verificarAlunoLogado, async (req, res) => {
         res.status(500).send('Erro ao obter ranking de desempenho da turma');
     }
 });
+
 
 router.get('/desempenho-geral', verificarAlunoLogado, async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
@@ -420,6 +457,7 @@ router.get('/desempenho-geral', verificarAlunoLogado, async (req, res) => {
         const { data: desempenhoGeral, error: desempenhoError } = await supabase
             .from('aluno_materia')
             .select('id_aluno, pontos');
+            console.log(desempenhoGeral); // Para verificar se há vários alunos
 
         if (desempenhoError) {
             console.error('Erro ao buscar desempenho geral:', desempenhoError);
@@ -443,7 +481,7 @@ router.get('/desempenho-geral', verificarAlunoLogado, async (req, res) => {
                 .select('nome')
                 .eq('id_aluno', aluno.id_aluno)
                 .single();
-                
+
             return error ? null : { nome: data.nome, pontos: aluno.pontos };
         }));
 
@@ -471,10 +509,9 @@ router.get('/minigame-kart', verificarAlunoLogado, (req, res) => {
     res.render('pages/prof/minigame-kart');
 });
 
-router.get('/quiz-perguntas/:id_minigame', async (req, res) => {
+router.get('/quiz/:id_minigame', verificarAlunoLogado, async (req, res) => {
     const { id_minigame } = req.params;
 
-    // Validar o ID do minigame
     if (!id_minigame) {
         console.error("ID do minigame não fornecido.");
         return res.status(400).json({ error: 'ID do minigame é obrigatório.' });
@@ -489,28 +526,47 @@ router.get('/quiz-perguntas/:id_minigame', async (req, res) => {
             .select('id_pergunta, texto')
             .eq('id_minigame', id_minigame);
 
-        console.log("Buscando perguntas para o minigame ID:", id_minigame);
-        console.log("Resultado da consulta:", perguntas);
-
-        // Tratar erros de consulta
         if (perguntasError) {
-            console.error("Erro na consulta ao Supabase:", perguntasError);
+            console.error("Erro na consulta de perguntas:", perguntasError);
             return res.status(500).json({ error: 'Erro ao buscar perguntas do minigame.' });
         }
 
-        // Caso nenhuma pergunta seja encontrada
         if (!perguntas || perguntas.length === 0) {
             console.warn("Nenhuma pergunta encontrada para o minigame ID:", id_minigame);
             return res.status(404).json({ error: 'Nenhuma pergunta encontrada para este minigame.' });
         }
 
-        // Retornar perguntas encontradas
-        res.status(200).json({ perguntas });
+        // Buscar alternativas relacionadas às perguntas
+        const perguntasIds = perguntas.map(p => p.id_pergunta); // IDs das perguntas
+        const { data: alternativas, error: alternativasError } = await supabase
+            .from('alternativa')
+            .select('id_pergunta, texto, correta')
+            .in('id_pergunta', perguntasIds); // Busca por ID das perguntas
+
+        if (alternativasError) {
+            console.error("Erro na consulta de alternativas:", alternativasError);
+            return res.status(500).json({ error: 'Erro ao buscar alternativas.' });
+        }
+
+        // Estruturar os dados para envio
+        const quiz = perguntas.map(pergunta => ({
+            id_pergunta: pergunta.id_pergunta,
+            texto: pergunta.texto,
+            alternativas: alternativas.filter(a => a.id_pergunta === pergunta.id_pergunta),
+        }));
+
+        console.log("Quiz estruturado:", quiz);
+
+        // Renderizar o template com os dados do quiz
+        res.render('pages/aluno/quiz', { quiz });
+
     } catch (err) {
         console.error("Erro inesperado:", err);
         res.status(500).json({ error: 'Erro inesperado ao buscar perguntas.' });
     }
 });
+
+
 
 
 
