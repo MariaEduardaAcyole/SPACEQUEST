@@ -3,98 +3,103 @@
 
 <head>
     <meta http-equiv="refresh" content="" />
-
-    <TItle>PERFIL</TItle>
+    <title>PERFIL</title>
     <link rel="stylesheet" href="css/perfil.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
 
-    <img class="img-fundo" src="img/fundo.png">
-
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
-        <div class="menu-cardapio"> 
+        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</a></h3>
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
-
         </div>
-
     </div>
 
     <div class="tras">
-
-    <br>
-
+        <br>
 
         <div class="col-1">
             <h1 class="dados-usuario">Dados do Usuario</h1>
             <p class="descriçao">
-                SENHA: <input type="text" placeholder="senha"> <button>SALVAR</button>
-                <br>
-                <br>
-                INFO:XXXXXXX
-                <br>
-                <br>
-                INFO:XXXXXXXXXX
-                <br>
-                <br>
-                INFO:XXXXXXXX
-                <br>
-                <br>
-                INFO:XXXXX
-                <br>
-                <br>
-                INFO:XXXXXXXX
-                <br>
-                <br>
-                INFO:XXXXXXXX
-                <br>
-                <br>
-                INFO:XXXXXX
-                <br>
-                <br>
-                INFO:XXXXXX
-
+                <strong>Nome:</strong>
+                <%= usuario.nome %>
             </p>
+
+            <!-- Formulário para alteração da senha -->
+            <h2>Alterar Senha</h2>
+            <form action="/alterar-senha" method="POST">
+                <label for="senhaAntiga">Senha Atual:</label>
+                <input type="password" name="senhaAntiga" required>
+
+                <label for="novaSenha">Nova Senha:</label>
+                <input type="password" name="novaSenha" required>
+
+                <label for="confirmarNovaSenha">Confirmar Nova Senha:</label>
+                <input type="password" name="confirmarNovaSenha" required>
+
+                <button type="submit">Salvar</button>
+            </form>
         </div>
 
         <div class="col-2">
-
             <div class="linha1">
                 <div class="caixa-usuario">
                     <div class="caixa-img-usuario">
                         <img class="img-perfil" src="img/perfil imagem.png">
-                        <p class="nome-usuario">NOME USUARIO</p>
+                        <p class="nome-usuario"><%= usuario.nome %></p>
                     </div>
-                    <p class="nome-usuario">NOME USUARIO</p>
+                    <p class="nome-usuario"><%= usuario.nome %></p>
                 </div>
 
                 <div class="caixa-materia">
-          
-
                     <h3>Pendências</h3>
-          
                     <h1>12</h1>
                     <img class="pendencias-img" src="img/pendencia.png">
-
                 </div>
-
             </div>
 
             <div class="linha2">
-                <div class="caixa-frequencia">FREQUENCIA</div>
+                <div class="caixa-frequencia">
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
-
         </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Pegar os dados passados do backend
+        const labels = <%= JSON.stringify(labels) %>;  // Nomes das matérias
+        const pontos = <%= JSON.stringify(pontos) %>;  // Pontuações do aluno
 
+        // Inicializar o gráfico
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,  // Nomes das matérias
+                datasets: [{
+                    label: 'Pontuação do Aluno',
+                    data: pontos,  // Pontuações do aluno
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor de fundo da barra
+                    borderColor: 'rgba(54, 162, 235, 1)', // Cor da borda
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    
 
-</div>
 </body>
 
 </html>

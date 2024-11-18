@@ -139,9 +139,9 @@ router.get('/entrega-atividade/:id', async (req, res) => {
     try {
         // READ - consulta no banco os dados
         const { data: atividade, error } = await supabase
-            .from('atividade') 
+            .from('atividade')
             .select('*')
-            .eq('id_atividade', atividadeId) 
+            .eq('id_atividade', atividadeId)
             .single(); // Espera apenas um único resultado
 
         // Verifica se houve erro ou se a atividade não foi encontrada
@@ -160,9 +160,130 @@ router.get('/pendencias', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/pendencias');
 });
 
-router.get('/perfil', verificarAlunoLogado, (req, res) => {
-    res.render('pages/aluno/perfil');
+router.get('/perfil', verificarAlunoLogado, async (req, res) => {
+    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
+
+    try {
+        // 1. Buscar as informações do usuário
+        const { data: usuarioData, error: usuarioError } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (usuarioError || !usuarioData) {
+            console.error('Erro ao buscar dados do usuário:', usuarioError);
+            return res.status(500).send('Erro ao buscar dados do usuário.');
+        }
+
+        // Verificar se o id_aluno está na tabela 'aluno'
+        const { data: alunoData, error: alunoError } = await supabase
+            .from('aluno')  // Supondo que a tabela 'aluno' tem a chave 'id_usuario'
+            .select('*')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (alunoError || !alunoData) {
+            console.error('Erro ao buscar dados do aluno:', alunoError);
+            return res.status(500).send('Erro ao buscar dados do aluno.');
+        }
+
+        const idAluno = alunoData.id_aluno;
+
+        // 2. Buscar as matérias e as pontuações do aluno
+        const { data: materiasData, error: materiasError } = await supabase
+            .from('aluno_materia')
+            .select('id_materia, pontos')
+            .eq('id_aluno', idAluno);
+
+        if (materiasError || !materiasData) {
+            console.error('Erro ao buscar matérias do aluno:', materiasError);
+            return res.status(500).send('Erro ao buscar matérias.');
+        }
+
+        // Debug para verificar o conteúdo de materiasData
+        console.log('Materias Data:', materiasData);
+
+        // 3. Preparar os dados para o gráfico
+        const labels = materiasData.map(materia => materia.materia);  // Array de matérias
+        const pontos = materiasData.map(materia => materia.pontos);   // Array de pontuações
+
+        // Debug para verificar os dados de labels e pontos
+        console.log('Labels:', labels);
+        console.log('Pontos:', pontos);
+
+        // 4. Passar os dados para a view
+        res.render('pages/aluno/perfil', {
+            usuario: usuarioData,
+            materias: materiasData,
+            labels: labels,  // Passa as matérias como array de strings
+            pontos: pontos   // Passa as pontuações como array de números
+        });
+
+    } catch (err) {
+        console.error('Erro ao exibir perfil:', err);
+        res.status(500).send('Erro ao exibir perfil.');
+    }
 });
+
+
+
+
+const bcrypt = require('bcrypt');  // Certifique-se de importar o bcrypt
+
+// Rota para atualizar a senha
+router.post('/alterar-senha', verificarAlunoLogado, async (req, res) => {
+    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
+    const { senhaAntiga, novaSenha, confirmarNovaSenha } = req.body;
+
+    try {
+        // Validação das senhas (nova senha deve ser igual à confirmação)
+        if (novaSenha !== confirmarNovaSenha) {
+            return res.status(400).send('As senhas não coincidem.');
+        }
+
+        // Buscar a senha do usuário no banco de dados (a senha está criptografada)
+        const { data: usuarioData, error: usuarioError } = await supabase
+            .from('usuario')
+            .select('senha')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (usuarioError || !usuarioData) {
+            console.error('Erro ao buscar dados do usuário:', usuarioError);
+            return res.status(500).send('Erro ao buscar dados do usuário.');
+        }
+
+        // Comparar a senha antiga fornecida com a senha criptografada no banco de dados
+        const senhaValida = await bcrypt.compare(senhaAntiga, usuarioData.senha);
+
+        if (!senhaValida) {
+            return res.status(400).send('Senha antiga incorreta.');
+        }
+
+        // Criptografar a nova senha
+        const novaSenhaCriptografada = await bcrypt.hash(novaSenha, 10);
+
+        // Atualizar a senha no banco de dados com a nova senha criptografada
+        const { error: updateError } = await supabase
+            .from('usuario')
+            .update({ senha: novaSenhaCriptografada })
+            .eq('id_usuario', idUsuario);
+
+        if (updateError) {
+            console.error('Erro ao atualizar senha:', updateError);
+            return res.status(500).send('Erro ao atualizar a senha.');
+        }
+
+        // Senha atualizada com sucesso, redirecionar para o perfil
+        res.redirect('/perfil');
+    } catch (err) {
+        console.error('Erro ao alterar a senha:', err);
+        res.status(500).send('Erro ao alterar a senha.');
+    }
+});
+
+
 
 // Rota para aluno ver suas matérias e atividades
 router.get('/materias', verificarAlunoLogado, async (req, res) => {
@@ -288,10 +409,10 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         const idAluno = alunoData.id_aluno;
         console.log(idAluno);
 
-        // Busca as matérias e os pontos do aluno
+        // Busca as matérias e os pontos do aluno, incluindo o nome da matéria
         const { data: desempenhoAluno, error: desempenhoError } = await supabase
             .from('aluno_materia')
-            .select('id_materia, pontos')
+            .select('id_materia, pontos, materia(nome_materia)')  // Correção: busca o nome_materia
             .eq('id_aluno', idAluno)
             .order('pontos', { ascending: false }); // Ordena por pontos de forma decrescente
 
@@ -305,31 +426,9 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
             return res.status(404).send('Nenhum desempenho encontrado para este aluno.');
         }
 
-        // Faz a busca dos nomes das matérias
-        const materiasInfo = await Promise.all(desempenhoAluno.map(async ({ id_materia, pontos }) => {
-            const { data: materiaData, error: materiaError } = await supabase
-                .from('materia')
-                .select('nome')
-                .eq('id_materia', id_materia)
-                .single();
-
-            if (materiaError || !materiaData) {
-                console.error('Erro ao buscar nome da matéria:', materiaError);
-                return null; // Caso não encontre a matéria
-            }
-
-            return {
-                nome_materia: materiaData.nome,
-                pontos
-            };
-        }));
-
-        // Filtra valores nulos (caso alguma matéria não tenha sido encontrada)
-        const materiasComPontos = materiasInfo.filter(materia => materia !== null);
-
         // Renderiza a página com as matérias e desempenho
         res.render('pages/aluno/desempenho-individual', {
-            desempenhoAluno: materiasComPontos
+            desempenhoAluno: desempenhoAluno
         });
 
     } catch (error) {
@@ -343,7 +442,7 @@ router.get('/desempenho-classe', verificarAlunoLogado, async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
 
     try {
-        // 1. Buscar o ID do aluno logado
+        // 1. Buscar o ID do aluno logado (opcional, se você precisar verificar ou exibir algo relacionado ao aluno logado)
         const { data: alunoData, error: alunoError } = await supabase
             .from('aluno')
             .select('id_aluno')
@@ -357,80 +456,66 @@ router.get('/desempenho-classe', verificarAlunoLogado, async (req, res) => {
 
         const idAluno = alunoData.id_aluno;
 
-        // 2. Buscar o ID da turma do aluno
-        const { data: turmaData, error: turmaError } = await supabase
-            .from('aluno_turma')
-            .select('id_turma')
-            .eq('id_aluno', idAluno)
-            .single();
+        // 2. Buscar todas as turmas
+        const { data: turmasData, error: turmasError } = await supabase
+            .from('turma') // Supondo que você tenha uma tabela 'turma'
+            .select('id_turma, nome_turma'); // Nome da turma (caso queira exibir)
 
-        if (turmaError || !turmaData) {
-            console.error('Erro ao buscar turma do aluno:', turmaError);
-            return res.status(500).send('Erro ao identificar a turma do aluno');
+        if (turmasError || !turmasData) {
+            console.error('Erro ao buscar turmas:', turmasError);
+            return res.status(500).send('Erro ao identificar turmas');
         }
 
-        const idTurma = turmaData.id_turma;
+        // 3. Para cada turma, buscar os alunos
+        const turmasComDesempenho = await Promise.all(turmasData.map(async (turma) => {
+            // Buscar os alunos da turma
+            const { data: turmaAlunos, error: turmaAlunosError } = await supabase
+                .from('aluno_turma')
+                .select('id_aluno')
+                .eq('id_turma', turma.id_turma);
 
-        // 3. Buscar os IDs dos alunos da turma
-        const { data: turmaAlunos, error: turmaAlunosError } = await supabase
-            .from('aluno_turma')
-            .select('id_aluno')
-            .eq('id_turma', idTurma);
+            if (turmaAlunosError) {
+                console.error(`Erro ao buscar alunos da turma ${turma.id_turma}:`, turmaAlunosError);
+                return null; // Caso haja erro, ignora essa turma
+            }
 
-        if (turmaAlunosError) {
-            console.error('Erro ao buscar alunos da turma:', turmaAlunosError);
-            return res.status(500).send('Erro ao identificar alunos da turma');
-        }
+            // 4. Buscar o desempenho dos alunos da turma
+            const { data: desempenhoTurma, error: desempenhoError } = await supabase
+                .from('aluno_materia')
+                .select('id_aluno, pontos')
+                .in('id_aluno', turmaAlunos.map(t => t.id_aluno));
 
-        console.log("Alunos da turma:", turmaAlunos); // Verifique os alunos da turma
+            if (desempenhoError) {
+                console.error(`Erro ao buscar desempenho da turma ${turma.id_turma}:`, desempenhoError);
+                return null;
+            }
 
-        // 4. Buscar o desempenho de todos os alunos na turma
-        const { data: desempenhoTurma, error: desempenhoError } = await supabase
-            .from('aluno_materia')
-            .select('id_aluno, pontos')
-            .in('id_aluno', turmaAlunos.map(t => t.id_aluno));
+            // 5. Somar os pontos de cada aluno
+            const totalPontos = desempenhoTurma.reduce((acc, { pontos }) => acc + pontos, 0);
 
-        console.log("Desempenho da turma:", desempenhoTurma); // Verifique o desempenho
+            // Retornar a turma com o desempenho total
+            // 5. Retornar a turma com o desempenho total
+            return {
+                id_turma: turma.id_turma,
+                nome_turma: turma.nome_turma, // Acesso correto à propriedade nome_turma
+                pontos: totalPontos          // Total de pontos da turma
+            };
 
-        if (desempenhoError) {
-            console.error('Erro ao buscar desempenho da turma:', desempenhoError);
-            return res.status(500).send('Erro ao buscar desempenho da turma');
-        }
-
-        // 5. Somar os pontos de cada aluno para o ranking
-        const ranking = {};
-        desempenhoTurma.forEach(({ id_aluno, pontos }) => {
-            ranking[id_aluno] = (ranking[id_aluno] || 0) + pontos;
-        });
-
-        // 6. Transformar ranking em array e ordenar por pontos (decrescente)
-        const rankingArray = Object.entries(ranking).map(([id_aluno, pontos]) => ({ id_aluno, pontos }));
-        rankingArray.sort((a, b) => b.pontos - a.pontos);
-
-        // 7. Buscar nomes dos alunos para exibir no ranking
-        const alunosInfo = await Promise.all(rankingArray.map(async aluno => {
-            const { data, error } = await supabase
-                .from('aluno')
-                .select('nome')
-                .eq('id_aluno', aluno.id_aluno)
-                .single();
-
-            return error ? null : { nome: data.nome, pontos: aluno.pontos };
         }));
 
-        console.log("Alunos Info:", alunosInfo); // Verifique os alunos
+        // Filtrando turmas com erro (caso tenha ocorrido algum erro de busca)
+        const turmasValidas = turmasComDesempenho.filter(turma => turma !== null);
 
-        // Filtra para remover alunos não encontrados (caso de erro em algum `select`)
-        const rankingFinal = alunosInfo.filter(a => a !== null);
+        // 6. Ordenar as turmas pela pontuação total (decrescente)
+        turmasValidas.sort((a, b) => b.pontos - a.pontos);
 
-        // Renderizar a página com o ranking
-        res.render('pages/aluno/desempenho-classe', {
-            ranking: rankingFinal
-        });
+        console.log(turmasValidas); // Verifique a estrutura dos dados antes de renderizar a página
+        res.render('pages/aluno/desempenho-classe', { turmas: turmasValidas });
+
 
     } catch (err) {
-        console.error('Erro ao obter ranking de desempenho da turma:', err);
-        res.status(500).send('Erro ao obter ranking de desempenho da turma');
+        console.error('Erro ao obter ranking de turmas:', err);
+        res.status(500).send('Erro ao obter ranking de turmas');
     }
 });
 
@@ -457,7 +542,7 @@ router.get('/desempenho-geral', verificarAlunoLogado, async (req, res) => {
         const { data: desempenhoGeral, error: desempenhoError } = await supabase
             .from('aluno_materia')
             .select('id_aluno, pontos');
-            console.log(desempenhoGeral); // Para verificar se há vários alunos
+        console.log(desempenhoGeral); // Para verificar se há vários alunos
 
         if (desempenhoError) {
             console.error('Erro ao buscar desempenho geral:', desempenhoError);
