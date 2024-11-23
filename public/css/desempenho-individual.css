@@ -15,7 +15,7 @@ button,a {
   }
 
 
-
+ 
   .head {
     width: 100%;
     height: auto;
@@ -77,32 +77,110 @@ body {
 
 
 .head {
-  height: 8%;
-  width: 90%;
-  border-radius: 4.86vh;
-  background: rgba(217, 217, 217, 0.20);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 65%;
+  height: 7%;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.30);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
 .corpo {
-  display: flex;
-  justify-content: center;
   width: 90%;
   height: 75%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #41beda00;
+}
+
+.podio{
+  width: 36%;
+height: 40%;
+flex-shrink: 0;
+display: flex;
+align-items: end;
+background-color: #610404;
+margin-top: 2%;
+}
+
+.top1{
+  width: 33%;
+  height: 50%;
+  flex-shrink: 0;
+  align-items: end;
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+background: #41BDD9;
+}
+
+.top2{
+  width: 33%;
+  height: 40%;
+justify-content: center;
+flex-shrink: 0;
+align-items: end;
+padding: 1%;
+display: flex;
+border-radius: 10px;
+background: #1150A2;
+}
+
+.top3{
+  width: 33%;
+height: 30%;
+justify-content: center;
+flex-shrink: 0;
+align-items: end;
+padding: 1%;
+display: flex;
+border-radius: 10px;
+background: #042763;
+}
+
+
+.kart1 {
+  position: absolute;
+  width: 95px;
+  top: 35%;
+height: 95px;
+flex-shrink: 0;
+}
+
+
+.kart2 {
+  position: absolute;
+  width: 95px;
+  top: 38%;
+height: 95px;
+flex-shrink: 0;
+}
+
+
+.kart3 {
+  position: absolute;
+  width: 95px;
+  top: 41%;
+height: 95px;
+flex-shrink: 0;
 }
 
 .tras {
-  width: 90%;
-  height: 90%;
-  border-radius: 40px;
+  width: 65%;
+  height: 50%;
+  flex-shrink: 0;
   display: flex;
+  background-color: rgba(254, 146, 5, 0);
   padding: 2vh;
   flex-wrap: wrap;
+  overflow: auto;
   align-items: center;
-  justify-content: center;
   overflow-y: auto;
 }
 
@@ -110,7 +188,6 @@ body {
 .tras::-webkit-scrollbar {
   background-color: #ffffff;
   height: max-content;
-  border-radius: 30px;
 
 
 }
@@ -118,7 +195,6 @@ body {
 .tras::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
   background-color: #042763;
-  border-radius: 30px;
 }
 
 .materia {
@@ -126,7 +202,8 @@ body {
   background: rgba(255, 255, 255, 0.50);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   width: 90%;
-  height: 17%;
+  height: 30%;
+  flex-shrink: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -160,15 +237,3 @@ a {
   color: #fff;
   font-size: 1em; /* Ajuste conforme necessário */
 }
-
-/* SCROLL */
-.div-semana::-webkit-scrollbar {
-  background-color: #ffffff;
-}
-
-.div-semana::-webkit-scrollbar-thumb {
-  width: 10%;
-  background-color: #042763;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-

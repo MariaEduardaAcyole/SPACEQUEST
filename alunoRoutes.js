@@ -178,7 +178,7 @@ router.get('/perfil', verificarAlunoLogado, async (req, res) => {
 
         // Verificar se o id_aluno está na tabela 'aluno'
         const { data: alunoData, error: alunoError } = await supabase
-            .from('aluno')  // Supondo que a tabela 'aluno' tem a chave 'id_usuario'
+            .from('aluno')
             .select('*')
             .eq('id_usuario', idUsuario)
             .single();
@@ -191,6 +191,7 @@ router.get('/perfil', verificarAlunoLogado, async (req, res) => {
         const idAluno = alunoData.id_aluno;
 
         // 2. Buscar as matérias e as pontuações do aluno
+        // 2. Buscar as matérias e as pontuações do aluno
         const { data: materiasData, error: materiasError } = await supabase
             .from('aluno_materia')
             .select('id_materia, pontos')
@@ -201,23 +202,32 @@ router.get('/perfil', verificarAlunoLogado, async (req, res) => {
             return res.status(500).send('Erro ao buscar matérias.');
         }
 
-        // Debug para verificar o conteúdo de materiasData
-        console.log('Materias Data:', materiasData);
+        // 3. Buscar os nomes das matérias a partir da tabela 'materia'
+        const { data: materiasNomes, error: materiasNomesError } = await supabase
+            .from('materia')  // Certifique-se de que a tabela chama 'materia' e tem os campos certos
+            .select('id_materia, nome_materia')  // Se o nome da matéria for 'nome_materia'
+            .in('id_materia', materiasData.map(materia => materia.id_materia));
 
-        // 3. Preparar os dados para o gráfico
-        const labels = materiasData.map(materia => materia.materia);  // Array de matérias
-        const pontos = materiasData.map(materia => materia.pontos);   // Array de pontuações
+        if (materiasNomesError || !materiasNomes) {
+            console.error('Erro ao buscar nomes das matérias:', materiasNomesError);
+            return res.status(500).send('Erro ao buscar nomes das matérias.');
+        }
 
-        // Debug para verificar os dados de labels e pontos
-        console.log('Labels:', labels);
-        console.log('Pontos:', pontos);
+        // 4. Preparar os dados para o gráfico
+        const labels = materiasData.map(materia => {
+            // Encontre o nome da matéria pelo id_materia
+            const materiaEncontrada = materiasNomes.find(m => m.id_materia === materia.id_materia); // Corrigido
+            return materiaEncontrada ? materiaEncontrada.nome_materia : 'Desconhecido';  // Verifique se o campo correto é 'nome_materia'
+        });
 
-        // 4. Passar os dados para a view
+        const pontos = materiasData.map(materia => materia.pontos); // Pontuações
+
+        // 5. Passar os dados para a view
         res.render('pages/aluno/perfil', {
             usuario: usuarioData,
             materias: materiasData,
-            labels: labels,  // Passa as matérias como array de strings
-            pontos: pontos   // Passa as pontuações como array de números
+            labels: labels,  // Passa os nomes das matérias
+            pontos: pontos   // Passa as pontuações
         });
 
     } catch (err) {
@@ -317,9 +327,10 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
         const idTurma = turmaData.id_turma;
 
         const { data: materias, error: materiasError } = await supabase
-            .from('turma_materia')
-            .select('id_materia')
-            .eq('id_turma', idTurma);
+        .from('turma_materia')
+        .select('id_materia, materia(nome_materia, cor_materia)')
+        .eq('id_turma', idTurma);
+    
 
 
         if (materiasError) {
@@ -344,6 +355,7 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
             atividades: atividades.filter(atividade => atividade.id_materia === materia.id_materia) || []
         }));
 
+        console.log('Matérias com dados completos:', materias);
 
         // Renderizar a página com as matérias e atividades
         res.render('pages/aluno/materias', { materias: materiasComAtividades });
@@ -396,18 +408,18 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
 
         // Busca o ID do aluno com base no ID do usuário logado
         const { data: alunoData, error: alunoError } = await supabase
-            .from('aluno')
-            .select('id_aluno')
-            .eq('id_usuario', idUsuario)
-            .single();
-
+        .from('aluno')
+        .select('id_aluno')
+        .eq('id_usuario', idUsuario)
+        .single();
+    
         if (alunoError || !alunoData) {
             console.error('Erro ao buscar ID do aluno:', alunoError);
             return res.status(500).send('Erro ao identificar o aluno');
         }
 
         const idAluno = alunoData.id_aluno;
-        console.log(idAluno);
+        console.log('ID do aluno identificado:', idAluno);
 
         // Busca as matérias e os pontos do aluno, incluindo o nome da matéria
         const { data: desempenhoAluno, error: desempenhoError } = await supabase
@@ -426,6 +438,8 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
             return res.status(404).send('Nenhum desempenho encontrado para este aluno.');
         }
 
+        console.log('Desempenho:', desempenhoAluno);
+
         // Renderiza a página com as matérias e desempenho
         res.render('pages/aluno/desempenho-individual', {
             desempenhoAluno: desempenhoAluno
@@ -435,6 +449,9 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         console.error('Erro ao obter desempenho individual:', error);
         res.status(500).send('Erro ao obter desempenho');
     }
+
+
+
 });
 
 

@@ -70,11 +70,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
     <script>
         // Pegar os dados passados do backend
-        const labels = <%= JSON.stringify(labels) %>;  // Nomes das matérias
-        const pontos = <%= JSON.stringify(pontos) %>;  // Pontuações do aluno
-
+        const labels = <%- JSON.stringify(labels) %>;  // Nomes das matérias
+        const pontos = <%- JSON.stringify(pontos) %>;  // Pontuações do aluno
+    
         // Inicializar o gráfico
         const ctx = document.getElementById('myChart').getContext('2d');
         new Chart(ctx, {

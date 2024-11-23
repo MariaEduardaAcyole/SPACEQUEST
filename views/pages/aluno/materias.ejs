@@ -8,34 +8,40 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
+
+
+    
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</a></h3>
+        <a href="./home-aluno"> <img src="img/logo.svg" alt="img/logo.svg" class="logo">
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
         </div>
     </div>
 
-    <div class="linha-2">
+
+
         <div class="caixa-atras">
-            <div class="caixa-titulo-pagina">Matérias</div>
+            
+            <div class="caixa-titulo-pagina"><h1>Matérias</h1></div>
             <div class="caixa-container-materias">
                 <% if (materias && materias.length > 0) { %>
                     <% materias.forEach(materia => { %>
-                        <div class="caixa-materia" style="background-color: <%= materia.cor_materia %>;">
-                            <h2><%= materia.nome_materia %></h2>
-                            <a href="/materia-atividades/<%= materia.id_materia %>" class="btn-ver-atividades">Ver Atividades</a>
-                            <a href="/materia-mural/<%= materia.id_materia %>" class="btn-ver-atividades">Ver MINIGAME</a>
-
-                            <ul>
-                                <% (materia.atividades || []).forEach(atividade => { %>
-                                    <li><%= atividade.nome_atividade %> - <%= atividade.descricao %></li>
-                                <% }) %>
-                            </ul>
+                        <div class="caixa-materia" style="background-color: <%= materia.materia.cor_materia %>;">
+                            <h2><%= materia.materia.nome_materia %></h2>
+                            <a href="/materia-atividades/<%= materia.id_materia %>" class="btn-ver-atividades">
+                                <div class="icons"> 
+                                    <img class="icons-img" src="img/icon1.png">
+                                    <img class="icons-img" src="img/icon2.png">
+                                    <img class="icons-img" src="img/icon3.png">
+                                </div>
+                            </a>
                         </div>
                     <% }) %>
                 <% } %>
             </div>
+            
+          
         </div>
-    </div>
+
 </body>
 </html>

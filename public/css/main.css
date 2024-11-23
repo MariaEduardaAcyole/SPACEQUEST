@@ -33,13 +33,16 @@ body, html {
  ::-webkit-input-placeholder {
     color: rgb(255, 255, 255);
  }
-.img-fundo {
+
+ .img-fundo {
   height: 150%;
   width: 100%;
   position: absolute;
   top: 0%;
   opacity: 50%;
-}
+  z-index: -1000;
+ }
+ 
 .header {
   width: 99%;
   height: 10vh;

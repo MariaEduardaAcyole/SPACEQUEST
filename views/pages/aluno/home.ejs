@@ -3,7 +3,6 @@
 
 <head>
     <!-- LINKS -->
-    <meta http-equiv="refresh" content="30" />
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/home.css">
     <script src="./src/scriptslide.js" defer></script>
@@ -13,8 +12,8 @@
 <body>
 
     <img class="img-fundo" src="img/fundo.png">
-    
-    <div class="col-1">
+
+    <div class="main">
         <div class="atras-menu">
             <%- include('../../partials/menu-lateral') %>
         </div>
@@ -28,115 +27,165 @@
                 <img class="nave" src="img/nave-espacial.png">
             </div>
 
-                <div class="planetas-bimestrais">
-                    <img class="img-planetas" src="img/planeta 01Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 02Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 03Bimestre.png">
-                    <img class="img-planetas" src="img/planeta 04Bimestre.png">
-                </div>
-
-
+            <div class="planetas-bimestrais">
+                <img class="img-planetas" src="img/planeta 01Bimestre.png">
+                <img class="img-planetas" src="img/planeta 02Bimestre.png">
+                <img class="img-planetas" src="img/planeta 03Bimestre.png">
+                <img class="img-planetas" src="img/planeta 04Bimestre.png">
+            </div>
 
             <div class="atras">
 
-                
-
                 <div class="col-2">
 
-                        <div class="noticias">
-                            <h3>Noticías</h3>
 
-                            <div class="container-slider">
+                    <div class="noticias">
+                        <h3>Noticías</h3>
+
+                        <div class="container-slider">
+
+                            <div class="container-images">
+                                <img src="img/slide1.png" alt="girl" class="slider on">
+                                <img src="img/slide2.png" alt="girl" class="slider">
+                                <img src="img/slide3.png" alt="girl" class="slider">
+                            </div>
+
+                        </div>
+
+
+                    </div>
                     
-                                <div class="container-images">
-                                  <img src="img/slide1.png" alt="girl" class="slider on">
-                                  <img src="img/slide2.png" alt="girl" class="slider">
-                                  <img src="img/slide3.png" alt="girl" class="slider">
-                                </div>
-                            
-                              </div>
-                            
+                    <div class="pendencias">
 
-                        </div>
-                    .
-                        <div class="pendencias">
+                        <h3>Pendências</h3>
 
-                            <h3>Pendências</h3>
-          
-                            <h1>12</h1>
-                            <img class="pendencias-img" src="img/pendencia.png">
+                        <h1>12</h1>
+                        <img class="pendencias-img" src="img/pendencia.png">
 
-                        
-                        </div>
-                </div>
 
-            <div class="col-3">
+                    </div>
 
-                <div class="grafico">
+                    <div class="grafico">
                         <canvas id="myChart"></canvas>
-                      
+
+                    </div>
+                    <div class="minigame">
+
+                        <h3 class="titulo-spacequest">SPACE<br>‎ ‎ QUEST</h3>
+                        <img class="kart" src="img/astrokart.png">
+
+                    </div>
                 </div>
 
-                <div  class="minigame">
-   
-                    <h3 class="titulo-spacequest">SPACE<br>‎ ‎ QUEST</h3>
-                    <img class="kart" src="img/astrokart.png">
-    
+                <div class="col-3">
+                    <div class="button-container">
+                        <button class="open-popup-btn" onclick="openPopup('segunda')">Segunda-feira</button>
+                        <button class="open-popup-btn" onclick="openPopup('terca')">Terça-feira</button>
+                        <button class="open-popup-btn" onclick="openPopup('quarta')">Quarta-feira</button>
+                        <button class="open-popup-btn" onclick="openPopup('quinta')">Quinta-feira</button>
+                        <button class="open-popup-btn" onclick="openPopup('sexta')">Sexta-feira</button>
+                    </div>
+                    <!-- Estrutura do popup -->
+                    <div class="popup-overlay" id="popup">
+                        <div class="popup-content">
+                            <h3 id="popup-title">Horário das Aulas</h3>
+                            <table>
+                                <tr>
+                                    <th>Horário</th>
+                                    <th>Aula</th>
+                                </tr>
+                                <!-- Linhas da tabela serão atualizadas pelo JavaScript -->
+                                <tbody id="popup-table-body">
+                                    <tr>
+                                        <td colspan="2">Selecione um dia para ver o horário</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="close-btn" onclick="closePopup()">Fechar</button>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
-            <div class="div-semana">
-                <div class="semana">
-                    <p>SEG</p>
-                </div>
-                <div class="semana">
-                    <p>TER</p>
-                </div>
-                <div class="semana">
-                    <p>QUA</p>
-                </div>
-                <div class="semana">
-                    <p>QUI</p>
-                </div>
-                <div class="semana">
-                    <p>SEX</p>
-                </div>
-                <div class="semana">
-                    <p>SAB</p>
-                </div>
-                <div class="semana">
-                    <p>DOM</p>
-                </div>
-            </div>
+</div>
+            <script>
+                const schedule = {
+                    segunda: [
+                        { aula: "Matemática" ,horario: "08h00 - 09h00"},
+                        { aula: "História", horario: "09h10 - 10h10" },
+                        { aula: "Ciências", horario: "10h20 - 11h20" }
+                    ],
+                    terca: [
+                        { aula: "Geografia", horario: "08h00 - 09h00" },
+                        { aula: "Inglês", horario: "09h10 - 10h10" },
+                        { aula: "Educação Física", horario: "10h20 - 11h20" }
+                    ],
+                    quarta: [
+                        { aula: "Química", horario: "08h00 - 09h00" },
+                        { aula: "Matemática", horario: "09h10 - 10h10" },
+                        { aula: "Português", horario: "10h20 - 11h20" }
+                    ],
+                    quinta: [
+                        { aula: "Biologia", horario: "08h00 - 09h00" },
+                        { aula: "Física", horario: "09h10 - 10h10" },
+                        { aula: "Artes", horario: "10h20 - 11h20" }
+                    ],
+                    sexta: [
+                        { aula: "Sociologia", horario: "08h00 - 09h00" },
+                        { aula: "História", horario: "09h10 - 10h10" },
+                        { aula: "Geografia", horario: "10h20 - 11h20" }
+                    ]
+                };
 
-            </div>
+                function openPopup(day) {
+                    const popup = document.getElementById("popup");
+                    const title = document.getElementById("popup-title");
+                    const tableBody = document.getElementById("popup-table-body");
 
-        </div>
+                    // Define o título do popup
+                    title.innerText = `Horário de ${capitalize(day)}-feira`;
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            const ctx = document.getElementById('myChart');
-          
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                scales: {
-                  y: {
-                    beginAtZero: true
-                  }
+                    // Limpa o conteúdo anterior da tabela
+                    tableBody.innerHTML = "";
+
+                    // Adiciona as linhas da tabela com base no dia selecionado
+                    schedule[day].forEach(item => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `<td>${item.horario}</td> <td>${item.aula}</td>`;
+                        tableBody.appendChild(row);
+                    });
+
+                    // Exibe o popup
+                    popup.style.display = "block";
                 }
-              }
-            });
-          </script>
-          
+
+                function closePopup() {
+                    document.getElementById("popup").style.display = "none";
+                }
+
+                function capitalize(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+                // Fecha o popup ao clicar fora do conteúdo principal
+                document.getElementById("popup").addEventListener("click", function (event) {
+                    const content = document.querySelector(".popup-content");
+                    if (!content.contains(event.target)) {
+                        closePopup();
+                    }
+                });
+
+                function closePopup() {
+                    document.getElementById("popup").style.display = "none";
+                }
+
+                function capitalize(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 
 </html>
-
