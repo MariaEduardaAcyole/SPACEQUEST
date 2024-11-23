@@ -19,11 +19,23 @@ router.get('/home-aluno', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/home');
 });
 
-// Rota para listar atividades de uma matéria específica
+// Rota para listar atividades de uma matéria 
 router.get('/materia-atividades/:id', verificarAlunoLogado, async (req, res) => {
     const idMateria = req.params.id;
 
     try {
+        // Busca os dados da matéria
+        const { data: materia, error: materiaError } = await supabase
+            .from('materia')
+            .select('*')
+            .eq('id_materia', idMateria)
+            .single(); // Retorna um único registro
+
+        if (materiaError) {
+            console.error('Erro ao buscar a matéria:', materiaError);
+            return res.status(500).json({ error: 'Erro ao buscar os dados da matéria' });
+        }
+
         // Busca as atividades dessa matéria
         const { data: atividades, error: atividadesError } = await supabase
             .from('atividade')
@@ -35,10 +47,10 @@ router.get('/materia-atividades/:id', verificarAlunoLogado, async (req, res) => 
             return res.status(500).json({ error: 'Erro ao buscar atividades da matéria' });
         }
 
-        // Renderiza a página com as atividades e id da matéria
-        res.render('pages/aluno/materia-atividades', { atividades, idMateria });
+        // Renderiza a página com as informações da matéria e as atividades
+        res.render('pages/aluno/materia-atividades', { materia, atividades, idMateria });
     } catch (err) {
-        console.error('Erro ao renderizar atividades:', err);
+        console.error('Erro ao carregar a página da matéria:', err);
         res.status(500).json({ error: 'Erro ao carregar atividades da matéria' });
     }
 });
