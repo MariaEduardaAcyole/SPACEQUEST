@@ -20,18 +20,27 @@
   border: 1vh solid rgb(255, 255, 255);
 }
 
+.H{
+  font-size: 16px;
+  margin: 7%;
+  font-size: 16px;
+}
+
 .p {
   width: 100%;
-  margin-top: 5%; /* remove o espaçamento padrão do parágrafo */
+  margin-top: 2vh;
+  font-size: 20px;
   word-wrap: break-word; /* quebra palavras longas */
   color: #FFF;
   text-align: center;
 }
 
 .menus {
-  margin-top: -16%;
   width: 60%;
+  height: 30%;
   flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
  background-color: #ff000000;
   color: #ffffff;
   overflow-wrap: break-word; /* evita o estouro das bordas quando há palavras longas */

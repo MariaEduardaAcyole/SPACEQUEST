@@ -11,10 +11,10 @@ button,a {
 .start-quiz.button {
   padding: 15px 30px;
   font-size: 18px;
-  background-color: #3498db;
+  border-radius: 30px;
+  border: 3px solid #000;
+  background: #042661;
   color: #fff;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -56,8 +56,7 @@ body {
   align-items: center;
 
   overflow: hidden;
-  background-repeat: no-repeat;background-image: url("img/fundo.png");
-  background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+  background-repeat: no-repeat;
   background-repeat: no-repeat;
 }
 
@@ -89,8 +88,8 @@ height: 12vh;
 }
 
 .container {
-  background-color: #12121400;
-  width: 100%;
+  background-color: #0000ff;
+  width: 80%;
 
   border-radius: 6px;
   padding: 16px;
@@ -119,7 +118,8 @@ height: 12vh;
   height: 200%;
 
   background: rgba(255, 255, 255, 0.178);
-  border-radius: 10px;
+  padding: 1%;
+  border-radius: 30px;
   align-items: center;
   justify-content: center;
 }
@@ -140,12 +140,15 @@ height: 12vh;
 }
 
 .button {
+  height: 10vh;
   background: #042661;
   color: #fff;
+  padding: 1%;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 10px;
-  height: 60px;
+  border-radius: 30px;
+  border: 3px solid #000;
+  background: #042661;
   transition: filter 0.1s;
 }
 

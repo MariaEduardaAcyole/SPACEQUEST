@@ -37,7 +37,7 @@ a {
         width: 100%;
         color: #ffffff;
 
-        /* /BACKGROUND/ */
+        /BACKGROUND/
         flex-direction: column;
         align-content: center;
         align-items: center;
@@ -83,13 +83,13 @@ a {
         flex-wrap: wrap;
         background-color: rgba(27, 255, 6, 0);
         align-items: center;
-        justify-content: right;
+        justify-content: center;
     }
 
     .linha {
 
-        height: 3px;
-        width: 74%;
+        width: 952.005px;
+height: 5px;
         position: absolute;
         background-color: rgb(255, 255, 255);
     }
@@ -98,16 +98,17 @@ a {
     .nave {
         width: 5%;
         height: 10%;
+        flex-shrink: 0;
         margin-right: 40%;
         position: absolute;
     }
 
     .corpo {
         width: 100%;
-        height: 100%;
+        height: 71%;
         display: flex;
         flex-wrap: wrap;
-        background-color: rgba(0, 255, 21, 0);
+        background-color: rgba(255, 0, 0, 0);
     }
 
     .atras {
@@ -125,7 +126,8 @@ a {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: 50% 50%;
+        justify-content: center;
+        grid-template-columns: 45% 45%;
         grid-template-rows: 40% 40% 20%;
 
         justify-content: center;
@@ -133,37 +135,60 @@ a {
         background-color: rgba(132, 0, 255, 0);
     }
 
-
     .col-3{
         width: 100%;
-        height: 95%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        overflow-y: auto;
         grid-column: 2/3;
         background-color: rgba(0, 255, 106, 0);
-        
     }
 
-    .planetas-bimestrais {
-        width: 80%;
-        height: 10%;
-        display: flex;
-        position: absolute;
-        justify-content: space-around;
-        margin-top: 5%;
-        background-color: #0062ff00;
+    .vertical-line1 {
+        position: fixed;
+        margin-left: 20%;
+        width: 4px;
+        height: 36px;
+        background-color: #ffffff;
     }
 
-    .img-planetas {
-        width: 5%;
-        height: 80%;
+    .vertical-line2 {
+        position: fixed;
+        margin-left: 50%;
+        width: 4px;
+        height: 36px;
+        background-color: #ffffff;
+    }
+
+    .vertical-line3 {
+        position: fixed;
+        margin-right: 20%;
+        width: 4px;
+        height: 36px;
+        background-color: #ffffff;
+    }
+
+    .vertical-line4 {
+        position: fixed;
+        margin-right: 50%;
+        width: 4px;
+        height: 36px;
+        background-color: #ffffff;
+    }
+
+    .titulo{
+        padding: 5%;
+        height: 20%;
+        width: 100%;
+        background-color: #00000000;
     }
 
     .noticias {
-        width: 100%;
-        height: 100%;
+        width: 95%;
+        height: 90%;
         flex-shrink: 0;
       
         align-items: center;
@@ -176,7 +201,7 @@ a {
 
     .container-slider {
         display: flex;
-        margin-top: 3%;
+        margin-top: 0%;
         width: 75%;
         min-height: 75%;
         align-items: center;
@@ -222,41 +247,51 @@ a {
       }
 
     .pendencias {
-        width: 100%;
-        height: 100%;
+        width: 95%;
+        height: 90%;
         flex-shrink: 0;
         justify-content: center;
-        display: grid;
+        display: flex;
         flex-wrap: wrap;
         border-radius: 30px;
         background: rgba(255, 255, 255, 0.30);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
+    .pendencianumber{
+        font-size: 128px;
+    }
+
 
     .pendencias-img {
-        width: 16%;
-        height: 30%;
-        position: absolute;
-        margin-left: 10%;
-    }
+        width: 40%;
+        height: 52%;
+        margin-left: 5%;
+        flex-shrink: 0;
+        }
 
 
     .grafico{
-        width: 100%;
-        height: 100%;
+        width: 97%;
+        height: 110%;
         flex-shrink: 0;
-      border-radius: 30px;
-      grid-column: 1/3;
-      background: rgba(255, 255, 255, 0.30);
+        justify-content: center;
+        border-radius: 30px;
+        grid-column: 1/3;
+        background: rgba(255, 255, 255, 0.30);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
+    .logo{
+        height: 15%;
+        position: absolute;
+        top: 87%;
+    }
+
     .minigame {
-        width: 100%;
-        height: 100%;
-        flex-shrink: 0;
-        margin-top: 1%;
+        width: 97%;
+        height: 7.6vh;
+        margin-top: 6%;
         grid-column: 1/3;
         border-radius: 30px;
         background: rgba(255, 255, 255, 0.30);
@@ -268,29 +303,20 @@ a {
         width: 12%;
         height: 25%;
         position: absolute;
-        top: 76%;
-        left: 63%;
+        top: 75%;
+        left: 57%;
     }
 
-    .div-semana {
-        overflow-y: scroll;
-        width: 20%;
-        height: 100%;
-        margin-top: -18%;
-        display: flex;
-        background-color:#00000000;
-        flex-wrap: wrap;
 
-    }
 
     /*SCROLL*/
-    .div-semana::-webkit-scrollbar {
+    .col-3::-webkit-scrollbar {
         background-color: #ffffff;
         height: max-content;
         width: 10px;
     }
 
-    .div-semana::-webkit-scrollbar-thumb {
+    .col-3::-webkit-scrollbar-thumb {
         height: 10%;
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
         background-color: #042763;
@@ -298,8 +324,7 @@ a {
     }
 
     .semana {
-        width: 90%;
-        height: 30%;
+        flex-shrink: 0;
         margin-top: 2%;
         display: flex;
         justify-content: center;
@@ -352,15 +377,15 @@ a {
 }
 
 .open-popup-btn {
-    padding: 10px 20px;
-    width: 100%;
-    height: 40%;
+    width: 75%;
+    height: 25.6vh;
+    flex-shrink: 0;
     font-size: 16px;
     cursor: pointer;
     background-color:var(--trasparencia2);
     color: white;
-    border: solid black 1px;
-    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
     transition: box-shadow 0.3s ease; /* Apenas a transição de sombra */
 }
 /* Efeito de duas sombras ao passar o mouse */
@@ -437,6 +462,7 @@ th {
     
 }
 
-@media screen and (max-width: 415px) /* TELAS PEQUENAS */ {
+@media screen and (max-width: 415px) /* TELAS PEQUENAS */
+{
 
 }
