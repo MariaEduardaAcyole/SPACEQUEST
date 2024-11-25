@@ -25,15 +25,9 @@ a {
         align-items: center;
         overflow: hidden;
         background-repeat: no-repeat;
-        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
+
     }
 
-    .img-fundo {
-        height: 125%;
-        width: 120%;
-        position: absolute;
-        opacity: 30%;
-    }
 
 
     .caixa {
@@ -112,7 +106,7 @@ a {
     }
 
     .btnEntrar {
-        width: 100%;
+        width:70%;
         height: 50px;
         color: #ffffff;
         font-family: "Russo One", sans-serif;
@@ -120,7 +114,10 @@ a {
         justify-content: center;
         align-items: center;
         border-radius: 30px;
-        background: linear-gradient(90deg, rgba(65, 188, 216, 0.80) 0%, rgba(13, 54, 107, 0.80) 93.96%);
+        border-radius: 159px;
+        font-size: 20px;
+        border: 4px solid #000;
+        background: #042661;
         margin-top: 20px;
         cursor: pointer;
         transition: background 0.3s ease-in-out;

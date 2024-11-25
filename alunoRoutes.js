@@ -378,7 +378,7 @@ router.get('/materias', verificarAlunoLogado, async (req, res) => {
 });
 
 router.get('/materia-mural/:id', verificarAlunoLogado, async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // Ajustado para usar "id"
 
     // Validar o ID da matéria
     if (!id || isNaN(Number(id))) {
@@ -387,28 +387,37 @@ router.get('/materia-mural/:id', verificarAlunoLogado, async (req, res) => {
     }
 
     try {
+        // Busca os dados da matéria
+        const { data: materia, error: materiaError } = await supabase
+            .from('materia')
+            .select('*')
+            .eq('id_materia', id)
+            .single(); // Retorna um único registro
+
+        if (materiaError) {
+            console.error("Erro ao buscar matéria:", materiaError);
+            return res.status(500).send('Erro ao buscar dados da matéria.');
+        }
+
         // Buscar os minigames associados à matéria no banco
-        const { data: minigames, error } = await supabase
+        const { data: minigames, error: minigamesError } = await supabase
             .from('minigame')
             .select('id_minigame, nome_minigame')
             .eq('id_materia', id); // Filtrar pelo ID da matéria
 
-        if (error) {
-            console.error("Erro ao buscar minigames:", error);
+        if (minigamesError) {
+            console.error("Erro ao buscar minigames:", minigamesError);
             return res.status(500).send('Erro ao buscar minigames.');
         }
 
-        if (!minigames || minigames.length === 0) {
-            console.warn("Nenhum minigame encontrado para a matéria:", id);
-        }
-
-        // Renderizar a página passando os minigames
-        res.render('pages/aluno/materia-mural', { minigames });
+        // Renderizar a página passando os minigames e a matéria
+        res.render('pages/aluno/materia-mural', { minigames, materia, id });
     } catch (err) {
         console.error("Erro inesperado:", err);
         res.status(500).send('Erro inesperado.');
     }
 });
+
 
 router.get('/materia-downloads', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/materia-downloads');

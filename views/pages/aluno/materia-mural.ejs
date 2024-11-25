@@ -2,84 +2,63 @@
 <html lang="pt-br">
 
 <head>
-    <!-- LINKS -->
+    <!-- Configurações Meta e Links -->
     <meta http-equiv="refresh" content="30" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MURAL</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/materia-mural.css">
+    <title>Mural de Minigames</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/materia-mural.css">
 </head>
 
 <body>
-
+    <!-- Cabeçalho -->
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
-        <div class="menu-cardapio"> 
+        <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
+        <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
-
-        </div>
-
-    </div>
-    <div class="corpo">
-
-    <div class="col-1">
-
-        <div class="img-materia" href="./materia">
-            <div class="h1" href="./materia">
-                <h1 href="./materia">NOME MATERIA</h1>
-            </div>
         </div>
     </div>
 
-    <div class="col-2">
-
-        <div class="col-navegacao">
-            <div class="navegacao">
-                <a href="./materia-mural" class="paginas">
-                    <h2>mural</h2>
-                </a>
-                <div class="linha"></div>
-                <a href="./materia-downloads" class="paginas">
-                    <h2>downloads</h2>
-                </a>
-                <div class="linha"></div>
-                <a href="./materia-atividades" class="paginas">
-                    <h2>atividades</h2>
-                </a>
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Informações da Matéria -->
+        <div class="col-1">
+            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+                <div class="caixa-materia">
+                    <h2><%= materia.nome_materia %></h2>
+                </div>
             </div>
         </div>
 
-        <div class="col-3">
-
-            <div class="titulo-postagem">
-                <div class="linha"></div>
-                <h2>AVISOS</h2>
+        <!-- Navegação e Minigames -->
+        <div class="col-2">
+            <div class="col-navegacao">
+                <div class="navegacao">
+                    <a href="/materia-downloads/<%= id %>" class="paginas"><h2>Downloads</h2></a>
+                    <a href="/materia-atividades/<%= id %>" class="paginas"><h2>Atividades</h2></a>
+                    <a href="/materia-mural/<%= id %>" class="paginas"><h2>Minigame</h2></a>
+                </div>
             </div>
 
+            <!-- Lista de Minigames -->
             <div class="col-4">
                 <% if (minigames && minigames.length > 0) { %>
-                    <ul>
-                      <% minigames.forEach(minigame => { %>
-                        <li>
-                          <h2><%= minigame.titulo %></h2>
-                          <p><%= minigame.descricao %></p>
-                          <a href="/quiz/<%= minigame.id_minigame %>">Jogar</a>
-                        </li>
-                      <% }); %>
-                    </ul>
-                  <% }
-                  else { %>
-                    <p>Nenhum minigame encontrado para esta matéria.</p>
-                  <% } %>
+                    <% minigames.forEach(minigame => { %>
+                        <div class="postagem">
+                            <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+                            <h3 class="titulo-atv">
+                                <a href="/minigame/<%= minigame.id_minigame %>">
+                                    <%= minigame.nome_minigame %>
+                                </a>
+                            </h3>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>Não há minigames cadastrados para esta matéria.</p>
+                <% } %>
             </div>
-
-
         </div>
     </div>
-
 </body>
 
 </html>
-
