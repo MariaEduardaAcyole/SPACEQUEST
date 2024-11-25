@@ -1,8 +1,4 @@
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
 
-/*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
 :root {
   --fundo: #042661;
   --caixas: rgba(255, 255, 255, 0.6);
@@ -42,19 +38,6 @@ body, html {
   opacity: 50%;
   z-index: -1000;
  }
- 
-.header {
-  width: 99%;
-  height: 10vh;
-  border-radius: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.titulo-spacequest {
-  width: 90%;
-}
 
 .menu {
   width: 10%;
@@ -74,11 +57,6 @@ a {
   text-decoration: none;
 }
 
-.titulo-spacequest {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
 
 
 h1 {
@@ -94,7 +72,7 @@ p {
   /* 16px */
 }
 
-/---------------------------------------------/
+/* /---------------------------------------------/ */
 a {
 	font-family: "Russo One", sans-serif !important;
 	line-height: 1.7;
@@ -119,7 +97,7 @@ a:hover {
   color: linear-gradient(left, #21d4fd, #b721ff);
 }
 
-/---------------------------------------------/
+/* /---------------------------------------------/ */
 h1,h2,h3,h4,h5,h6{
 	margin: 0px;
   color: rgb(255, 255, 255);

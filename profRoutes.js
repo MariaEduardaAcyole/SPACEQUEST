@@ -18,16 +18,28 @@ const session = require('express-session');
 
 router.use(express.urlencoded({ extended: true }));
 
+router.use((req, res, next) => {
+    console.log(`Recebida requisição ${req.method} em ${req.url} com body:`, req.body);
+    console.log('Sessão atual:', req.session);
+    next();
+});
+
 // Middleware para verificar se o usuário logado é um professor
 
-const verificarProfessorLogado = (req, res, next) => {
-    console.log("Sessão na verificação:", req.session);
-    if (!req.session.usuario || req.session.usuario.tipo_usuario !== 'Professor') {
-        console.log("Usuário não autenticado como professor");
-        return res.redirect('/login');
+function verificarProfessorLogado(req, res, next) {
+    if (!req.session || !req.session.usuario) {
+        console.log('Usuário não logado. Redirecionando para login.');
+        return res.redirect('/login'); // Redireciona se não estiver logado
     }
+
+    if (req.session.usuario.tipo_usuario !== 'Professor') {
+        console.log('Usuário não é professor. Redirecionando para login.');
+        return res.redirect('/login'); // Redireciona se não for professor
+    }
+
+    // Se tudo estiver certo, segue para a próxima função
     next();
-};
+}
 
 router.use('/addmateria', addMateriasRouter);
 
@@ -75,7 +87,7 @@ router.get('/inicio-game-prof', async (req, res) => {
             .from('turma') // Tabela onde você está armazenando as turmas
             .select('*');
 
-            const { data: materia, errorMateria } = await supabase
+        const { data: materia, errorMateria } = await supabase
             .from('materia') // Tabela onde você está armazenando as turmas
             .select('*');
 
@@ -97,7 +109,7 @@ router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
     const { nome_minigame, turma, materia, perguntas } = req.body;
     const id_professor = req.session.usuario.id_usuario;
 
-    if (!nome_minigame || !turma || !perguntas ||!materia || perguntas.length === 0) {
+    if (!nome_minigame || !turma || !perguntas || !materia || perguntas.length === 0) {
         return res.status(400).send('Dados incompletos');
     }
 
@@ -170,9 +182,10 @@ router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
 
 
 // Rota: Exibir tela de cadastro de turmas
-router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
+router.get('/addturma', verificarProfessorLogado, async (req, res) => {
     try {
         const data = await getAlunosEMaterias();
+        console.log('Dados para a página de adicionar turma:', JSON.stringify(data, null, 2)); // Debug
         const { alunos, materias } = data;
 
         const successMessage = req.session.successMessage;
@@ -185,7 +198,7 @@ router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
         });
     } catch (err) {
         console.error('Erro ao buscar dados para adicionar turma:', err);
-        return res.status(500).send('Erro ao buscar dados para adicionar turma');
+        res.status(500).send('Erro ao buscar dados para adicionar turma');
     }
 });
 
@@ -193,7 +206,7 @@ router.get('/addTurma', verificarProfessorLogado, async (req, res) => {
 router.post('/addTurma', addTurma);
 
 // Rota: Exibir tela de criar atividade
-router.get('/addAtividade/:id', verificarProfessorLogado, (req, res) => {
+router.get('/addatividade/:id', verificarProfessorLogado, (req, res) => {
     res.render('pages/prof/addAtividade', { successMessage: null });
 });
 
@@ -213,7 +226,6 @@ router.get('/materia-downloads-prof/:id', (req, res) => {
 // Rota para obter as atividades de uma matéria específica
 router.get('/materia-atividades-prof/:id', verificarProfessorLogado, async (req, res) => {
     try {
-        const idProfessor = req.session.usuario.id_usuario; // Pega o ID do professor logado
         const idMateria = req.params.id; // Pega o ID da matéria da URL
 
         // Buscar as atividades da matéria específica
@@ -242,8 +254,7 @@ router.get('/materia-atividades-prof/:id', verificarProfessorLogado, async (req,
         // Renderiza a página com as atividades, nome da matéria e idMateria
         res.render('pages/prof/materia-atividades-prof', {
             atividades, // Passa as atividades para a view
-            nome_materia: materia.nome_materia, // Passa o nome da matéria para a view
-            idMateria: idMateria // Passa a idMateria para o EJS
+            materia, idMateria: idMateria // Passa a idMateria para o EJS
         });
 
     } catch (error) {
@@ -253,7 +264,7 @@ router.get('/materia-atividades-prof/:id', verificarProfessorLogado, async (req,
 });
 
 // Rota: Exibir matérias do professor
-router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
+router.get('/materias-prof', async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
 
     try {
@@ -279,6 +290,8 @@ router.get('/materias-prof', verificarProfessorLogado, async (req, res) => {
             console.error('Erro ao buscar matérias do professor:', materiasError);
             return res.status(500).json({ error: 'Erro ao buscar matérias' });
         }
+        console.log('ID do Professor:', idProfessor);
+        console.log('Matérias:', materias);
 
         res.render('pages/prof/materias-prof', { materias });
     } catch (err) {

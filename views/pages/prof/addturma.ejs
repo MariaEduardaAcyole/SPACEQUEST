@@ -10,10 +10,9 @@
 
 <body>
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> QUEST</a></h3>
-
+        <a href="./home-aluno"> <img src="img/logo.svg" alt="img/logo.svg" class="logo">
         <div class="menu-cardapio">
-            <%- include('../../partials/menu-superior-prof') %>
+            <%- include('../../partials/menu-superior') %>
         </div>
     </div>
 
@@ -34,17 +33,20 @@
             <div class="tabelas-aluno-materias">
                 <!-- Alunos -->
                 <div class="col-1-aluno">
+                    
                     <table class="alunosTable" id="alunosTable">
                         <thead>
                             <tr><th>Nome do Aluno</th></tr>
                         </thead>
                         <tbody>
                             <% alunos.forEach(aluno => { %>
-                                <tr class="clickable" data-id="<%= aluno.id_aluno %>">
-                                    <td><%= aluno.usuario.nome %></td>
-                                </tr>
+                              <tr class="clickable" data-id="<%= aluno.id_aluno %>">
+                                <td><%= aluno.nome %></td>
+                              </tr>
                             <% }); %>
-                        </tbody>
+                          </tbody>
+                          
+                        
                     </table>
                 </div>
 

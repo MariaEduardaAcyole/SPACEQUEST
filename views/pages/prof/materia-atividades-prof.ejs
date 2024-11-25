@@ -6,58 +6,74 @@
     <meta http-equiv="refresh" content="30" />
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/materia-atividades.css">
-    <title>Atividades da Matéria prof</title>
+
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    </head>
+
+    <title>Atividades da Matéria</title>
 </head>
 
 <body>
-
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
+        <a href="./home-prof"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
         </div>
     </div>
+    <div class="container">
+        <div class="col-1">
+            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">     
+                <div class="caixa-materia" >
+                    <h2>
+                        <%= materia.nome_materia %>
+                    </h2>
+                </div>
+            </div>
+</div>
+            <div class="col-2">
+                <div class="col-navegacao">
+                    <div class="navegacao">
+                        <a href="/materia-downloads/<%= idMateria %>" class="paginas">
+                            <h2>Downloads</h2>
+                        </a>
+                        <a href="/materia-atividades/<%= idMateria %>" class="paginas">
+                            <h2>Atividades</h2>
+                        </a>
+                        <a href="/materia-mural/<%= idMateria %>" class="paginas">
+                            <h2>Minigame</h2>
+                        </a>
+                        <a href="/addatividade/<%= idMateria %>" class="paginas">
+                            <h2>Add Atividade</h2>
+                        </a>
+                    </div>
+                </div>
 
-    <div class="col-1">
-        <div class="img-materia">
-            <!-- Exibe o nome da matéria -->
-            <h1 class="h1">NOME DA MATÉRIA</h1>
+                <div class="col-4">
+                    <% if (atividades && atividades.length> 0) { %>
+                        <% atividades.forEach(atividade=> { %>
+                            <div class="postagem">
+                                <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+
+                                <h3 class="titulo-atv">
+                                    <a href="/entrega-atividade/<%= atividade.id_atividade %>">
+                                        <%= atividade.titulo %>
+                                    </a>
+                                </h3>
+                                <p class="pontos"><%= atividade.pontos %></p>
+                                <p class="data-vencimento">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <%= atividade.data_vencimento %>
+                                </p>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <p>Não há atividades cadastradas para esta matéria.</p>
+                                    <% } %>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="col-2">
-        <div class="col-navegacao">
-            <div class="navegacao">
-                <!-- <a href="/materia-mural/<%= idMateria %>" class="paginas"><h2>Mural</h2></a> -->
-                <!-- <a href="/materia-downloads/<%= idMateria %>" class="paginas"><h2>Downloads</h2></a> -->
-                <a href="/materia-atividades/<%= idMateria %>" class="paginas"><h2>Atividades</h2></a>
-            </div>
-        </div>
-
-        <div class="col-3">
-            <div class="titulo-postagem">
-                <div class="linha"></div>
-                <h2>Atividades</h2>
-            </div>
-
-            <div class="col-4">
-                <% if (atividades && atividades.length > 0) { %>
-                    <% atividades.forEach(atividade => { %>
-                        <div class="postagem">
-                            <h3>
-                                <a href="/addAtividade/<%= atividade.id_atividade %>">
-                                    <%= atividade.titulo %>
-                                </a>
-                            </h3>
-                            <p><%= atividade.descricao %></p>
-                        </div>
-                    <% }) %>
-                <% } else { %>
-                    <p>Não há atividades cadastradas para esta matéria.</p>
-                <% } %>
-            </div>
-        </div>
-    </div>
-
 </body>
+
 </html>

@@ -11,11 +11,15 @@ a {
     text-decoration: none;
 }
 
-.titulo-spacequest {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+.header{
+    width: 100%;
+    height: 15%;
+  }
+  
+  .logo{
+    max-width: 100%;
+    max-height: 100%;
+  }
 
 /*TELA GRANDE*/
 

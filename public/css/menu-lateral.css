@@ -40,7 +40,6 @@
   height: 30%;
   flex-wrap: wrap;
   display: flex;
-  flex-direction: column;
  background-color: #ff000000;
   color: #ffffff;
   overflow-wrap: break-word; /* evita o estouro das bordas quando há palavras longas */

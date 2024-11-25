@@ -1,37 +1,18 @@
-input,
-button,a {
-    box-shadow: none;
-    border: none;
-    outline: none;
-    text-decoration: none;
+.header{
+width: 100%;
+height: auto;
+display: flex;
+justify-content: space-between;
+margin-top: 0px;
+align-items: start;
+align-content: start;
 }
 
 .titulo-spacequest{
-   width: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    }
-
-    
-.header {
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
-    align-items: center;
-    align-content: center;
-    position: sticky;
-
+    width: 50%;
+    background-color: red;
 }
 
-.cardapio {
-    height: 9vh;
-    width: 5%;
-    background-color: #09326b00;
+.logo{
+    max-height: 20vh;
 }
-
-a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 150%;
-  }

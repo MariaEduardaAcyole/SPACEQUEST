@@ -4,7 +4,7 @@ const supabase = require('../../supabaseClient');
 const getAlunosEMaterias = async () => {
     const { data: alunos, error: alunosError } = await supabase
         .from('aluno')
-        .select('id_aluno, usuario(nome)');
+        .select('id_aluno, nome');
 
     if (alunosError) throw alunosError;
 

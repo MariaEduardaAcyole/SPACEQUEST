@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Matérias</title>
+    <meta http-equiv="refresh" content="30" />
+    <title>Matérias - PROF</title>
     <link rel="stylesheet" href="/css/materia.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
-    <div class="header">
-        <h3 class="titulo-spacequest"><a href="/home-prof">SPACE<br>QUEST</a></h3>
-        <div class="menu-cardapio">
-            <%- include('../../partials/menu-superior') %>
-        </div>
-    </div>
 
-    <div class="container">
-        <h2>Minhas Matérias</h2>
-        <br>
-        <br>
-        <div class="caixa-container-materias">
-            <% if (materias && materias.length > 0) { %>
-                <% materias.forEach(materia => { %>
-                    <!-- Card de cada matéria com link para a página de atividades dessa matéria -->
-                    <div class="caixa-materia" style="background-color: <%= materia.cor_materia || '#FFFFFF' %>;"> <!-- Aplica a cor cadastrada ou branco como fallback -->
-                        <h3><%= materia.nome_materia %></h3>
-                        <a href="/materia-atividades-prof/<%= materia.id_materia %>" class="btn-ver-atividades">Ver Atividades</a>
-                    </div>
-                <% }); %>
-            <% } else { %>
-                <p>Nenhuma matéria encontrada.</p>
-            <% } %>
+    
+    <div class="header">
+        <a href="./home-prof"> <img src="img/logo.svg" alt="img/logo.svg" class="logo">
+        <div class="menu-cardapio">
+            <%- include('../../partials/menu-superior-prof') %>
         </div>
     </div>
+    <img class="img-fundo" src="img/fundo.png">
+
+        <div class="caixa-atras">
+            
+            <div class="caixa-titulo-pagina"><h1>Matérias</h1></div>
+            <div class="caixa-container-materias">
+                <% if (materias && materias.length > 0) { %>
+                    <% materias.forEach(materia => { %>
+                        <div class="caixa-materia" style="background-color: <%= materia.cor_materia %>;">
+                            <h2><%= materia.nome_materia %></h2>
+                            <a href="/materia-atividades-prof/<%= materia.id_materia %>" class="btn-ver-atividades">
+                                <div class="icons"> 
+                                    <img class="icons-img" src="img/icon1.png">
+                                    <img class="icons-img" src="img/icon2.png">
+                                    <img class="icons-img" src="img/icon3.png">
+                                </div>
+                            </a>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+          
+        </div>
+
 </body>
 </html>
