@@ -2,73 +2,62 @@
 <html lang="pt-br">
 
 <head>
-    <!-- LINKS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- Configurações Meta e Links -->
     <meta http-equiv="refresh" content="30" />
-    <title>MURAL Prof</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/materia-mural-prof.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mural de Minigames</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/materia-mural.css">
 </head>
 
 <body>
-    <img class="img-fundo" src="img/fundo.png">
-
+    <!-- Cabeçalho -->
     <div class="header">
-
-        <h3 class="titulo-spacequest"><a href="./home-prof">SPACE<br> ‎ ‎ QUEST</h3> </a>
-
-        <div class="menu-cardapio"> 
-            <%- include('../../partials/menu-superior-prof') %>
-
+        <h3 class="titulo-spacequest"><a href="../home-prof">SPACE<br>QUEST</a></h3>
+        <div class="menu-cardapio">
+            <%- include('../../partials/menu-superior') %>
         </div>
-
     </div>
 
-    </div>
-    <div class="col-1">
-
-        <div class="img-download" href="./materia">
-            <div class="h1" href="./materia">
-                <h1 href="./materia">NOME MATERIA</h1>
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Informações da Matéria -->
+        <div class="col-1">
+            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+                <div class="caixa-materia">
+                    <h2><%= materia.nome_materia %></h2>
+                </div>
             </div>
         </div>
 
-
-
-
-
-    <div class="col-2">
-
+        <!-- Navegação e Minigames -->
+        <div class="col-2">
             <div class="col-navegacao">
                 <div class="navegacao">
-                    <a href="./materia-mural-prof" class="paginas">
-                        <h2>mural</h2>
-                    </a>
-                    <a href="./materia-downloads-prof" class="paginas">
-                        <h2>downloads</h2>
-                    </a>
-                    <a href="./materia-atividades-prof/{1}" class="paginas">
-                        <h2>atividades</h2>
-                    </a>
-                    <a href="./addatividade" class="paginas">
-                        <h2>addAtividade</h2>
-                    </a>
+                    <a href="../materia-downloads-prof/<%= id %>" class="paginas"><h2>Downloads</h2></a>
+                    <a href="../materia-atividades-prof/<%= id %>" class="paginas"><h2>Atividades</h2></a>
+                    <a href="../materia-mural-prof/<%= id %>" class="paginas"><h2>Minigame</h2></a>
                 </div>
             </div>
 
-        <div class="col-3">
-
-            <div class="titulo-postagem">
-                <div class="linha"></div>
-                <h2>MURAL</h2>
+            <!-- Lista de Minigames -->
+            <div class="col-4">
+                <% if (minigames && minigames.length > 0) { %>
+                    <% minigames.forEach(minigame => { %>
+                        <div class="postagem">
+                            <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+                            <h3 class="titulo-atv">
+                                <a href="/minigame/<%= minigame.id_minigame %>">
+                                    <%= minigame.nome_minigame %>
+                                </a>
+                            </h3>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>Não há minigames cadastrados para esta matéria.</p>
+                <% } %>
             </div>
-
-                <div class="col-4">
-
-            </div>
-    </div>
-
+        </div>
     </div>
 </body>
 

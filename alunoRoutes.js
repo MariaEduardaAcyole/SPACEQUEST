@@ -15,9 +15,81 @@ const verificarAlunoLogado = (req, res, next) => {
     next();
 };
 
-router.get('/home-aluno', verificarAlunoLogado, (req, res) => {
-    res.render('pages/aluno/home');
+// Rota para /home-aluno
+router.get('/home-aluno', verificarAlunoLogado, async (req, res) => {  // Adicionado "async" para suportar o uso de await
+    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
+
+    try {
+        // 1. Buscar as informações do usuário
+        const { data: usuarioData, error: usuarioError } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (usuarioError || !usuarioData) {
+            console.error('Erro ao buscar dados do usuário:', usuarioError);
+            return res.status(500).send('Erro ao buscar dados do usuário.');
+        }
+
+        // 2. Verificar se o id_aluno está na tabela 'aluno'
+        const { data: alunoData, error: alunoError } = await supabase
+            .from('aluno')
+            .select('*')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (alunoError || !alunoData) {
+            console.error('Erro ao buscar dados do aluno:', alunoError);
+            return res.status(500).send('Erro ao buscar dados do aluno.');
+        }
+
+        const idAluno = alunoData.id_aluno;
+
+        // 3. Buscar as matérias e as pontuações do aluno
+        const { data: materiasData, error: materiasError } = await supabase
+            .from('aluno_materia')
+            .select('id_materia, pontos')
+            .eq('id_aluno', idAluno);
+
+        if (materiasError || !materiasData) {
+            console.error('Erro ao buscar matérias do aluno:', materiasError);
+            return res.status(500).send('Erro ao buscar matérias.');
+        }
+
+        // 4. Buscar os nomes das matérias a partir da tabela 'materia'
+        const { data: materiasNomes, error: materiasNomesError } = await supabase
+            .from('materia')
+            .select('id_materia, nome_materia')
+            .in('id_materia', materiasData.map(materia => materia.id_materia));
+
+        if (materiasNomesError || !materiasNomes) {
+            console.error('Erro ao buscar nomes das matérias:', materiasNomesError);
+            return res.status(500).send('Erro ao buscar nomes das matérias.');
+        }
+
+        // 5. Preparar os dados para o gráfico
+        const labels = materiasData.map(materia => {
+            const materiaEncontrada = materiasNomes.find(m => m.id_materia === materia.id_materia);
+            return materiaEncontrada ? materiaEncontrada.nome_materia : 'Desconhecido';
+        });
+
+        const pontos = materiasData.map(materia => materia.pontos);
+
+        // 6. Passar os dados para a view
+        res.render('pages/aluno/home', {
+            usuario: usuarioData,
+            materias: materiasData,
+            labels: labels,  // Passa os nomes das matérias
+            pontos: pontos   // Passa as pontuações
+        });
+
+    } catch (err) {
+        console.error('Erro ao exibir perfil:', err);
+        res.status(500).send('Erro ao exibir perfil.');
+    }
 });
+
 
 // Rota para listar atividades de uma matéria 
 router.get('/materia-atividades/:id', verificarAlunoLogado, async (req, res) => {
@@ -248,9 +320,6 @@ router.get('/perfil', verificarAlunoLogado, async (req, res) => {
     }
 });
 
-
-
-
 const bcrypt = require('bcrypt');  // Certifique-se de importar o bcrypt
 
 // Rota para atualizar a senha
@@ -304,7 +373,6 @@ router.post('/alterar-senha', verificarAlunoLogado, async (req, res) => {
         res.status(500).send('Erro ao alterar a senha.');
     }
 });
-
 
 
 // Rota para aluno ver suas matérias e atividades
@@ -419,8 +487,10 @@ router.get('/materia-mural/:id', verificarAlunoLogado, async (req, res) => {
 });
 
 
-router.get('/materia-downloads', verificarAlunoLogado, (req, res) => {
-    res.render('pages/aluno/materia-downloads');
+router.get('/materia-downloads/:id', verificarAlunoLogado, (req, res) => {
+    const { id } = req.params; // Ajustado para usar "id"
+
+    res.render('pages/aluno/materia-downloads', {id});
 });
 
 router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {

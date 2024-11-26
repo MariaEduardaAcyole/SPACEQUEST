@@ -70,7 +70,6 @@
 
                     <div class="grafico">
                         <canvas id="myChart"></canvas>
-
                     </div>
                     <div class="minigame">
 
@@ -111,83 +110,36 @@
                 </div>
             </div>
 </div>
-            <script>
-                const schedule = {
-                    segunda: [
-                        { aula: "Matemática" ,horario: "08h00 - 09h00"},
-                        { aula: "História", horario: "09h10 - 10h10" },
-                        { aula: "Ciências", horario: "10h20 - 11h20" }
-                    ],
-                    terca: [
-                        { aula: "Geografia", horario: "08h00 - 09h00" },
-                        { aula: "Inglês", horario: "09h10 - 10h10" },
-                        { aula: "Educação Física", horario: "10h20 - 11h20" }
-                    ],
-                    quarta: [
-                        { aula: "Química", horario: "08h00 - 09h00" },
-                        { aula: "Matemática", horario: "09h10 - 10h10" },
-                        { aula: "Português", horario: "10h20 - 11h20" }
-                    ],
-                    quinta: [
-                        { aula: "Biologia", horario: "08h00 - 09h00" },
-                        { aula: "Física", horario: "09h10 - 10h10" },
-                        { aula: "Artes", horario: "10h20 - 11h20" }
-                    ],
-                    sexta: [
-                        { aula: "Sociologia", horario: "08h00 - 09h00" },
-                        { aula: "História", horario: "09h10 - 10h10" },
-                        { aula: "Geografia", horario: "10h20 - 11h20" }
-                    ]
-                };
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+<script>
+    // Pegar os dados passados do backend
+    const labels = <%- JSON.stringify(labels) %>;  // Nomes das matérias
+    const pontos = <%- JSON.stringify(pontos) %>;  // Pontuações do aluno
 
-                function openPopup(day) {
-                    const popup = document.getElementById("popup");
-                    const title = document.getElementById("popup-title");
-                    const tableBody = document.getElementById("popup-table-body");
-
-                    // Define o título do popup
-                    title.innerText = `Horário de ${capitalize(day)}-feira`;
-
-                    // Limpa o conteúdo anterior da tabela
-                    tableBody.innerHTML = "";
-
-                    // Adiciona as linhas da tabela com base no dia selecionado
-                    schedule[day].forEach(item => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `<td>${item.horario}</td> <td>${item.aula}</td>`;
-                        tableBody.appendChild(row);
-                    });
-
-                    // Exibe o popup
-                    popup.style.display = "block";
+    // Inicializar o gráfico
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,  // Nomes das matérias
+            datasets: [{
+                label: 'Pontuação do Aluno',
+                data: pontos,  // Pontuações do aluno
+                borderWidth: 1,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor de fundo da barra
+                borderColor: 'rgba(54, 162, 235, 1)', // Cor da borda
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
-
-                function closePopup() {
-                    document.getElementById("popup").style.display = "none";
-                }
-
-                function capitalize(string) {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
-                }
-                // Fecha o popup ao clicar fora do conteúdo principal
-                document.getElementById("popup").addEventListener("click", function (event) {
-                    const content = document.querySelector(".popup-content");
-                    if (!content.contains(event.target)) {
-                        closePopup();
-                    }
-                });
-
-                function closePopup() {
-                    document.getElementById("popup").style.display = "none";
-                }
-
-                function capitalize(string) {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
-                }
-
-            </script>
-
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            }
+        }
+    });
+</script>
 
 </body>
 

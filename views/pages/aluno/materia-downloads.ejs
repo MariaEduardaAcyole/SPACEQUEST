@@ -7,8 +7,8 @@
 
     <meta http-equiv="refresh" content="30" />
     <title>DOWNLOADS</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/materia-downloads.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/materia-mural.css">
 
 </head>
 
@@ -28,7 +28,7 @@
     </div>
     <div class="col-1">
 
-        <div class="img-download" href="./materia">
+        <div class="img-materia" href="./materia">
             <div class="h1" href="./materia">
                 <h1 href="./materia">NOME MATERIA</h1>
             </div>
@@ -43,17 +43,9 @@
 
         <div class="col-navegacao">
             <div class="navegacao">
-                <a href="./materia-mural" class="paginas">
-                    <h2>mural</h2>
-                </a>
-                <div class="linha"></div>
-                <a href="./materia-downloads" class="paginas">
-                    <h2>downloads</h2>
-                </a>
-                <div class="linha"></div>
-                <a href="./materia-atividades" class="paginas">
-                    <h2>atividades</h2>
-                </a>
+                <a href="../materia-downloads/<%= id %>" class="paginas"><h2>Downloads</h2></a>
+                <a href="../materia-atividades/<%= id %>" class="paginas"><h2>Atividades</h2></a>
+                <a href="../materia-mural/<%= id %>" class="paginas"><h2>Minigame</h2></a>
             </div>
         </div>
 
