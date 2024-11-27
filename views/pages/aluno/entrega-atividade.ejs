@@ -28,10 +28,21 @@
                     <%= atividade.titulo %>
                 </h1>
                 <p class="vencimento-atv">
-                    <%= new Date(atividade.Data_Vencimento).toLocaleDateString() %>
+                    <h3>
+                        <%= atividade.data_vencimento
+                            ? new Date(atividade.data_vencimento).toLocaleDateString('pt-BR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            })
+                            : 'Data não disponível'
+                        %>
+                    </h3>
                 </p>
+                
+                
                 <p class="descricao">
-                    <%= atividade.Descricao %>
+                    <%= atividade.descricao %>
                 </p>
             </div>
 
@@ -56,7 +67,7 @@
 
                 <!-- Formulário para envio da entrega -->
                 <div class="linha-2">
-                    <form action="/entrega-atividade/<%= atividade.ID_Atividade %>" method="POST"
+                    <form action="/entrega-atividade/<%= atividade.id_atividade %>" method="POST"
                         enctype="multipart/form-data">
 
                         <div class="anexado">
@@ -69,8 +80,18 @@
         </div>
         <div class="col-2">
             <div class="caixa-entrega">
-            <h3>ENTREGUA DIA: <%= new Date().toLocaleDateString() %>
-            </h3>
+                <% respostas.forEach((entrega) => { %>
+                    <h3>
+                        <%= entrega.data_entrega
+                            ? new Date(entrega.data_entrega).toLocaleDateString('pt-BR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            })
+                            : 'Data não disponível'
+                        %>
+                    </h3>
+                <% }); %>
             <img class="astrosentado" src="/img/astrosentado.png" alt="Astronauta Sentado">
 
             <button type="submit" class="entregar-button">ENTREGAR</button>
@@ -82,5 +103,8 @@
     </div>
 
 </body>
+<script>
+    new Date(atividade).toLocaleDateString('en-US', { day: 'numeric', month: 'long',  year: 'numeric' });
 
+</script>
 </html>

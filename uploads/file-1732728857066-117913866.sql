@@ -1,0 +1,1 @@
+INSERT INTO "public"."progressoCurso" ("id_progresssoCurso", "id_aluno", "id_curso", "progresso_total", "status", "data_inicio", "data_conclusao", "certificado_emitido") VALUES ('1', '1', '1', '50', 'iniciado', '2024-11-25 19:42:37', null, 'false');

@@ -197,9 +197,10 @@ const entregaController = require('./public/js/entrega-atividade');
 router.post('/entrega-atividade/:id', entregaController.upload.single('file'), entregaController.atvEntrega);
 
 router.post('/entrega-atividade/:id', async (req, res) => {
-    const idAluno = req.session.usuario.id_aluno; // ID do aluno logado
+    const idAluno = req.session.usuario.id_usuario; // ID do aluno logado
     const idMateria = req.body.id_materia; // ID da matéria da atividade
     const pontosAtividade = req.body.pontos; // Pontos obtidos na atividade
+    console.log('Usuário logado:', req.session.usuario);
 
     try {
         const resultado = await somarPontosAtividade(idAluno, idMateria, pontosAtividade);
@@ -221,24 +222,36 @@ router.get('/entrega-atividade/:id', async (req, res) => {
     const sucesso = req.query.sucesso;
 
     try {
-        // READ - consulta no banco os dados
-        const { data: atividade, error } = await supabase
+        // Busca os detalhes da atividade
+        const { data: atividade, error: atividadeError } = await supabase
             .from('atividade')
             .select('*')
             .eq('id_atividade', atividadeId)
-            .single(); // Espera apenas um único resultado
+            .single();
 
-        // Verifica se houve erro ou se a atividade não foi encontrada
-        if (error || !atividade) {
+        if (atividadeError || !atividade) {
             return res.status(404).send('Atividade não encontrada.');
         }
 
-        res.render('pages/aluno/entrega-atividade', { atividade, sucesso });
+        // Busca as entregas associadas à atividade
+        const { data: respostas, error: respostasError } = await supabase
+            .from('respostas')
+            .select('id_aluno, caminho_arquivo, data_entrega') // Certifique-se de buscar a data
+            .eq('id_atividade', atividadeId);
+
+            console.error('Entregas:', respostas);
+
+        if (respostasError) {
+            return res.status(500).send('Erro ao buscar entregas.');
+        }
+
+        res.render('pages/aluno/entrega-atividade', { atividade, respostas, sucesso });
     } catch (err) {
         console.error('Erro ao buscar detalhes da atividade:', err);
         res.status(500).send('Erro ao buscar detalhes da atividade.');
     }
 });
+
 // Rota para outras páginas do aluno
 router.get('/pendencias', verificarAlunoLogado, (req, res) => {
     res.render('pages/aluno/pendencias');
@@ -540,8 +553,6 @@ router.get('/desempenho-individual', verificarAlunoLogado, async (req, res) => {
         console.error('Erro ao obter desempenho individual:', error);
         res.status(500).send('Erro ao obter desempenho');
     }
-
-
 
 });
 
