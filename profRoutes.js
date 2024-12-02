@@ -29,12 +29,12 @@ router.use((req, res, next) => {
 function verificarProfessorLogado(req, res, next) {
     if (!req.session || !req.session.usuario) {
         console.log('Usuário não logado. Redirecionando para login.');
-        return res.redirect('/login'); // Redireciona se não estiver logado
+        return res.redirect('/login');
     }
 
     if (req.session.usuario.tipo_usuario !== 'Professor') {
         console.log('Usuário não é professor. Redirecionando para login.');
-        return res.redirect('/login'); // Redireciona se não for professor
+        return res.redirect('/login');
     }
 
     // Se tudo estiver certo, segue para a próxima função

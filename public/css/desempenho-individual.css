@@ -110,17 +110,16 @@ body {
   align-items: center;
   justify-content: center;
   display: flex;
-  background-color: #41beda00;
 }
-
+           
 .podio{
   width: 36%;
 height: 40%;
 flex-shrink: 0;
 display: flex;
 align-items: end;
-background-color: #610404;
-margin-top: 2%;
+background-color: #61040400;
+margin-top: 1%;
 }
 
 .top1{
@@ -162,27 +161,27 @@ background: #042763;
 
 .kart1 {
   position: absolute;
-  width: 95px;
+  width: 6%;
   top: 35%;
-height: 95px;
+height: 14%;
 flex-shrink: 0;
 }
 
 
 .kart2 {
   position: absolute;
-  width: 95px;
+  width: 6%;
   top: 38%;
-height: 95px;
+  height: 14%;
 flex-shrink: 0;
 }
 
 
 .kart3 {
   position: absolute;
-  width: 95px;
+  width: 6%;
   top: 41%;
-height: 95px;
+  height: 14%;
 flex-shrink: 0;
 }
 
@@ -194,6 +193,7 @@ flex-shrink: 0;
   background-color: rgba(254, 146, 5, 0);
   padding: 2vh;
   flex-wrap: wrap;
+  margin-top: 1%;
   overflow: auto;
   align-items: center;
   overflow-y: auto;
@@ -203,6 +203,7 @@ flex-shrink: 0;
 .tras::-webkit-scrollbar {
   background-color: #ffffff;
   height: max-content;
+  width: 10px;
 
 
 }

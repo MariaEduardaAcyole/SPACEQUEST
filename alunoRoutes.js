@@ -713,7 +713,7 @@ router.get('/minigame-kart', verificarAlunoLogado, (req, res) => {
     res.render('pages/prof/minigame-kart');
 });
 
-router.get('/quiz/:id_minigame', verificarAlunoLogado, async (req, res) => {
+router.get('/quiz/:id_minigame', async (req, res) => {
     const { id_minigame } = req.params;
 
     if (!id_minigame) {

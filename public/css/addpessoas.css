@@ -2,8 +2,14 @@
     --fundo: #042661;
     --caixas: rgba(255, 255, 255, 0.6);
     --transparencia: rgba(217, 217, 217, 0.6);
-    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+   
+        --cor-fundo: #042661;
+        --cor-secundaria: #41BDDA;
+        --cor-titulo: #FFFFFF;
+        --cor-card: #FFFFFF;
+        --cor-link: #ffffff;
+    
     --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
 
@@ -16,9 +22,7 @@
 body {
     color: #ffffff;
     overflow: hidden;
-    background-repeat: no-repeat;
-    background: var(--gradiente-body);
-    font-family: "Russo One", sans-serif;
+   
     height: 100vh;
     width: 100%;
     display: flex;

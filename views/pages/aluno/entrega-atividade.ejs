@@ -11,6 +11,9 @@
 </head>
 
 <body>
+
+    <img class="img-fundo" src="img/fundo.png">
+
     <div class="header">
 
         <h3 class="titulo-spacequest"><a href="../home-aluno">SPACE<br> ‎ ‎ QUEST</h3> </a>
@@ -27,8 +30,8 @@
                 <h1 class="titulo">
                     <%= atividade.titulo %>
                 </h1>
-                <p class="vencimento-atv">
-                    <h3>
+                <p >
+                    <h3 class="vencimento-atv">
                         <%= atividade.data_vencimento
                             ? new Date(atividade.data_vencimento).toLocaleDateString('pt-BR', {
                                 day: '2-digit',
@@ -70,15 +73,15 @@
                     <form action="/entrega-atividade/<%= atividade.id_atividade %>" method="POST"
                         enctype="multipart/form-data">
 
-                        <div class="anexado">
-                            <img class="img-anexado" src="/img/anexo-icon.png" alt="Upload">
-                            <input type="file" name="file" required>
-                        </div>
+                        
+                            
+                            <input type="file" name="file" required class="anexado" img class="img-anexado" src="/img/anexo-icon.png" alt="Upload">
+                       
 
                 </div>
             </div>
         </div>
-        <div class="col-2">
+
             <div class="caixa-entrega">
                 <% respostas.forEach((entrega) => { %>
                     <h3>
@@ -96,7 +99,7 @@
 
             <button type="submit" class="entregar-button">ENTREGAR</button>
         </div>
-        </div>
+
 
         </form>
 

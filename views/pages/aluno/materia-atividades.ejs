@@ -15,8 +15,9 @@
 </head>
 
 <body>
+
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
+        <a href="../home-aluno"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
         <div class="menu-cardapio">
             <%- include('../../partials/menu-superior') %>
         </div>
@@ -24,54 +25,59 @@
 
     <div class="container">
         <div class="col-1">
-            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">     
-                <div class="caixa-materia" >
-                    <h2>
+            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+                <div class="caixa-materia">
+                    <h2 class="nomemateria">
                         <%= materia.nome_materia %>
                     </h2>
                 </div>
             </div>
-</div>
-            <div class="col-2">
-                <div class="col-navegacao">
-                    <div class="navegacao">
-                        <a href="/materia-downloads/<%= idMateria %>" class="paginas">
-                            <h2>Downloads</h2>
-                        </a>
-                        <a href="/materia-atividades/<%= idMateria %>" class="paginas">
-                            <h2>Atividades</h2>
-                        </a>
-                        <a href="/materia-mural/<%= idMateria %>" class="paginas">
-                            <h2>Minigame</h2>
-                        </a>
+        </div>
+        <div class="col-2">
+            <div class="col-navegacao">
+                <div class="navegacao">
+                    <a href="/materia-downloads/<%= idMateria %>" class="paginas">
+                        <h2>Downloads</h2>
+                    </a>
+                    <a href="/materia-atividades/<%= idMateria %>" class="paginas">
+                        <h2>Atividades</h2>
+                    </a>
+                    <a href="/materia-mural/<%= idMateria %>" class="paginas">
+                        <h2>Minigame</h2>
+                    </a>
 
-                    </div>
                 </div>
+            </div>
 
-                <div class="col-4">
-                    <% if (atividades && atividades.length> 0) { %>
-                        <% atividades.forEach(atividade=> { %>
-                            <div class="postagem">
-                                <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+            <div class="col-4">
+                <% if (atividades && atividades.length> 0) { %>
+                    <% atividades.forEach(atividade=> { %>
+                            <a class="postagem" href="/entrega-atividade/<%= atividade.id_atividade %>">
+                                <p class="circulo-materia"
+                                    style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
 
                                 <h3 class="titulo-atv">
-                                    <a href="/entrega-atividade/<%= atividade.id_atividade %>">
-                                        <%= atividade.titulo %>
-                                    </a>
+
+                                    <%= atividade.titulo %>
                                 </h3>
-                                <p class="pontos"><%= atividade.pontos %></p>
+                                <p class="pontos">
+                                    <%= atividade.pontos %>
+                                </p>
                                 <p class="data-vencimento">
                                     <i class="fas fa-calendar-alt"></i>
                                     <%= atividade.data_vencimento %>
                                 </p>
-                            </div>
-                            <% }) %>
-                                <% } else { %>
-                                    <p>Não há atividades cadastradas para esta matéria.</p>
-                                    <% } %>
-                </div>
+                            
+                            </a>
+                        <% }) %>
+                        <% } else { %>
+                            <p>Não há atividades cadastradas para esta matéria.</p>
+                            <% } %>
+
+
             </div>
         </div>
+    </div>
     </div>
 </body>
 

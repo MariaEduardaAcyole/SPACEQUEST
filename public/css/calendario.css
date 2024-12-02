@@ -124,7 +124,16 @@ a {
 
     }
 
+    .header{
+        margin-top: 0px;
+        min-width: 100%;
+  height:7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
 
+    
     .atras {
         width: 90%;
         height: 70%;
@@ -152,7 +161,7 @@ a {
 
     .img-astro {
         height: 35%;
-        top: 17%;
+        top: 14%;
         border-radius: 30px;
        position: fixed;
         z-index: 1000;
@@ -165,10 +174,15 @@ a {
         align-items: center;
         justify-content: center;
         color: #ffffff;
-        width: 70%;
+        width: 90%;
         height: 30%;
         border-radius: 20px;
         background: linear-gradient(180deg, #41BDD9 0%, #41BDD9 0.01%, #042661 100%);
+        border-radius: 159px;
+        border: 4px solid #000;
+        background: #042661;
+        text-align: center  ;
+        font-size: 30px;
     }
 
 

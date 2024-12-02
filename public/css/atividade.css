@@ -1,12 +1,5 @@
-:root {
-    --fundo: #042661;
-    --caixas: rgba(255, 255, 255, 0.6);
-    --transparencia: rgba(217, 217, 217, 0.6);
-    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
-    --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
-    --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
-}
 
+            
 input {
     box-shadow: none;
     border: none;
@@ -42,7 +35,7 @@ p {
     font-size: 1rem;
     /* 16px */
 }
-
+              
 @media screen and (min-width: 416px)
 /*GRANDES*/
     {
@@ -60,30 +53,38 @@ p {
     a {
         color: #ffffff;
     }
-
+         
     .atras {
-        width: 95%;
+        width: 80%;
         height: 80%;
-        border-radius: 30px;
-        margin-top: 1%;
+        flex-shrink: 0;
+        align-items: center;
+
         filter: var(--shadow-filter);
         display: flex;
         justify-content: space-between;
+        background-color: rgba(127, 255, 212, 0);
+    }
+
+    .header{
+        width: 98%;
     }
 
     .col-1 {
         width: 50%;
         height: 100%;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
+        flex-direction: column;
         margin-left: 1%;
+        background-color: rgba(137, 43, 226, 0);
+        
     }
 
     .col-2 {
-        width: 50%;
+        width: 35%;
         display: flex;
-        justify-content: end;
+        justify-items: end;
+        background-color: rgba(95, 158, 160, 0);
     }
 
     .instrucoes {
@@ -96,16 +97,12 @@ p {
 
     .linha-1 {
         display: flex;
-
         width: 100%;
         height: 25%;
         margin-top: 1%;
-        align-items: center;
-        justify-content: center;
+        background-color: #00000000;
 
     }
-
-    .linha-2 {}
 
     .anexado {
         display: flex;
@@ -113,38 +110,49 @@ p {
 
     .titulo {
         width: 100%;
-        height: 10%;
+        height: 40%;
+        background-color: #04266100;
+        font-size: 30px;
     }
 
     .vencimento-atv {
-        width: 100%;
+        width: 30%;
         height: 10%;
+        background-color: rgba(0, 255, 255, 0);
+        align-self: self-start;
     }
 
-    .descrição {
-        width: 100%;
-        height: 20%;
+    .descricao {
+        width: 90%;
+        height: 75%;
+        font-size: 15px;
+        background-color: #00000000;
+        align-self: self-start;
     }
 
     .anexado {
         width: 95%;
-        height: 20%;
+        height: auto;
         margin-top: 3%;
         border-radius: 30px;
         background: var(--transparencia);
         color: white;
         border: solid 1px;
+
     }
 
     .caixa-arquivos {
-        width: 100%;
-        height: 40%;
+        width: 70%;
+        height: 38%;
+        flex-shrink: 0;
         flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
         border-radius: 30px;
         display: flex;
+        padding: 1%;
         background-color: var(--caixas);
+        background: rgba(255, 255, 255, 0.60);
+
+margin-top: 10%;
     }
 
 
@@ -181,34 +189,58 @@ p {
     }
 
     .entregar-button {
-        width: 20%;
-        height: 10%;
-        border-radius: 30px;
+        width: 25%;
+        height: 15%;
+        flex-shrink: 0;
+        font-size: 30px;
         justify-content: center;
         align-items: center;
         background: var(--gradiente-button);
+        border-radius: 30px;
+        border: 5px solid #000;
+        background: #042661;
         margin-top: 25%;
         color: white;
         position: fixed;
     }
 
+    .entregar{
+        font-size: 36px;
+        color: white;
+    }
+
     .astrosentado {
-        width: 80%;
-        height: 73%;
+        width: 70%;
+        height: 50%;
+        flex-shrink: 0;
         display: flex;
         position: static;
+        margin-top: 10%;
     }
 
     .caixa-entrega {
-        width: 70%;
+        width: 30%;
         height: 85%;
+        flex-shrink: 0;
         border-radius: 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
         background: var(--caixas);
+padding: 3%;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 415px)
 /*PQ*/
@@ -329,6 +361,7 @@ p {
         background-color: transparent;
         align-items: center;
         justify-content: center;
+  
     }
 
     .anexo {
@@ -358,6 +391,7 @@ p {
 
     .col-2 {
         width: 100%;
+        
     }
 
     .entregar-button {
