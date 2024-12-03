@@ -33,10 +33,10 @@ body {
   max-height: 100%;
 }
 .head {
-  height: 8%;
-  width: 90%;
+  width: 65%;
+  height: 7%;
   border-radius: 4.86vh;
-  background: rgba(217, 217, 217, 0.20);
+  background: rgba(255, 255, 255, 0.30);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: space-around;
@@ -56,15 +56,28 @@ body {
   width: 90%;
   height: 90%;
   border-radius: 40px;
-
   display: flex;
   padding: 2vh;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
-
+overflow-y: scroll;
 }
+
+.pontuadores::-webkit-scrollbar {
+  background-color: #ffffff;
+  height: max-content;
+  width: 10px;
+}
+
+.pontuadores::-webkit-scrollbar-thumb {
+  height: 10%;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #042763;
+}
+
+
+
 .pontuador1,
 .pontuador5 {
   border-radius: 40px;
@@ -72,7 +85,8 @@ body {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 75%;
   height: 15%;
-  display: flex;
+  display: flex;  
+  margin-top: 3%;
   flex-direction: row;
   justify-content: space-around;
 }
@@ -81,6 +95,7 @@ body {
   border-radius: 40px;
   background: rgba(255, 255, 255, 0.50);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
   width: 85%;
   height: 15%;
   display: flex;
@@ -93,7 +108,7 @@ body {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 95%;
   height: 17%;
-  display: flex;
+  display: flex; 
   flex-direction: row;
   justify-content: space-around;
 }

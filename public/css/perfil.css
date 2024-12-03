@@ -30,6 +30,10 @@ body {
     background:#042661 ;
 }
 
+.header{
+    width: 98%;
+}
+
 .img-fundo {
     height: 120%;
     width: 120%;
@@ -61,21 +65,21 @@ h1 {
     letter-spacing: 0.8px;
     font-size: 1.5rem;
 }
-
+           
 img {
     margin: 0 auto;
     max-width: 100%;
 }
 
 .tras {
-    width: 75%;
-    height: 85%;
+    width: 60%;
+    height: 70%;
     border-radius: 30px;
     display: flex;
     justify-content: right;
     flex-wrap: wrap;
     align-items: end;
-    color: aquamarine;
+    background-color: #04266100;
 }
 
 .col-1 {
@@ -139,6 +143,7 @@ flex-wrap: wrap;
 .nome-usuario {
     width: 100%;
     display: flex;
+    font-size: 30px;
     justify-content: center;
     margin-right: 8%;
 }
@@ -153,22 +158,6 @@ flex-wrap: wrap;
     border: 1vh solid #fff;
 }
 
-.trocar-foto {
-    position: absolute;
-    width: 4%;
-    height: 8%;
-    right: 38%;
-    border-radius: 50%;
-    background-color: #042661;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.img-camera-trocar-foto {
-    width: 70%;
-    height: 70%;
-}
 
 .caixa-materia {
     width: 35%;
@@ -192,13 +181,7 @@ flex-wrap: wrap;
 .pendencianumber{
     font-size: 120px;
 }
-
-.pendencias-img {
-    width: 40%;
-    height: 45%;
-    flex-shrink: 0;
-}
-
+         
 
 .materia {
     width: 100%;
@@ -313,13 +296,3 @@ width: 40%;
   
 }
 
-
-.header{
-    width: 100%;
-    height: 15%;
-  }
-  
-  .logo{
-    max-width: 100%;
-    max-height: 100%;
-  }

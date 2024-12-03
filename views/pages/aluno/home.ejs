@@ -11,7 +11,7 @@
 
 <body>
 
-    <img class="img-fundo" src="img/fundo.png">
+    <img class="img-fundo" src="/img/fundo.png">
 
     <div class="main">
         <div class="atras-menu">
@@ -62,7 +62,7 @@
                         <h2>Pendências</h2>
                         </div>
 
-                        <h1 class="pendencianumber">99</h1>
+                        <h1 class="pendencianumber">00</h1>
                         <img class="pendencias-img" src="img/pendencia.png">
 
 
@@ -113,33 +113,73 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  
 <script>
-    // Pegar os dados passados do backend
-    const labels = <%- JSON.stringify(labels) %>;  // Nomes das matérias
-    const pontos = <%- JSON.stringify(pontos) %>;  // Pontuações do aluno
+    // Dados dos horários para cada dia da semana
+    const horariosSemana = {
+        segunda: [
+            { horario: "08:00 - 09:00", aula: "Matemática" },
+            { horario: "09:00 - 10:00", aula: "Português" },
+        ],
+        terca: [
+            { horario: "08:00 - 09:00", aula: "História" },
+            { horario: "09:00 - 10:00", aula: "Geografia" },
+        ],
+        quarta: [
+            { horario: "08:00 - 09:00", aula: "Física" },
+            { horario: "09:00 - 10:00", aula: "Química" },
+        ],
+        quinta: [
+            { horario: "08:00 - 09:00", aula: "Biologia" },
+            { horario: "09:00 - 10:00", aula: "Inglês" },
+        ],
+        sexta: [
+            { horario: "08:00 - 09:00", aula: "Educação Física" },
+            { horario: "09:00 - 10:00", aula: "Artes" },
+        ],
+    };
 
-    // Inicializar o gráfico
-    const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,  // Nomes das matérias
-            datasets: [{
-                label: 'Pontuação do Aluno',
-                data: pontos,  // Pontuações do aluno
-                borderWidth: 1,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor de fundo da barra
-                borderColor: 'rgba(54, 162, 235, 1)', // Cor da borda
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+    // Abrir o popup
+    function openPopup(dia) {
+        const popup = document.getElementById("popup");
+        const tableBody = document.getElementById("popup-table-body");
+
+        // Limpar as linhas da tabela
+        tableBody.innerHTML = "";
+
+        // Adicionar os horários do dia selecionado
+        if (horariosSemana[dia]) {
+            horariosSemana[dia].forEach(item => {
+                const row = document.createElement("tr");
+                const horarioCell = document.createElement("td");
+                const aulaCell = document.createElement("td");
+
+                horarioCell.textContent = item.horario;
+                aulaCell.textContent = item.aula;
+
+                row.appendChild(horarioCell);
+                row.appendChild(aulaCell);
+                tableBody.appendChild(row);
+            });
+        } else {
+            // Caso não haja dados para o dia
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.colSpan = 2;
+            cell.textContent = "Nenhum horário disponível";
+            row.appendChild(cell);
+            tableBody.appendChild(row);
         }
-    });
+
+        // Mostrar o popup
+        popup.style.display = "block";
+    }
+
+    // Fechar o popup
+    function closePopup() {
+        const popup = document.getElementById("popup");
+        popup.style.display = "none";
+    }
 </script>
+    
 
 </body>
 

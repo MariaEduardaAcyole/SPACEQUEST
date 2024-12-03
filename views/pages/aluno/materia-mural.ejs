@@ -11,12 +11,12 @@
 </head>
 
 <body>
-    <!-- Cabeçalho -->
+    <img class="img-fundo" src="/img/fundo.png">
     <div class="header">
-        <h3 class="titulo-spacequest"><a href="/home-aluno">SPACE<br>QUEST</a></h3>
-        <div class="menu-cardapio">
-            <%- include('../../partials/menu-superior') %>
-        </div>
+        <a href="./home-aluno"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
+            <div class="menu-cardapio">
+                <%- include('../../partials/menu-superior') %>
+            </div>
     </div>
 
     <!-- Conteúdo Principal -->
@@ -24,8 +24,10 @@
         <!-- Informações da Matéria -->
         <div class="col-1">
             <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+
                 <div class="caixa-materia">
-                    <h2><%= materia.nome_materia %></h2>
+
+                    <h2 class="nomemateria">Minigames</h2>
                 </div>
             </div>
         </div>
@@ -34,29 +36,38 @@
         <div class="col-2">
             <div class="col-navegacao">
                 <div class="navegacao">
-                    <a href="/materia-downloads/<%= id %>" class="paginas"><h2>Downloads</h2></a>
-                    <a href="/materia-atividades/<%= id %>" class="paginas"><h2>Atividades</h2></a>
-                    <a href="/materia-mural/<%= id %>" class="paginas"><h2>Minigame</h2></a>
+                    <a href="./materias/<%= id %>" class="paginas">MATERIAS</a>
+                    <a href="/materia-atividades/<%= id %>" class="paginas">
+                        <h2>Atividades</h2>
+                    </a>
+                    <a href="/materia-mural/<%= id %>" class="paginas">
+                        <h2>Minigame</h2>
+                    </a>
                 </div>
             </div>
 
             <!-- Lista de Minigames -->
             <div class="col-4">
-                <% if (minigames && minigames.length > 0) { %>
-                    <% minigames.forEach(minigame => { %>
-                        <div class="postagem">
-                            <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+                <% if (minigames && minigames.length> 0) { %>
+                    <% minigames.forEach(minigame=> { %>
+                        <a class="postagem" href="/quiz/<%= minigame.id_minigame %>">
+
+                            <div class="circulo-materia"
+                                style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+                                <img src="/img/controle-de-video-game.png" alt="" class="img-icon-game">
+                            </div>
                             <h3 class="titulo-atv">
-                                <a href="/quiz/<%= minigame.id_minigame %>">
-                                    <%= minigame.nome_minigame %>
-                                </a>
+                                <%= minigame.nome_minigame %>
                             </h3>
-                        </div>
-                    <% }) %>
+                        </a>
+
+            </div>
+
+            <% }) %>
                 <% } else { %>
                     <p>Não há minigames cadastrados para esta matéria.</p>
-                <% } %>
-            </div>
+                    <% } %>
+
         </div>
     </div>
 </body>

@@ -3,7 +3,6 @@
     --fundo: #042661;
     --caixas: rgba(255, 255, 255, 0.6);
     --transparencia: rgba(217, 217, 217, 0.6);
-    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
     --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
@@ -150,9 +149,8 @@ tr {
 
 td {
     padding: 0 20px;
-    border: 0.5px solid rgba(0, 0, 0, 0.178);
+    border: 0.5px solid rgba(255, 255, 255, 0.178);
     /* 0 para o topo e fundo, 20px para os lados esquerdo e direito */
-
 }
 
 thead {

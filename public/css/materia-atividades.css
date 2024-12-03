@@ -182,6 +182,8 @@ font-size: 27px;
     text-align: right;
     grid-column: 3/4;
     grid-row: 1/3;
+    font-size: 2rem;
+
 }
 
   .pontos {
@@ -306,7 +308,7 @@ font-size: 12px;
     flex-wrap: wrap;
   }
   .data-vencimento{
-    font-size: 12px;
+    font-size: 2rem;
   }
   .postagem {
     width: 100%;
