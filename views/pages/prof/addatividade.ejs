@@ -1,107 +1,105 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+    <!DOCTYPE html>
+    <html lang="pt-br">
 
-<head>
-    <!-- LINKS -->
-    <meta http-equiv="refresh" content="300000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADD ATIVIDADE</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/css/addatividade.css">
-</head>
+    <head>
+        <!-- LINKS -->
+        <meta http-equiv="refresh" content="300000" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ADD ATIVIDADE</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/addatividade.css">
+    </head>
 
-<body>
-    <img class="img-fundo" src="/img/fundo.png">
+    <body>
+        <img class="img-fundo" src="/img/fundo.png">
 
-    <div class="header">
-        <a href="../home-prof"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
-        <div class="menu-cardapio">
-            <%- include('../../partials/menu-superior') %>
+        <div class="header">
+            <a href="../home-prof"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
+            <div class="menu-cardapio">
+                <%- include('../../partials/menu-superior') %>
+            </div>
         </div>
-    </div>
-    <div class="col-1">
-
-        <div class="img-materia" href="./materia">
-            <h1 href="./materia">NOME MATERIA</h1>
-        </div>
-
-        <div class="col-2">
-
-            <div class="col-navegacao">
-                <div class="navegacao">
-                    <a href="./materia-mural-prof" class="paginas">
-                        <h2>mural</h2>
-                    </a>
-                    <a href="./materia-downloads-prof" class="paginas">
-                        <h2>downloads</h2>
-                    </a>
-                    <a href="./materia-atividades-prof" class="paginas">
-                        <h2>atividades</h2>
-                    </a>
-                    <a href="./addatividade" class="paginas">
-                        <h2>addAtividade</h2>
-                    </a>
+        <div class="col-1">
+            <div class="img-materia" style="background-color:#55349B;">
+                <div class="caixa-materia">
+                    <h2><%= materia.nome_materia %></h2>
                 </div>
             </div>
-
-            <div class="col-3">
-
-                <div class="titulo-postagem">
-                    <div class="linha"></div>
-                    <h2>addAtividade</h2>
+            
+            <div class="col-2">
+                <div class="col-navegacao">
+                    <div class="navegacao">
+                        <a href="/materia-downloads-prof/<%= id_materia %>" class="paginas">
+                            <h2>Downloads</h2>
+                        </a>
+                        <a href="/materia-atividades-prof/<%= id_materia %>" class="paginas">
+                            <h2>Atividades</h2>
+                        </a>
+                        <a href="/materia-mural-prof/<%= id_materia %>" class="paginas">
+                            <h2>Minigame</h2>
+                        </a>
+                        <a href="/addatividade/<%= id_materia %>" class="paginas">
+                            <h2>Add Atividade</h2>
+                        </a>
+                        
+                    </div>
                 </div>
 
-                <div class="col-4">
+                <div class="col-3">
 
-                <form action="/addAtividade" method="POST" enctype="multipart/form-data">
-                    <div class="col-1-atv">
-
-                    <input placeholder="Titulo" type="text" id="titulo" name="titulo" required class="titulo-atv">
-
-                        <input placeholder="Descrição" id="descricao" name="descricao" type="text" class="descriçao-atv" required>
-
-                        <div class="linha-1">
-                            <div class="anexo">
-                                <img class="img-anexo" src="/img/anexo-icon.png">
-                            </div>
-                            <div class="anexo">
-                                <img class="img-anexo" src="/img/planilhas-icon.png">
-                            </div>
-                            <div class="anexo">
-                                <img class="img-anexo" src="/img/docs-icon.png">
-                            </div>
-                            <div class="anexo">
-                                <img class="img-anexo" src="/img/slides-icon.png">
-                            </div>
-                            <div class="anexo">
-                                <img class="img-anexo" src="/img/formularios-icon.png">
-                            </div>
-                        </div>
-                        <input type="file" class="arquivo-anexado" id="arquivo" name="arquivo"
-                            accept=".pdf, .docx, .pptx" required>
-</div>
-                    <div class="col-2-atv">
-
-                        <input type="date" placeholder="Data Vencimento" class="data-vencimento" id="data_vencimento"
-                            name="data_vencimento">
-
-                        <input type="number" placeholder="Pontos" id="pontos" name="pontos" class="pontos" required>
-
-                        <button type="submit" value="POSTAR" class="postar">POSTAR</button>
+                    <div class="titulo-postagem">
+                        <div class="linha"></div>
+                        <h2>addAtividade</h2>
                     </div>
 
-                </form>
+                    <div class="col-4">
+
+                    <form action="/addAtividade" method="POST" enctype="multipart/form-data">
+                        <div class="col-1-atv">
+
+                        <input placeholder="Titulo" type="text" id="titulo" name="titulo" required class="titulo-atv">
+
+                            <input placeholder="Descrição" id="descricao" name="descricao" type="text" class="descriçao-atv" required>
+
+                            <div class="linha-1">
+                                <div class="anexo">
+                                    <img class="img-anexo" src="/img/anexo-icon.png">
+                                </div>
+                                <div class="anexo">
+                                    <img class="img-anexo" src="/img/planilhas-icon.png">
+                                </div>
+                                <div class="anexo">
+                                    <img class="img-anexo" src="/img/docs-icon.png">
+                                </div>
+                                <div class="anexo">
+                                    <img class="img-anexo" src="/img/slides-icon.png">
+                                </div>
+                                <div class="anexo">
+                                    <img class="img-anexo" src="/img/formularios-icon.png">
+                                </div>
+                            </div>
+                            <input type="file" class="arquivo-anexado" id="arquivo" name="arquivo"
+                                accept=".pdf, .docx, .pptx" required>
+    </div>
+                        <div class="col-2-atv">
+
+                            <input type="date" placeholder="Data Vencimento" class="data-vencimento" id="data_vencimento"
+                                name="data_vencimento">
+
+                            <input type="number" placeholder="Pontos" id="pontos" name="pontos" class="pontos" required>
+
+                            <button type="submit" value="POSTAR" class="postar">POSTAR</button>
+                        </div>
+
+                    </form>
+
+                    </div>
 
                 </div>
 
             </div>
-
         </div>
-    </div>
-    <!-- Mensagem de sucesso, se existir -->
-<!-- <% if (successMessage) { %>
-    <p style="color: green;"><%= successMessage %></p>
-<% } %> -->
-</body>
+   
+    </body>
 
-</html>
+    </html>

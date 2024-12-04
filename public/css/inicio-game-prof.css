@@ -2,7 +2,6 @@
     --fundo: #042661;
     --caixas: rgba(255, 255, 255, 0.6);
     --transparencia: rgba(217, 217, 217, 0.6);
-    --gradiente-body: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     --gradiente-button: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
     --shadow-filter: drop-shadow(#000000a8 1rem 1rem 15px);
 }
@@ -40,7 +39,6 @@
         align-items: center;
         background-repeat: no-repeat;
         overflow-y: auto;
-        background: linear-gradient(180deg, #042661 0%, #41BDDA 100%);
     }
 
     input,
@@ -67,7 +65,7 @@
     }
 
     .atras-1 {
-        width: 97%;
+        width: 70%;
         height: 85%;
         display: flex;
         flex-direction: column;
@@ -380,6 +378,9 @@
         border: none;
         outline: none;
         text-decoration: none;
+    }
+    .header{
+        width: 100%;
     }
 
     .titulo-spacequest {

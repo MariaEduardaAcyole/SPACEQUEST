@@ -37,7 +37,7 @@ form{
     align-items: center;
     justify-content: space-evenly;
     display: flex;
-    background: rgba(217, 217, 217, 0.20);
+    background: rgba(217, 217, 217, 0);
 }
 .header{
   width: 95%;
@@ -64,7 +64,7 @@ a {
 
 .col-1{
     width: 30%;
-    height: 85%;
+    height: 80%;
     border-radius: 30px;
     flex-direction: column;
     align-items: center;
@@ -96,7 +96,7 @@ border-radius: 20%;
     align-items: center;
     justify-content: center;
     display: flex;
-    background: rgba(217, 217, 217, 0.493);
+    background: rgba(217, 217, 217, 0.349);
 }
 
 .button{
@@ -109,7 +109,9 @@ border-radius: 20%;
     justify-content: center;
     display: flex;
     color: #ffffff;
-    background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
+    border-radius: 30px;
+border: 2px solid #000;
+background: #042661;
 }
 
 

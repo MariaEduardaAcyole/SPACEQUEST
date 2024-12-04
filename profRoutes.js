@@ -66,7 +66,6 @@ router.get('/addmateria', async (req, res) => {
 
 module.exports = router;
 
-
 // Rota: Página inicial do professor
 router.get('/home-prof', verificarProfessorLogado, async (req, res) => {  
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
@@ -150,113 +149,71 @@ router.get('/home-prof', verificarProfessorLogado, async (req, res) => {
     }
 });
 
+router.get('/perfil-prof', verificarProfessorLogado, async (req, res) => {
+    const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
+
+    try {
+        // 1. Buscar dados do professor
+        const { data: professorData, error: professorError } = await supabase
+            .from('professor')
+            .select('*')
+            .eq('id_usuario', idUsuario)
+            .single();
+
+        if (professorError || !professorData) {
+            console.error('Erro ao buscar dados do professor:', professorError);
+            return res.status(500).send('Erro ao buscar dados do professor.');
+        }
+
+        const idProf = professorData.id_prof;
+
+        // 2. Buscar as matérias associadas ao professor
+        const { data: materiasData, error: materiasError } = await supabase
+            .from('materia')
+            .select('id_materia, nome_materia')
+            .eq('id_professor', idProf);
+
+        if (materiasError || !materiasData) {
+            console.error('Erro ao buscar matérias do professor:', materiasError);
+            return res.status(500).send('Erro ao buscar matérias.');
+        }
+
+        // 3. Buscar pontuações dos alunos por turma/matéria
+        const { data: pontuacoesData, error: pontuacoesError } = await supabase
+            .from('aluno_turma') // Relacione com sua tabela de vínculo aluno/turma/matéria
+            .select('id_materia, soma_pontos: sum(pontos)')
+            .in('id_materia', materiasData.map(m => m.id_materia))
+            .group('id_materia'); // Agregue os pontos por matéria
+
+        if (pontuacoesError || !pontuacoesData) {
+            console.error('Erro ao buscar pontuações:', pontuacoesError);
+            return res.status(500).send('Erro ao buscar pontuações.');
+        }
+
+        // 4. Preparar dados para o gráfico
+        const labels = materiasData.map(materia => materia.nome_materia);
+        const pontos = materiasData.map(materia => {
+            const pontuacao = pontuacoesData.find(p => p.id_materia === materia.id_materia);
+            return pontuacao ? pontuacao.soma_pontos : 0; // Pontuação agregada ou 0
+        });
+
+        // 5. Renderizar a página com os dados
+        res.render('pages/prof/perfil-prof', {
+            usuario: professorData,
+            materias: materiasData,
+            labels: labels, // Nomes das matérias para o gráfico
+            pontos: pontos  // Pontuações agregadas
+        });
+
+    } catch (err) {
+        console.error('Erro ao exibir perfil:', err);
+        res.status(500).send('Erro ao exibir perfil.');
+    }
+});
 
 router.get('/minigame-kart', (req, res) => {
     res.render('pages/prof/minigame-kart');
 });
-
-// Rota: Exibir tela de criação de mini-game
-// Rota: Exibir tela de criação de mini-game
-router.get('/inicio-game-prof', async (req, res) => {
-    try {
-        // Supondo que você tenha uma consulta para buscar as turmas no banco de dados
-        const { data: turma, error } = await supabase
-            .from('turma') // Tabela onde você está armazenando as turmas
-            .select('*');
-
-        const { data: materia, errorMateria } = await supabase
-            .from('materia') // Tabela onde você está armazenando as turmas
-            .select('*');
-
-        if (error) {
-            console.error("Erro ao buscar as turmas:", error);
-            return res.status(500).send('Erro ao buscar as turmas');
-        }
-
-        // Renderiza a página com a variável turma
-        res.render('pages/prof/inicio-game-prof', { turma, materia });
-    } catch (err) {
-        console.error("Erro na rota GET /inicio-game-prof:", err);
-        res.status(500).send('Erro ao carregar a página de criação de minigame');
-    }
-});
-
-// Rota: Processar criação de mini-game
-router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
-    const { nome_minigame, turma, materia, perguntas } = req.body;
-    const id_professor = req.session.usuario.id_usuario;
-
-    if (!nome_minigame || !turma || !perguntas || !materia || perguntas.length === 0) {
-        return res.status(400).send('Dados incompletos');
-    }
-
-    try {
-        // Inserir o mini-game no banco
-        const { data: minigame, error: minigameError } = await supabase
-            .from('minigame')
-            .insert([{ nome_minigame, id_professor, turma, id_materia: materia, data_criacao: new Date() }])
-            .select('id_minigame')
-            .single();
-
-        if (minigameError || !minigame) {
-            console.error('Erro ao inserir minigame:', minigameError);
-            throw new Error('Falha ao criar mini-game no banco');
-        }
-
-        console.log("Mini-game criado com ID:", minigame.id_minigame);
-
-        // Iterar sobre cada pergunta para inserir no banco
-        for (const pergunta of perguntas) {
-            const { texto, alternativas, correta } = pergunta;
-
-            // Inserir a pergunta vinculada ao minigame recém-criado
-            const { data: perguntaData, error: perguntaError } = await supabase
-                .from('pergunta')
-                .insert([{ id_minigame: minigame.id_minigame, texto }])
-                .select('id_pergunta') // Supondo que a coluna seja id_pergunta
-                .single();
-
-            if (perguntaError || !perguntaData) {
-                console.error('Erro ao inserir pergunta:', perguntaError);
-                throw new Error('Falha ao inserir pergunta');
-            }
-
-            const perguntaId = perguntaData.id_pergunta; // Atribui o ID da pergunta
-
-            // Mapear alternativas com o ID da pergunta
-            const alternativasInsert = alternativas.map((alternativa, index) => {
-                const corretaAlternativa = correta === String(index + 1); // Verifica se é a alternativa correta
-                return {
-                    id_pergunta: perguntaId,
-                    texto: alternativa,
-                    correta: corretaAlternativa,
-                    nome_materia: "Biologia", // Defina o nome da matéria conforme necessário
-                    pontos: corretaAlternativa ? 10 : 0 // Atribui pontos apenas para a resposta correta
-                };
-            });
-
-            // Inserir as alternativas no banco de dados
-            const { error: alternativaError } = await supabase
-                .from('alternativa')
-                .insert(alternativasInsert);
-
-            if (alternativaError) {
-                console.error('Erro ao inserir alternativas:', alternativaError);
-                throw new Error('Falha ao inserir alternativas');
-            }
-
-            console.log(`Alternativas criadas para a pergunta com ID: ${perguntaId}`);
-        }
-
-        console.log("Mini-game criado com sucesso e todas as perguntas e alternativas inseridas!");
-        res.status(200).send('Minigame criado com sucesso!');
-
-    } catch (err) {
-        console.error('Erro ao criar minigame:', err.message);
-        res.status(500).send('Erro ao criar minigame');
-    }
-});
-
 
 // Rota: Exibir tela de cadastro de turmas
 router.get('/addturma', verificarProfessorLogado, async (req, res) => {
@@ -281,14 +238,6 @@ router.get('/addturma', verificarProfessorLogado, async (req, res) => {
 
 // Rota: Processar adição de turma
 router.post('/addTurma', addTurma);
-
-// Rota: Exibir tela de criar atividade
-router.get('/addatividade/:id', verificarProfessorLogado, (req, res) => {
-    res.render('pages/prof/addAtividade', { successMessage: null });
-});
-
-// Rota: Processar criação de atividade
-router.post('/addAtividade', upload.single('arquivo'), addAtividade);
 
 router.get('/materia-mural-prof/:id', verificarProfessorLogado, async (req, res) => {
     const { id } = req.params; // Ajustado para usar "id"
@@ -330,7 +279,6 @@ router.get('/materia-mural-prof/:id', verificarProfessorLogado, async (req, res)
         res.status(500).send('Erro inesperado.');
     }
 });
-
 
 // Rota: Downloads de uma matéria específica
 router.get('/materia-downloads-prof/:id', (req, res) => {
@@ -541,7 +489,6 @@ router.get('/desempenho-classe-prof', verificarProfessorLogado, async (req, res)
     }
 });
 
-
 router.get('/desempenho-geral-prof', verificarProfessorLogado, async (req, res) => {
     const idUsuario = req.session.usuario.id_usuario; // ID do usuário logado
 
@@ -602,8 +549,124 @@ router.get('/desempenho-geral-prof', verificarProfessorLogado, async (req, res) 
         res.status(500).send('Erro ao obter ranking geral dos alunos');
     }
 });
+
 router.get('/calendario-prof', (req, res) => {
     res.render('pages/prof/calendario-prof');
+});
+
+// Rota: Exibir tela de criação de mini-game
+router.get('/inicio-game-prof', async (req, res) => {
+    try {
+        const { data: turma, error: turmaError } = await supabase.from('turma').select('*');
+        const { data: materia, error: materiaError } = await supabase.from('materia').select('*');
+
+        if (turmaError || materiaError) {
+            console.error("Erro ao buscar dados:", turmaError || materiaError);
+            return res.status(500).send('Erro ao buscar dados');
+        }
+
+        res.render('pages/prof/inicio-game-prof', { turma, materia });
+    } catch (err) {
+        console.error("Erro ao carregar página:", err);
+        res.status(500).send('Erro ao carregar a página');
+    }
+});
+
+// Rota: Processar criação de mini-game
+router.post('/criar-minigame', verificarProfessorLogado, async (req, res) => {
+    const { nome_minigame, turma, materia, perguntas } = req.body;
+    const id_professor = req.session.usuario.id_usuario;
+
+    if (!nome_minigame || !turma || !materia || !perguntas || perguntas.length === 0) {
+        return res.status(400).send('Dados incompletos');
+    }
+
+    try {
+        const { data: minigame, error: minigameError } = await supabase
+            .from('minigame')
+            .insert([{ nome_minigame, id_professor, turma, id_materia: materia, data_criacao: new Date() }])
+            .select('id_minigame')
+            .single();
+
+        if (minigameError || !minigame) {
+            console.error('Erro ao inserir minigame:', minigameError);
+            throw new Error('Falha ao criar mini-game no banco');
+        }
+
+        console.log("Mini-game criado com ID:", minigame.id_minigame);
+
+        for (const pergunta of perguntas) {
+            const { texto, alternativas, correta } = pergunta;
+
+            const { data: perguntaData, error: perguntaError } = await supabase
+                .from('pergunta')
+                .insert([{ id_minigame: minigame.id_minigame, texto }])
+                .select('id_pergunta')
+                .single();
+
+            if (perguntaError || !perguntaData) {
+                console.error('Erro ao inserir pergunta:', perguntaError);
+                throw new Error('Falha ao inserir pergunta');
+            }
+
+            const alternativasInsert = alternativas.map((alt, index) => ({
+                id_pergunta: perguntaData.id_pergunta,
+                texto: alt,
+                correta: correta === String(index + 1),
+                pontos: correta === String(index + 1) ? 10 : 0,
+            }));
+
+            const { error: alternativaError } = await supabase.from('alternativa').insert(alternativasInsert);
+
+            if (alternativaError) {
+                console.error('Erro ao inserir alternativas:', alternativaError);
+                throw new Error('Falha ao inserir alternativas');
+            }
+        }
+
+        console.log("Mini-game criado com sucesso!");
+        res.status(200).send('Minigame criado com sucesso!');
+    } catch (err) {
+        console.error('Erro ao criar minigame:', err.message);
+        res.status(500).send('Erro ao criar minigame');
+    }
+});
+
+// Rota: Exibir tela de criar atividade
+router.get('/addatividade/:id_materia', async (req, res) => {
+    const { id_materia } = req.params;
+
+    // Verificar se o ID da matéria é válido
+    const { data: materia, error } = await supabase
+        .from('materia')
+        .select('*')
+        .eq('id_materia', id_materia)
+        .single();
+
+    if (error || !materia) {
+        return res.status(404).send('Matéria não encontrada.');
+    }
+
+    res.render('pages/prof/addAtividade', { id_materia , materia});
+});
+
+
+// Rota: Processar criação de atividade
+router.post('/addAtividade', upload.single('arquivo'), async (req, res) => {
+    try {
+        const { titulo, descricao, turma } = req.body;
+        const arquivo = req.file;
+
+        if (!titulo || !descricao || !arquivo) {
+            return res.status(400).send('Dados incompletos');
+        }
+
+        console.log('Atividade recebida:', { titulo, descricao, turma, arquivo });
+        alert('Atividade criada com sucesso!');
+    } catch (err) {
+        console.error('Erro ao criar atividade:', err.message);
+        res.status(500).send('Erro ao criar atividade');
+    }
 });
 
 module.exports = router;

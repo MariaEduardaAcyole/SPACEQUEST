@@ -180,7 +180,34 @@
     }
 </script>
     
+<script>
+    // Pegar os dados passados do backend
+    const labels = <%- JSON.stringify(labels) %>;  // Nomes das matérias
+    const pontos = <%- JSON.stringify(pontos) %>;  // Pontuações do aluno
+    // Inicializar o gráfico
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,  // Nomes das matérias
+            datasets: [{
+                label: 'Pontuação do Aluno',
+                data: pontos,  // Pontuações do aluno
+                borderWidth: 1,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor de fundo da barra
+                borderColor: 'rgba(54, 162, 235, 1)', // Cor da borda
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
 
+                }
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

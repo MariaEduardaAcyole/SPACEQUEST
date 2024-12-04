@@ -19,62 +19,65 @@
 
     <div class="header">
         <a href="./home-prof"> <img src="/img/logo.svg" alt="img/logo.svg" class="logo">
-        <div class="menu-cardapio">
-            <%- include('../../partials/menu-superior') %>
-        </div>
+            <div class="menu-cardapio">
+                <%- include('../../partials/menu-superior') %>
+            </div>
     </div>
     <div class="container">
         <div class="col-1">
-            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">     
-                <div class="caixa-materia" >
+            <div class="img-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;">
+                <div class="caixa-materia">
                     <h2>
                         <%= materia.nome_materia %>
                     </h2>
                 </div>
             </div>
-</div>
-            <div class="col-2">
-                <div class="col-navegacao">
-                    <div class="navegacao">
-                        <a href="/materia-downloads-prof/<%= idMateria %>" class="paginas">
-                            <h2>Downloads</h2>
-                        </a>
-                        <a href="/materia-atividades-prof/<%= idMateria %>" class="paginas">
-                            <h2>Atividades</h2>
-                        </a>
-                        <a href="/materia-mural-prof/<%= idMateria %>" class="paginas">
-                            <h2>Minigame</h2>
-                        </a>
-                        <a href="/addatividade/<%= idMateria %>" class="paginas">
-                            <h2>Add Atividade</h2>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <% if (atividades && atividades.length> 0) { %>
-                        <% atividades.forEach(atividade=> { %>
-                            <div class="postagem">
-                                <p class="circulo-materia" style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
-
-                                <h3 class="titulo-atv">
-                                    <a href="/entrega-atividade/<%= atividade.id_atividade %>">
-                                        <%= atividade.titulo %>
-                                    </a>
-                                </h3>
-                                <p class="pontos"><%= atividade.pontos %></p>
-                                <p class="data-vencimento">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <%= atividade.data_vencimento %>
-                                </p>
-                            </div>
-                            <% }) %>
-                                <% } else { %>
-                                    <p>Não há atividades cadastradas para esta matéria.</p>
-                                    <% } %>
+        </div>
+        <div class="col-2">
+            <div class="col-navegacao">
+                <div class="navegacao">
+                    <a href="/materia-downloads-prof/<%= idMateria %>" class="paginas">
+                        <h2>Downloads</h2>
+                    </a>
+                    <a href="/materia-atividades-prof/<%= idMateria %>" class="paginas">
+                        <h2>Atividades</h2>
+                    </a>
+                    <a href="/materia-mural-prof/<%= idMateria %>" class="paginas">
+                        <h2>Minigame</h2>
+                    </a>
+                    <a href="/addatividade/<%= idMateria %>" class="paginas">
+                        <h2>Add Atividade</h2>
+                    </a>
                 </div>
             </div>
+
+            <div class="col-4">
+                <% if (atividades && atividades.length> 0) { %>
+                    <% atividades.forEach(atividade=> { %>
+                        <div class="postagem">
+                            <p class="circulo-materia"
+                                style="background-color: <%= materia.cor_materia || '#ffffff' %>;"></p>
+
+                            <h3 class="titulo-atv">
+                                <a href="/entrega-atividade/<%= atividade.id_atividade %>">
+                                    <%= atividade.titulo %>
+                                </a>
+                            </h3>
+                            <p class="pontos">
+                                <%= atividade.pontos %>
+                            </p>
+                            <p class="data-vencimento">
+                                <i class="fas fa-calendar-alt"></i>
+                                <%= atividade.data_vencimento %>
+                            </p>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>Não há atividades cadastradas para esta matéria.</p>
+                                <% } %>
+            </div>
         </div>
+    </div>
     </div>
 </body>
 

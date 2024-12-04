@@ -101,7 +101,6 @@ a {
         justify-content: center;
         justify-self: auto;
         background: ("./img/história.jfif");
-        background: linear-gradient(91deg, #021F59 0%, #1570BF 34.9%, #2685BF 57.29%, #41BDD9 81.25%);
         flex-direction: row;
         align-content: center;
     }
