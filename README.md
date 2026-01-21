@@ -6,6 +6,17 @@ O SpaceQuest é uma idealização de sistema de aprendizagem para escola e profe
 # ANDROMEDA
 #### ceo: MARIA EDUARDA ACYOLE
 
+## 🛰️ Sobre o Projeto
+
+O Space Quest foi criado para:
+
+- Explorar conceitos de programação de forma prática
+- Trabalhar lógica, estruturas de controle e organização de código
+- Simular ou representar desafios em um ambiente espacial
+- Servir como projeto de estudo e portfólio
+
+O projeto pode ser expandido futuramente com novas fases, mecânicas, melhorias gráficas ou integrações.
+
 ## Funcionalidades
 
 Para Alunos:
@@ -26,6 +37,7 @@ Para Professores:
 ![CSS](https://icongr.am/devicon/css3-original.svg?size=128&color=currentColor)
 ![Node.js](https://icongr.am/devicon/nodejs-original.svg?size=128&color=currentColor)
 ![SQL](https://icongr.am/devicon/mysql-original.svg?size=128&color=currentColor)
+
 
 
 
