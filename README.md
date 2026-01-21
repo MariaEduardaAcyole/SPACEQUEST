@@ -3,6 +3,8 @@
 
 O SpaceQuest é uma idealização de sistema de aprendizagem para escola e professores particulares. Carrega valores de inovação e personalização da aprendizagem
 
+### Projeto TCC 2024 - Etec Paulistano
+
 # ANDROMEDA
 #### ceo: MARIA EDUARDA ACYOLE
 
@@ -37,6 +39,7 @@ Para Professores:
 ![CSS](https://icongr.am/devicon/css3-original.svg?size=128&color=currentColor)
 ![Node.js](https://icongr.am/devicon/nodejs-original.svg?size=128&color=currentColor)
 ![SQL](https://icongr.am/devicon/mysql-original.svg?size=128&color=currentColor)
+
 
 
 
